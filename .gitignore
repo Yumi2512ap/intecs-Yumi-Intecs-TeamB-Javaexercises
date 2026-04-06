@@ -1,0 +1,11 @@
+# ビルド成果物
+/bin/
+/build/
+/dist/
+# Eclipse 固有設定
+.settings/
+# OS 依存ファイル
+Thumbs.db
+# ログ・一時ファイル
+*.log
+*.tmp

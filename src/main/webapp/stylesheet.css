@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+*{
+    text-align: center;
+    font-size: 1.35rem;
+}
+
+table{
+    margin: auto;
+}
+th,td{
+    text-align: left;
+}
