@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ja">
 <head>
-<link rel="stylesheet" href="stylesheet.css">
 <meta charset="UTF-8">
 <title>予約確定</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>予約完了</h2>
@@ -37,6 +36,6 @@
 	<form action="menu.jsp">
 		<input type="submit" value="完了">
 	</form>
-
+<%@ include file="footer.jsp" %>
 </body>
 </html>
