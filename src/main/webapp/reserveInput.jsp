@@ -11,17 +11,14 @@
 	<hr>
 	<h2>利用日</h2>
 	<form action="<%= request.getContextPath() %>/reserveInput.jsp" method="post">
-		<!-- 本来であれば今日の日付を入れる場所
-			とりあえず仮置き、サーブレットかなにかから日付を取得して
-			動的に変更されるように-->
-		<input type="date" name="date" value="2026-04-06">
+		<input type="date" name="date" value="${meetingRoom.date}">
 		<input type="submit" value="日付変更">
 	</form>
-	<h2>予約可能時間帯（ここにセッションなどからユーザー名を表示）</h2>
+	<h2>予約可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
 	
 	<!-- ここの書き方はあんましよくない気が
 		配列に会議室名を入れてforループ1つで済ませたい-->
-	 <form action="<%= request.getContextPath() %><!-- ここにURL -->>"method="get">
+	 <form action="<%= request.getContextPath() %>/ReserveCreateServlet" method="get">
 	 <table border="1">
     <tr>
       <th>会議室名＼時間帯</th>
@@ -33,20 +30,20 @@
     <tr>
       <td>大会議室</td>
        <%  for(int i = 9;i <=16; i++) { %>
-    	  <td><input type="button" name="time" value="<%= i %>:00"> </td> 
+    	  <td><input type="submit" name="time" value="<%= i %>:00"> </td> 
     	  <% } %>
     </tr>
     <tr>
       <td>3A会議室</td>
       <%  for(int i = 9;i <=16; i++) { %>
-	  <td><input type="button" name="time" value="<%= i %>:00"> </td>      
+	  <td><input type="submit" name="time" value="<%= i %>:00"> </td>      
 	  <% } %>
     </tr>
       
       <tr>
       <td>3B会議室</td>
       <%  for(int i = 9;i <=16; i++) { %>
-      <td><input type="button" name="time" value="<%= i %>:00"> </td> 
+      <td><input type="submit" name="time" value="<%= i %>:00"> </td> 
       <% } %>
       </tr>
       

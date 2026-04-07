@@ -20,4 +20,4 @@
 		<input type="submit" value="ログアウト">
 	</form>
 </body>
-</html>
+</html> 
