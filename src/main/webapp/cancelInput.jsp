@@ -14,7 +14,7 @@
 		<!-- 本来であれば今日の日付を入れる場所
 			とりあえず仮置き、サーブレットかなにかから日付を取得して
 			動的に変更されるように-->
-		<input type="date" name="date" value="2026-04-06">
+		<input type="date" name="date" value="${meetingRoom.date}">
 		<input type="submit" value="日付変更">
 	</form>
 	<h2>キャンセル可能時間帯（ここにセッションなどからユーザー名を表示）</h2>
