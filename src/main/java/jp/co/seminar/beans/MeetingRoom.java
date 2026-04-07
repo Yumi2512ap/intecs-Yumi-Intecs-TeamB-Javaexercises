@@ -39,11 +39,11 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public RoomBean[] getRooms() {
-		return rooms;
+		return;//帰り値分からん　追記予定
 	}
 
 	public UserBean getUser() {
-		return user;
+		return ;//帰り値分からん　追記予定
 	}
 
 	public boolean login(String id, String password) {
