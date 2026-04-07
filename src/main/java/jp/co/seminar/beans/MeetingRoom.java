@@ -14,16 +14,28 @@ public class MeetingRoom implements Serializable {
 	public MeetingRoom() {
 	}
 
+	public void cancel(resevationBean reservation) {
+
+	}
+
+	public ReservationBean createReservation(String roomId, String start) {
+
+	}
+
 	public String getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public static String[] getPeriod() {
 		return PERIOD;
+	}
+
+	public static ReservationBean[][] getReservations() {
+		return;//帰り値分からん　追記予定
+	}
+
+	public static RoomBean getRoom(String roomId) {
+		return;//帰り値分からん　追記予定
 	}
 
 	public RoomBean[] getRooms() {
@@ -33,4 +45,29 @@ public class MeetingRoom implements Serializable {
 	public UserBean getUser() {
 		return user;
 	}
+
+	public boolean login(String id, String password) {
+
+	}
+
+	public void reserve(ReservationBean reservation) {
+
+	}
+
+	private static int roomIndex(String roomId) throws IndexOutOfBoundsException {
+
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	private static int startPeriod(String start) {
+
+	}
+	@Override
+	public String toString() {
+		return "";
+	}
+
 }
