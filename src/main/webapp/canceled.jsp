@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="stylesheet.css">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>会議室予約キャンセル</h1>
+	<%@ include file="header.jsp"%>
+	<h1>会議室予約キャンセル</h1>
 	<hr>
 	<h2>キャンセル完了</h2>
 	<table>
@@ -36,5 +36,6 @@
 	<form action="Reserve">
 		<input type="submit" value="決定">
 	</form>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>
