@@ -16,8 +16,8 @@ public class MeetingRoom implements Serializable {
 
 	public MeetingRoom() {
 		// rooms をセット
-		RoomDao roomDao = new RoomDao();
-		this.rooms = roomDao.findAll();
+		RoomDao roD = new RoomDao();
+		this.rooms = roD.findAll();
 		// date をyyyy-MM-ddでセット
 		Date nowDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,22 +71,26 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public RoomBean getRoom(String roomId) {
-		return;//帰り値分からん　追記予定
+		for (RoomBean roB : rooms) {
+			if(roomId.equals(roB.getId)) {
+				return roB;
+			}
+		}
 	}
 
 	public RoomBean[] getRooms() {
-		return;//帰り値分からん　追記予定
+		return rooms;
 	}
 
 	public UserBean getUser() {
-		return;//帰り値分からん　追記予定
+		return user;
 	}
 
 	public boolean login(String id, String password) {
 		// しおり26 , 47
-		UserDao ud = new UserDao();
-		UserBean ub = ud.certificate(id, password);
-		return ub != null;
+		UserDao uD = new UserDao();
+		UserBean uB = uD.certificate(id, password);
+		return uB != null;
 	}
 
 	public void reserve(ReservationBean reservation) throws Exception {
