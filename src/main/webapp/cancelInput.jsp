@@ -7,6 +7,7 @@
 <title>会議室予約</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
 	<h1>会議室予約キャンセル</h1>
 	<hr>
 	<h2>利用日</h2>
@@ -56,5 +57,7 @@
   <form action="<%= request.getContextPath() %>/menu.jsp" method="get">
   	<input type="submit" value="戻る">
   </form>	
+  <%@ include file="footer.jsp"%>
+  
 </body>
 </html>

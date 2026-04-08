@@ -30,11 +30,11 @@ public class MeetingRoom implements Serializable {
 		return PERIOD;
 	}
 
-	public  ReservationBean[][] getReservations() {
+	public ReservationBean[][] getReservations() {
 		return;//帰り値分からん　追記予定
 	}
 
-	public  RoomBean getRoom(String roomId) {
+	public RoomBean getRoom(String roomId) {
 		return;//帰り値分からん　追記予定
 	}
 
@@ -43,7 +43,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public UserBean getUser() {
-		return ;//帰り値分からん　追記予定
+		return;//帰り値分からん　追記予定
 	}
 
 	public boolean login(String id, String password) {
@@ -55,6 +55,12 @@ public class MeetingRoom implements Serializable {
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
+		String[] room = { "0501", "0502", "0503" };
+		for (int i = 0; i < room.length; i++) {
+			if (room.equals(roomId)) {
+				return i;
+			}
+		}throw new IndexOutOfBoundsException("会議室が存在しません");
 
 	}
 
@@ -63,11 +69,19 @@ public class MeetingRoom implements Serializable {
 	}
 
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
-		
+		int startTime = 9;
+		int endTime = 16;
+		int time = Integer.parseInt(start.substring(0, 2));
+		if (time < startTime || time > endTime) {
+			throw new IndexOutOfBoundsException("利用時間帯の範囲外です");
+		}
+		return time - startTime;
+
 	}
+
 	@Override
 	public String toString() {
-		return "";
+		return "利用日:" + this.date + "利用時間:" + INTERVAL;
 	}
 
 }
