@@ -28,7 +28,7 @@
      
     </tr>
     <tr>
-      <td>大会議室</td>
+      <td>大会議室</td><!-- 本来なら配列から会議室名取得 -->>
        <%  for(int i = 9;i <=16; i++) { %>
     	  <td><input type="submit" name="time" value="<%= i %>:00"> </td> 
     	  <% } %>

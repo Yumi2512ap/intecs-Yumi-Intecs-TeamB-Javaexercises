@@ -63,7 +63,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
-
+		
 	}
 	@Override
 	public String toString() {

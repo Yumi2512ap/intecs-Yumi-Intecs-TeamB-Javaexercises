@@ -9,3 +9,5 @@ Thumbs.db
 # ログ・一時ファイル
 *.log
 *.tmp
+# テストデータ隠匿
+TestData.java
