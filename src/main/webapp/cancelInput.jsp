@@ -7,6 +7,7 @@
 <title>会議室予約</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
 	<h1>会議室予約キャンセル</h1>
 	<hr>
 	<h2>利用日</h2>
@@ -17,7 +18,7 @@
 		<input type="date" name="date" value="${meetingRoom.date}">
 		<input type="submit" value="日付変更">
 	</form>
-	<h2>キャンセル可能時間帯（ここにセッションなどからユーザー名を表示）</h2>
+	<h2>キャンセル可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
 	
 	<!-- ここの書き方はあんましよくない気が
 		配列に会議室名を入れてforループ1つで済ませたい-->
@@ -33,20 +34,20 @@
     <tr>
       <td>大会議室</td>
        <%  for(int i = 9;i <=16; i++) { %>
-    	  <td><input type="button" name="time" value="<%= i %>:00"> </td> 
+    	  <td><input type="submit" name="time" value="<%= i %>:00"> </td> 
     	  <% } %>
     </tr>
     <tr>
       <td>3A会議室</td>
       <%  for(int i = 9;i <=16; i++) { %>
-	  <td><input type="button" name="time" value="<%= i %>:00"> </td>      
+	  <td><input type="submit" name="time" value="<%= i %>:00"> </td>      
 	  <% } %>
     </tr>
       
       <tr>
       <td>3B会議室</td>
       <%  for(int i = 9;i <=16; i++) { %>
-      <td><input type="button" name="time" value="<%= i %>:00"> </td> 
+      <td><input type="submit" name="time" value="<%= i %>:00"> </td> 
       <% } %>
       </tr>
       
@@ -56,5 +57,7 @@
   <form action="<%= request.getContextPath() %>/menu.jsp" method="get">
   	<input type="submit" value="戻る">
   </form>	
+  <%@ include file="footer.jsp"%>
+  
 </body>
 </html>

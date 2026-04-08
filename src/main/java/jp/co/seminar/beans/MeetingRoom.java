@@ -1,9 +1,11 @@
 package jp.co.seminar.beans;
 
 import java.io.Serializable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 
 public class MeetingRoom implements Serializable {
 
@@ -39,6 +41,7 @@ public class MeetingRoom implements Serializable {
 		String end = PERIOD[startPeriod(start) + 1];
 		ReservationBean rB = new ReservationBean(roomId, date, start, end, user.getId());
 		return rB;
+
 	}
 
 	public String getDate() {
@@ -50,6 +53,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public ReservationBean[][] getReservations() {
+
 		// null の2次元配列とDAOを用意
 		ReservationBean[][] rBs = new ReservationBean[rooms.length][PERIOD.length];
 		ReservationDao rD = new ReservationDao();
@@ -95,9 +99,17 @@ public class MeetingRoom implements Serializable {
 
 	public void reserve(ReservationBean reservation) throws Exception {
 
+
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
+
+		String[] room = { "0501", "0502", "0503" };
+		for (int i = 0; i < room.length; i++) {
+			if (room.equals(roomId)) {
+				return i;
+			}
+		}throw new IndexOutOfBoundsException("会議室が存在しません");
 
 	}
 
@@ -107,11 +119,19 @@ public class MeetingRoom implements Serializable {
 
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
 
+		int startTime = 9;
+		int endTime = 16;
+		int time = Integer.parseInt(start.substring(0, 2));
+		if (time < startTime || time > endTime) {
+			throw new IndexOutOfBoundsException("利用時間帯の範囲外です");
+		}
+		return time - startTime;
+
 	}
 
 	@Override
 	public String toString() {
-		return "";
+		return "利用日:" + this.date + "利用時間:" + INTERVAL;
 	}
 
 }
