@@ -94,19 +94,26 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public void reserve(ReservationBean reservation) throws Exception {
+		//予約登録
+		//会議室予約情報で会議室Daoを利用し、予約します。
+		ReservationDao dada = new ReservationDao();
 
+		//予約済みの場合
+		throw new Exception("すでに予約されています");
+		//時刻を過ぎている場合
+		throw new Exception("時刻が過ぎているため予約できません");
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
-
-		String[] room = { "0501", "0502", "0503" };
-		for (int i = 0; i < room.length; i++) {
-			if (room.equals(roomId)) {
+		//roomIdが配列にあった場合その添え字を返すメソッド
+		RoomDao roD = new RoomDao();
+		RoomBean[] Rooms = roD.findAll();
+		for (int i = 0; i < Rooms.length; i++) {
+			if (Rooms[i].getId().equals(roomId)) {
 				return i;
 			}
 		}
 		throw new IndexOutOfBoundsException("会議室が存在しません");
-
 	}
 
 	public void setDate(String date) {
@@ -114,7 +121,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
-
+		//受け取った入力時間を添え字で返す
 		int startTime = 9;
 		int endTime = 16;
 		int time = Integer.parseInt(start.substring(0, 2));
