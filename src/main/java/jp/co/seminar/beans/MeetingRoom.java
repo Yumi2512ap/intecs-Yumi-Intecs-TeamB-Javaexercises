@@ -1,11 +1,9 @@
 package jp.co.seminar.beans;
 
 import java.io.Serializable;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 
 public class MeetingRoom implements Serializable {
 
@@ -28,8 +26,8 @@ public class MeetingRoom implements Serializable {
 
 	public void cancel(ResevationBean reservation) throws Exception {
 		try {
-			ReservationDao rD = new ReservationDao();
-			rD.delete(reservation);
+			ReservationDao reD = new ReservationDao();
+			reD.delete(reservation);
 		} catch (Exception e) {
 			System.err.println("キャンセルエラー");//暫定処理
 		}
@@ -39,8 +37,8 @@ public class MeetingRoom implements Serializable {
 		// しおり46
 		// end情報→スタートの次
 		String end = PERIOD[startPeriod(start) + 1];
-		ReservationBean rB = new ReservationBean(roomId, date, start, end, user.getId());
-		return rB;
+		ReservationBean reB = new ReservationBean(roomId, date, start, end, user.getId());
+		return reB;
 
 	}
 
@@ -55,27 +53,21 @@ public class MeetingRoom implements Serializable {
 	public ReservationBean[][] getReservations() {
 
 		// null の2次元配列とDAOを用意
-		ReservationBean[][] rBs = new ReservationBean[rooms.length][PERIOD.length];
-		ReservationDao rD = new ReservationDao();
+		ReservationBean[][] reBs = new ReservationBean[rooms.length][PERIOD.length];
+		ReservationDao reD = new ReservationDao();
 		// 予約一覧を取得
-		List<ReservationBean> ReservationList = rD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
+		List<ReservationBean> reList = reD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
 		// 予約リストの全件
-		for (ReservationBean rB : ReservationList) {
-			// 部屋番号が一致か？
-			for (int i = 0; i < rooms.length; i++) {
-				String roomId = rooms[i].getId();
-				if (roomId.equals(rB.getRoomId())) {
-					// 開始時間が一致か？
-					for (int j = 0; j < PERIOD.length; j++) {
-						if (PERIOD[j].equals(rB.getStart())) {
-							// 配列の[room添え字][時間添え字]に代入
-							rBs[roomIndex(roomId)][j] = rB;
-						}
-					}
-				}
-			}
+		for (ReservationBean reB : reList) {
+			// 部屋番号と時間
+			String roomId = reB.getRoomId();
+			String start = reB.getStart();
+
+			// 配列の[room添え字][時間添え字]に代入
+			reBs[roomIndex(roomId)][startPeriod(start)] = reB;
+
 		}
-		return rBs;
+		return reBs;
 	}
 
 	public RoomBean getRoom(String roomId) {
@@ -99,7 +91,6 @@ public class MeetingRoom implements Serializable {
 
 	public void reserve(ReservationBean reservation) throws Exception {
 
-
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
@@ -109,7 +100,8 @@ public class MeetingRoom implements Serializable {
 			if (room.equals(roomId)) {
 				return i;
 			}
-		}throw new IndexOutOfBoundsException("会議室が存在しません");
+		}
+		throw new IndexOutOfBoundsException("会議室が存在しません");
 
 	}
 
