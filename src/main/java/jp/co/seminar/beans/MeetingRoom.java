@@ -2,6 +2,7 @@ package jp.co.seminar.beans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -96,12 +97,28 @@ public class MeetingRoom implements Serializable {
 	public void reserve(ReservationBean reservation) throws Exception {
 		//予約登録
 		//会議室予約情報で会議室Daoを利用し、予約します。
-		ReservationDao dada = new ReservationDao();
-
-		//予約済みの場合
-		throw new Exception("すでに予約されています");
+		LocalDateTime nowTime = LocalDateTime.now();
+		LocalDateTime reservationTime = LocalDateTime.of(reservation.getDate(),reservation.getStart());
+		ReservationDao reD = new ReservationDao();
+		List<ReservetionBean> reservationCheck = reD.findByDate(reservation.getDate);
 		//時刻を過ぎている場合
-		throw new Exception("時刻が過ぎているため予約できません");
+		if (nowTime.isAfter(reservationTime)) {
+			throw new Exception("時刻が過ぎているため予約できません");
+			return;
+		}
+		//予約済みかどうか判定
+		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
+		for (String reC : reservationCheck) {
+			if (reC.getRoomId.equals(reservation.getRoomId)&&reC.getStart.equals(reservation.getStart)) {
+				if (reD.insert(reservation)) {
+					
+				} else {
+					throw new Exception("すでに予約されています");
+				}
+			}
+
+		}
+
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
