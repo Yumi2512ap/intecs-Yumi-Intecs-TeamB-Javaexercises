@@ -7,7 +7,9 @@
 <title>会議室予約</title>
 </head>
 <body>
+
 	<%@ include file="header.jsp"%>
+
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>利用日</h2>
@@ -31,20 +33,26 @@
     <tr>
       <td>大会議室</td><!-- 本来なら配列から会議室名取得 -->>
        <%  for(int i = 9;i <=16; i++) { %>
+
     	  <td><input type="submit" name="time" value="<%= String.format("%02d", i) %>:00"> </td> 
+
     	  <% } %>
     </tr>
     <tr>
       <td>3A会議室</td>
       <%  for(int i = 9;i <=16; i++) { %>
+
 	  <td><input type="submit" name="time" value="<%= String.format("%02d", i) %>:00"> </td> 
+
 	  <% } %>
     </tr>
       
       <tr>
       <td>3B会議室</td>
       <%  for(int i = 9;i <=16; i++) { %>
+
       <td><input type="submit" name="time" value="<%= String.format("%02d", i) %>:00"> </td> 
+
       <% } %>
       </tr>
       
