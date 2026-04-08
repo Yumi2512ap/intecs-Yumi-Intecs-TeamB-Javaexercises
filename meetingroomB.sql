@@ -1,6 +1,13 @@
-DROP DATABASE IF EXISTS meetingroom;
-CREATE DATABASE meetingroom;
-USE meetingroom;
+
+CREATE USER IF NOT EXISTS 'user'@'localhost' IDENTIFIED BY 'pass';
+
+GRANT SELECT, UPDATE, INSERT, DELETE 
+ON meetingroomB.* 
+TO 'user'@'localhost';
+
+DROP DATABASE IF EXISTS meetingroomB;
+CREATE DATABASE meetingroomB;
+USE meetingroomB;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS reservation;
@@ -28,3 +35,4 @@ CREATE TABLE reservation (
         FOREIGN KEY(userid) REFERENCES user(id),
         UNIQUE(roomid, date, start)
 );
+
