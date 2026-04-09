@@ -9,12 +9,14 @@ table{
     margin: 10px auto 20px auto;
 }
 th,td{
-    text-align: left;
+    text-align: center;
     font-size: 1.5rem;
-    padding: 6px 8px;
 }
-th{
+.result tr th{
     padding-right: 32px;
+}
+.result tr td{
+    padding: 6px 8px;
 }
 
 html {
@@ -35,7 +37,7 @@ header{
     display: flex;
     position: relative;
     align-items: center;
-    background-image: linear-gradient(90deg, #59e1f3, #b421cb);
+    background-image: linear-gradient(90deg, #80e4f1, #d763e9);
     backdrop-filter: blur(10px);
     position: sticky; top: 0;
     border-bottom: 1px solid;
@@ -45,7 +47,7 @@ header{
 
 
 footer{
-    background-image: linear-gradient(90deg, #59e1f3, #b421cb);
+    background-image: linear-gradient(90deg, #80e4f1, #d763e9);
     height: 60px;
     display: flex;
     justify-content: center; 
@@ -68,7 +70,7 @@ input[type="submit"] {
     color: #414c82;
     border: 1px solid #414c82;
     padding: 8px 20px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     border-radius: 4px;
     cursor: pointer;          /* マウスホバーでポインタ表示 */
@@ -113,6 +115,15 @@ hr {
     width: 100%;
     margin-right: 30px;
 }
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+.flex form{
+    margin: 0;
+}
 /* ヘッダー */
 header {
     display: flex;
@@ -153,4 +164,35 @@ header input[type="submit"]:hover {
 .logo{
     text-decoration: none;
     margin-left: 1%;
+}
+
+/* 表部分 */
+.cell {
+  padding: 0; /* td側の余白を消す */
+}
+
+.cell input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 16px 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+
+    background-color: #ffffff;
+    color: #414c82;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cell input[type="submit"]:hover {
+    background-color: #414c82;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.list tr th{
+    padding: 5px 15px;
 }
