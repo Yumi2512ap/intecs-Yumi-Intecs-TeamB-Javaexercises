@@ -98,7 +98,7 @@ public class MeetingRoom implements Serializable {
 		//予約登録
 		//会議室予約情報で会議室Daoを利用し、予約します。
 		LocalDateTime nowTime = LocalDateTime.now();
-		LocalDateTime reservationTime = LocalDateTime.of(reservation.getDate(),reservation.getStart());
+		LocalDateTime reservationTime = LocalDateTime.of(reservation.getDate(), reservation.getStart());
 		ReservationDao reD = new ReservationDao();
 		List<ReservetionBean> reservationCheck = reD.findByDate(reservation.getDate);
 		//時刻を過ぎている場合
@@ -109,16 +109,13 @@ public class MeetingRoom implements Serializable {
 		//予約済みかどうか判定
 		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
 		for (String reC : reservationCheck) {
-			if (reC.getRoomId.equals(reservation.getRoomId)&&reC.getStart.equals(reservation.getStart)) {
-				if (reD.insert(reservation)) {
-					
-				} else {
-					throw new Exception("すでに予約されています");
-				}
+			if (reC.getRoomId.equals(reservation.getRoomId) && reC.getStart.equals(reservation.getStart)) {
+				throw new Exception("すでに予約されています");
 			}
-
 		}
-
+		if (!reD.insert(reservation)) {
+			throw new Exception("予約できませんでした");
+		}
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
