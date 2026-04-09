@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import bean.UserBean;
+
 public class MeetingRoom implements Serializable {
 
 	private String date;
@@ -73,7 +75,7 @@ public class MeetingRoom implements Serializable {
 
 	public RoomBean getRoom(String roomId) {
 		for (RoomBean roB : rooms) {
-			if(roomId.equals(roB.getId)) {
+			if (roomId.equals(roB.getId)) {
 				return roB;
 			}
 		}
@@ -104,7 +106,6 @@ public class MeetingRoom implements Serializable {
 		//時刻を過ぎている場合
 		if (nowTime.isAfter(reservationTime)) {
 			throw new Exception("時刻が過ぎているため予約できません");
-			return;
 		}
 		//予約済みかどうか判定
 		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
@@ -120,10 +121,10 @@ public class MeetingRoom implements Serializable {
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
 		//roomIdが配列にあった場合その添え字を返すメソッド
-		RoomDao roD = new RoomDao();
-		RoomBean[] Rooms = roD.findAll();
-		for (int i = 0; i < Rooms.length; i++) {
-			if (Rooms[i].getId().equals(roomId)) {
+		//		RoomDao roD = new RoomDao();
+		//		RoomBean[] Rooms = roD.findAll();
+		for (int i = 0; i < this.rooms.length; i++) {
+			if (this.rooms[i].getId().equals(roomId)) {
 				return i;
 			}
 		}
