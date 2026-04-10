@@ -1,3 +1,4 @@
+
 package jp.co.seminar.servlet;
 
 import java.io.IOException;
@@ -65,3 +66,4 @@ public class CancelCreateServlet extends HttpServlet {
 	}
 
 }
+
