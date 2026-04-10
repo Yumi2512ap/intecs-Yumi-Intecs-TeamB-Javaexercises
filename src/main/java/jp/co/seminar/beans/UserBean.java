@@ -1,4 +1,4 @@
-package bean;
+package jp.co.seminar.beans;
 
 import java.io.Serializable; // これを追加
 
