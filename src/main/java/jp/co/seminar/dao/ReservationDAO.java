@@ -1,33 +1,36 @@
-package calculation;//p164 p42 データベースdate型　
+package jp.co.seminar.dao;//p164 p42 データベースdate型　
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.seminar.beans.ReservationBean;
-import jp.co.seminar.util.ReservationConnectionProvider;
-import jp.co.seminar.util.ReservationList;
+import jp.co.seminar.util.MRConnectionProvider;
 
 public class ReservationDAO {
 	//コンストラクタ
-	private ReservationDAO() {}
+	private ReservationDAO() {
+	}
 
 	//利用日による予約情報取得 
-	
+
 	public List<ReservationBean> findByDate(String date){
 		//////利用日を指定し、該当日の予約情報を取得する
 		//DB取得結果を格納 
-		List<ReservationBean> List=new ReservationList();
+		List<ReservationBean> List = new ArrayList<ReservationBean>();
 		//データベース接続
 		String sql = "SELECT * FROM meetingroom WHERE date = ?";
 	
 		//try-with-resources構文
 		try(
-		Connection conn=MRConnectionProvider.getConnection();
-		PreparedStatement pstmt=conn.prepareStatement(sql)){
+		Connection conn = MRConnectionProvider.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql)){
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 		//プレスホルダーに値を設定
 		pstmt.setString(1, date);
@@ -38,9 +41,9 @@ public class ReservationDAO {
 		//SQL文を実行して結果を取得
 		try(ResultSet rs=pstmt.executeQuery()){
 			
-		}
+		}catch(Exception e){}
 		//P56 date型を文字列変換
-		
+			
 		//見つからない場合は、空リスト
 		//エラーの場合は、nullを出力する
 
@@ -51,10 +54,7 @@ public class ReservationDAO {
 		
 		}
 		
-}		
-
-		
-
+	}
 
 	//--予約情報を格納する　String→date
 	public boolean insert(reservation:Reservation) {
@@ -71,11 +71,8 @@ public class ReservationDAO {
 			e.printStackTrace();
 			System.err.println("SQLに関するエラーです");
 		}
-	}	//try-with-resourcesによりconnとpstmtは自動的にクローズされる
+	} //try-with-resourcesによりconnとpstmtは自動的にクローズされる
 
-
-		
-	
 	//--予約情報を削除する  P37
 	public boolean delete(reservation:Reservation) {
 		
@@ -89,5 +86,5 @@ public class ReservationDAO {
 			e.printStackTrace();
 			System.err.println("SQLに関するエラーです");
 		}
-	
+	}
 }
