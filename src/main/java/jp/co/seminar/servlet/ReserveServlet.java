@@ -7,10 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
+import jp.co.seminar.beans.ReservationBean;
 
 /**
  * Servlet implementation class ReserveServlet
@@ -21,9 +21,8 @@ public class ReserveServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/login.jsp")
-				.forward(request, response);
-
+		response.sendRedirect("login.jsp");
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

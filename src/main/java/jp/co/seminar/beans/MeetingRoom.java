@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import bean.UserBean;
-
 public class MeetingRoom implements Serializable {
 
 	private String date;
