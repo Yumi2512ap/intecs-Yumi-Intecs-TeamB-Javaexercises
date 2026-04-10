@@ -37,6 +37,7 @@
 			<input type="submit" value="決定">
 		</form>
 	</div>
+
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
