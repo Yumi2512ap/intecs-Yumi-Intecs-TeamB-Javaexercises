@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="stylesheet.css">
 <title>予約確認</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>予約確認</h2>
-	<table>
+	<table class="result">
 		<tr>
 			<th>予約日</th>
 			<td>${reservation.date}2023-02-02</td>
@@ -30,11 +29,14 @@
 		</tr>
 	</table>
 	<hr>
-	<form action="reserveInput.jsp">
-		<input type="submit" value="戻る">
-	</form>
-	<form action="Reserve">
-		<input type="submit" value="決定">
-	</form>
+	<div class="flex">
+		<form action="reserveInput.jsp">
+			<input type="submit" value="戻る">
+		</form>
+		<form action="Reserve">
+			<input type="submit" value="決定">
+		</form>
+	</div>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

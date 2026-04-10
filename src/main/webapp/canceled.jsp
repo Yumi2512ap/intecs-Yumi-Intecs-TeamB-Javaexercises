@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
-<title>予約確定</title>
+<title>Insert title here</title>
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	<h1>会議室予約</h1>
+	<h1>会議室予約キャンセル</h1>
 	<hr>
-	<h2>予約完了</h2>
+	<h2>キャンセル完了</h2>
 	<table>
-		<tr>
-			<th>予約ID</th>
-			<td>${reservation.id}8</td>
-		</tr>
 		<tr>
 			<th>予約日</th>
 			<td>${reservation.date}2023-02-02</td>
@@ -33,8 +30,11 @@
 		</tr>
 	</table>
 	<hr>
-	<form action="menu.jsp">
-		<input type="submit" value="完了">
+	<form action="canceled.jsp">
+		<input type="submit" value="戻る">
+	</form>
+	<form action="Reserve">
+		<input type="submit" value="決定">
 	</form>
 	<%@ include file="footer.jsp"%>
 </body>
