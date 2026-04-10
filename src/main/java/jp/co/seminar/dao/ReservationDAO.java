@@ -13,11 +13,10 @@ import jp.co.seminar.util.ReservationList;
 
 public class ReservationDAO {
 	//コンストラクタ
-	private ReservationDAO() {
+	private ReservationDAO() {}
 
-	}
-
-	//---データベーステーブルから日付データ検索するメソッド
+	//利用日による予約情報取得 
+	
 	public List<ReservationBean> findByDate(String date){
 		//////利用日を指定し、該当日の予約情報を取得する
 		//DB取得結果を格納 
@@ -32,50 +31,63 @@ public class ReservationDAO {
 		}
 		//プレスホルダーに値を設定
 		pstmt.setString(1, date);
+		//beanのString型を取得 
+		String dateStr=ReservationBean.getString(date);
+		
+
 		//SQL文を実行して結果を取得
 		try(ResultSet rs=pstmt.executeQuery()){
 			
 		}
-
+		//P56 date型を文字列変換
+		
+		//見つからない場合は、空リスト
+		//エラーの場合は、nullを出力する
 
 		
 		//結果セットをviewへ送るための準備
 		while(rs.next()) {
 		//結果セットから取得
+		
 		}
 		
-		
-		//書式設定
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy年MM月dd日");
-		String dateStr=sdf.format(date);
-		
-	}
+}		
 
-	//--予約情報を格納する
+		
+
+
+	//--予約情報を格納する　String→date
 	public boolean insert(reservation:Reservation) {
-		String sql = "INSERT FROM meetingroom WHERE date = ?";
+		//-1が帰ってきたら格納できていない P31参考
+		int ret=-1;
+		
+		String sql = "INSERT INTO meetingroom WHERE date = ?";
 		try(Connection conn=MRConnectionProvider.getConnection();
 				PreparedStatement pstmt=conn.prepareStatement(sql)){
-		
+		   //SQL文を実行
+			ret=pstmt.executeUpdate();
+			System.out.println(ret+"件、挿入しました");
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.err.println("SQLに関するエラーです");
 		}
-		//-1が帰ってきたら格納できていない P37参考
-		int ret=-1;
-		//プレスホルダーに値を設定
-		pstmt.setString（1,keyword);
-		//SQL文を実行して結果を取得
-		try(ResultSet rs=pstmt.executeQuery()){
-			
-		}
+	}	//try-with-resourcesによりconnとpstmtは自動的にクローズされる
+
+
 		
-	}
-	//--予約情報を削除する    
+	
+	//--予約情報を削除する  P37
 	public boolean delete(reservation:Reservation) {
 		
 		String sql = "DELETE FROM meetingroom WHERE date = ?";
-		try(
-				Connection conn=MRConnectionProvider.getConnection();
-				PreparedStatement pstmt=conn.prepareStatement(sql){
-		
-				}
-	}
+		try(Connection conn=MRConnectionProvider.getConnection();
+			PreparedStatement pstmt=conn.prepareStatement(sql)){
+			//SQL文を実行
+			ret=pstmt.executeUpdate();
+			System.out.println(ret+"件、削除しました");
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.err.println("SQLに関するエラーです");
+		}
+	
 }
