@@ -2,8 +2,11 @@ package jp.co.seminar.beans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import bean.UserBean;
 
 public class MeetingRoom implements Serializable {
 
@@ -72,7 +75,7 @@ public class MeetingRoom implements Serializable {
 
 	public RoomBean getRoom(String roomId) {
 		for (RoomBean roB : rooms) {
-			if(roomId.equals(roB.getId)) {
+			if (roomId.equals(roB.getId)) {
 				return roB;
 			}
 		}
@@ -94,19 +97,38 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public void reserve(ReservationBean reservation) throws Exception {
-
+		//予約登録
+		//会議室予約情報で会議室Daoを利用し、予約します。
+		LocalDateTime nowTime = LocalDateTime.now();
+		LocalDateTime reservationTime = LocalDateTime.of(reservation.getDate(), reservation.getStart());
+		ReservationDao reD = new ReservationDao();
+		List<ReservetionBean> reservationCheck = reD.findByDate(reservation.getDate);
+		//時刻を過ぎている場合
+		if (nowTime.isAfter(reservationTime)) {
+			throw new Exception("時刻が過ぎているため予約できません");
+		}
+		//予約済みかどうか判定
+		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
+		for (String reC : reservationCheck) {
+			if (reC.getRoomId.equals(reservation.getRoomId) && reC.getStart.equals(reservation.getStart)) {
+				throw new Exception("すでに予約されています");
+			}
+		}
+		if (!reD.insert(reservation)) {
+			throw new Exception("予約できませんでした");
+		}
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
-
-		String[] room = { "0501", "0502", "0503" };
-		for (int i = 0; i < room.length; i++) {
-			if (room.equals(roomId)) {
+		//roomIdが配列にあった場合その添え字を返すメソッド
+		//		RoomDao roD = new RoomDao();
+		//		RoomBean[] Rooms = roD.findAll();
+		for (int i = 0; i < this.rooms.length; i++) {
+			if (this.rooms[i].getId().equals(roomId)) {
 				return i;
 			}
 		}
 		throw new IndexOutOfBoundsException("会議室が存在しません");
-
 	}
 
 	public void setDate(String date) {
@@ -114,7 +136,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
-
+		//受け取った入力時間を添え字で返す
 		int startTime = 9;
 		int endTime = 16;
 		int time = Integer.parseInt(start.substring(0, 2));
