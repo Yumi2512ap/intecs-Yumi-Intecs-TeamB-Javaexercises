@@ -24,7 +24,7 @@
 	
 	<!-- ここの書き方はあんましよくない気が
 		配列に会議室名を入れてforループ1つで済ませたい-->
-	 <form action="<%= request.getContextPath() %>/ReserveCreateServlet" method="get">
+	 <form action="<%= request.getContextPath() %>/ReserveCreate" method="get">
 	 <table class="list">
 
 	 

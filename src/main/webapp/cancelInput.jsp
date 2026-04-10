@@ -12,7 +12,7 @@
 	<h1>会議室予約キャンセル</h1>
 	<hr>
 	<h2>利用日</h2>
-	<form action="<%= request.getContextPath() %>/ChangeDateServlet" method="post">
+	<form action="<%= request.getContextPath() %>/ChangeDate" method="post">
 		<input type="date" name="date" value="${meetingRoom.date}">
 		<input type="hidden" name="page" value="<%= request.getContextPath() %>/reserveInput.jsp">
 		<input type="submit" value="日付変更">
@@ -21,7 +21,7 @@
 	
 	<!-- ここの書き方はあんましよくない気が
 		配列に会議室名を入れてforループ1つで済ませたい-->
-	 <form action="<%= request.getContextPath() %>/ReserveCreateServlet" method="post">
+	 <form action="<%= request.getContextPath() %>/CancelCreate" method="post">
 	 <table border="1">
 	 
 	 <tr>
