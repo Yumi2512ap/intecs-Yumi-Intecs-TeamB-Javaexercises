@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import bean.UserBean;
-
 public class MeetingRoom implements Serializable {
 
 	private String date;
@@ -27,7 +25,7 @@ public class MeetingRoom implements Serializable {
 		this.date = sdf.format(nowDate);
 	}
 
-	public void cancel(ResevationBean reservation) throws Exception {
+	public void cancel(ReservationBean reservation) throws Exception {
 		//予約キャンセル
 		//会議室予約情報で会議室をキャンセルします。
 		try {

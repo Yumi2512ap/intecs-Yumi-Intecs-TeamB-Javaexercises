@@ -7,6 +7,8 @@
 <title>ログイン画面</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
+	
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>ログイン</h2>
@@ -15,5 +17,7 @@
 		パスワード：<input type="password" name="userPw" value=""> <br>
 		<input type="submit" value="ログイン">
 	</form>
+	
+	<%@ include file="footer.jsp"%>
 </body>
 </html>
