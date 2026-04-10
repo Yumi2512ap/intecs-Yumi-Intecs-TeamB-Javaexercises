@@ -21,7 +21,7 @@ public class MeetingRoom implements Serializable {
 		// rooms をセット
 		RoomDao roD = new RoomDao();
 		this.rooms = roD.findAll();
-		// date をyyyy-MM-ddでセット
+		// date をyyyy-MM-ddでセット 違うかも
 		Date nowDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		this.date = sdf.format(nowDate);
