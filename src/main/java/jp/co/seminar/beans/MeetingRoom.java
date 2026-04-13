@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import bean.UserBean;
-
 public class MeetingRoom implements Serializable {
 
 	private String date;
@@ -27,7 +25,9 @@ public class MeetingRoom implements Serializable {
 		this.date = sdf.format(nowDate);
 	}
 
-	public void cancel(ResevationBean reservation) throws Exception {
+	public void cancel(ReservationBean reservation) throws Exception {
+		//予約キャンセル
+		//会議室予約情報で会議室をキャンセルします。
 		try {
 			ReservationDao reD = new ReservationDao();
 			reD.delete(reservation);
@@ -37,6 +37,9 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public ReservationBean createReservation(String roomId, String start) {
+		//予約生成
+		//予約日で会議室と時間帯を指定した会議室予約情報を生成します。
+		//また、開始時刻を基に終了時刻を生成し利用する。
 		// しおり46
 		// end情報→スタートの次
 		String end = PERIOD[startPeriod(start) + 1];
@@ -54,7 +57,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public ReservationBean[][] getReservations() {
-
+		//会議室予約システムの利用日における予約状況を返します。
 		// null の2次元配列とDAOを用意
 		ReservationBean[][] reBs = new ReservationBean[rooms.length][PERIOD.length];
 		ReservationDao reD = new ReservationDao();
@@ -74,6 +77,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public RoomBean getRoom(String roomId) {
+		//会議室予約システムで利用できるすべての会議室を返します
 		for (RoomBean roB : rooms) {
 			if (roomId.equals(roB.getId)) {
 				return roB;
@@ -90,6 +94,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public boolean login(String id, String password) {
+		//会議室予約システムにログインします。
 		// しおり26 , 47
 		UserDao uD = new UserDao();
 		UserBean uB = uD.certificate(id, password);
@@ -99,12 +104,14 @@ public class MeetingRoom implements Serializable {
 	public void reserve(ReservationBean reservation) throws Exception {
 		//予約登録
 		//会議室予約情報で会議室Daoを利用し、予約します。
+		//現在の時刻を取得
 		LocalDateTime nowTime = LocalDateTime.now();
+		//予約時刻を取得し比較できる形式に
 		LocalDateTime reservationTime = LocalDateTime.of(reservation.getDate(), reservation.getStart());
 		ReservationDao reD = new ReservationDao();
 		List<ReservetionBean> reservationCheck = reD.findByDate(reservation.getDate);
 		//時刻を過ぎている場合
-		if (nowTime.isAfter(reservationTime)) {
+		if (nowTime.isAfter(reservationTime)) {//isAfeterで現在時刻が予約時刻を過ぎていないか確認
 			throw new Exception("時刻が過ぎているため予約できません");
 		}
 		//予約済みかどうか判定

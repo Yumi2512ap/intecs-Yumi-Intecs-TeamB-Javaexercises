@@ -4,14 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>キャンセル確認</title>
+<title>会議室予約</title>
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	<h1>会議室予約キャンセル</h1>
+
+	<h1>会議室予約</h1>
 	<hr>
-	<h2>キャンセル確認</h2>
-	<table>
+	<h2>予約エラー</h2>
+	<label>${errorReason}時刻が過ぎているため予約できません</label>
+	<table class="result">
 		<tr>
 			<th>予約日</th>
 			<td>${reservation.date}2023-02-02</td>
@@ -30,12 +32,10 @@
 		</tr>
 	</table>
 	<hr>
-	<form action="cancelInput.jsp">
-		<input type="submit" value="戻る">
+	<form action="<%=request.getContextPath()%>/menu.jsp" method="get">
+		<input type="submit" value="確認">
 	</form>
-	<form action="cancelServret.java">
-		<input type="submit" value="決定">
-	</form>
+
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
