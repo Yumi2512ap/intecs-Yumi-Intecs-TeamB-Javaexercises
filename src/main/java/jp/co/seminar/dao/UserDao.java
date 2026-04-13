@@ -12,7 +12,8 @@ public class UserDao {
 	public UserDao() {
 	}
 
-	public static UserBean certificate​(String id, String password) {
+	public static UserBean certificate(String id, String password) {
+
 		
 		UserBean user = null;
 		
@@ -28,13 +29,16 @@ public class UserDao {
 			try (ResultSet rs = pstmt.executeQuery()) {	
 
 				if (rs.next()) {
-				    String name = rs.getString("name");       // 追加
-				    String address = rs.getString("address"); // 追加
+				    String name = rs.getString("name");       
+				    String address = rs.getString("address"); 
   
 				user = new UserBean(id, password, name, address);
             }
         }							
 		}catch (Exception e) {
+		    e.printStackTrace(); // 何が起きたかコンソールに表示する
+		    System.err.println(e);
+
 		
 		}
 		return user;
