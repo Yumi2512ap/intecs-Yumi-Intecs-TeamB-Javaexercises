@@ -79,10 +79,12 @@ public class MeetingRoom implements Serializable {
 	public RoomBean getRoom(String roomId) {
 		//会議室予約システムで利用できるすべての会議室を返します
 		for (RoomBean roB : rooms) {
-			if (roomId.equals(roB.getId)) {
+			if (roomId.equals(roB.getId())) {
 				return roB;
 			}
 		}
+		return null;
+
 	}
 
 	public RoomBean[] getRooms() {
