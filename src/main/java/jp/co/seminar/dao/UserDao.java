@@ -28,6 +28,8 @@ public class UserDao {
 			try (ResultSet rs = pstmt.executeQuery()) {	
 
 				if (rs.next()) {
+				    String name = rs.getString("name");       // 追加
+				    String address = rs.getString("address"); // 追加
   
 				user = new UserBean(id, password, name, address);
             }
