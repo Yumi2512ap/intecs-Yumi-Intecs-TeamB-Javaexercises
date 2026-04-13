@@ -8,7 +8,6 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
-import jp.co.seminar.dao.ReservationDao;
 
 public class MeetingRoom implements Serializable {
 
