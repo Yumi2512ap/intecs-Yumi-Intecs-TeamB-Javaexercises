@@ -12,10 +12,23 @@ public class UserBean implements Serializable { // abstractを消して、implem
 	private String name; // 氏名
 	private String address; // アドレス
 	private String password; // パスワード
+	private Boolean isAdmin;
 
 	// コンストラクタ
 	public UserBean() {
 		// デフォルトコンストラクタ
+	}
+
+	public UserBean(String id, String name, String address, String password, Boolean isAdmin) {
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.password = password;
+		this.isAdmin = isAdmin;
+	}
+
+	public UserBean(String id, String name, String address, String password) {
+		this(id, name, address, password, false);
 	}
 
 	// Getter / Setter
@@ -23,31 +36,19 @@ public class UserBean implements Serializable { // abstractを消して、implem
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public Boolean getIsAdmin() {
+		return isAdmin;
 	}
 }
