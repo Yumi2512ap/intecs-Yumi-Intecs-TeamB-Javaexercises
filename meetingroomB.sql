@@ -15,7 +15,8 @@ CREATE TABLE user (
         id VARCHAR(7) PRIMARY KEY,
         password VARCHAR(10) NOT NULL,
         name VARCHAR(10),
-        address VARCHAR(30)
+        address VARCHAR(30),
+        is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE room (
