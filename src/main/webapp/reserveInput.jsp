@@ -22,7 +22,7 @@
 	</form>
 	<h2>予約可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
 	
-	 <form action="<%= request.getContextPath() %>/ReserveCreate" method="get">
+	 <form action="<%= request.getContextPath() %>/ReserveCreate" method="post">
 	 <table class="list">
 		<tr>
 			<th>会議室名＼時間帯</th>
@@ -51,7 +51,7 @@
   
   <hr>
   
-  <form action="<%= request.getContextPath() %>/menu.jsp" method="get">
+  <form action="<%= request.getContextPath() %>/menu.jsp" method="post">
   	<input type="submit" value="戻る">
   </form>	
   

@@ -19,8 +19,6 @@
 	</form>
 	<h2>キャンセル可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
 	
-	<!-- ここの書き方はあんましよくない気が
-		配列に会議室名を入れてforループ1つで済ませたい-->
 		
 	 <form action="<%= request.getContextPath() %>/CancelCreate" method="post">
 	 <table>
