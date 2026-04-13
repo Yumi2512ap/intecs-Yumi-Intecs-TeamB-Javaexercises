@@ -38,7 +38,7 @@
 	<tr>
 		<td><%= room[i] %></td>
 	<% for(int j = 9;j <= 16; j++) { %>
-		<td>
+		<td class="cell">
 			<input type="submit" name="time" value=<%= String.format("%02d", j) %>:00>
 			<input type="hidden" name="roomId" value="<%= roomId[i] %>">
 		</td> 
