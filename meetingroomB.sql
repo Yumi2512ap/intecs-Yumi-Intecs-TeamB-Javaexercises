@@ -16,7 +16,7 @@ CREATE TABLE user (
         password VARCHAR(10) NOT NULL,
         name VARCHAR(10),
         address VARCHAR(30)
-);s
+);
 
 CREATE TABLE room (
         id VARCHAR(4) PRIMARY KEY,
