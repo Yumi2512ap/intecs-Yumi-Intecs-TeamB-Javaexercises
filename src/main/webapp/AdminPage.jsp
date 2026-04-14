@@ -18,7 +18,6 @@
 		<tr>
 			<td>会議室ID</td>
 			<td>会議室名</td>
-			<td></td>
 		</tr>
 		<% for(int i = 0; i < room.length; i++){ %>
 		<tr>
