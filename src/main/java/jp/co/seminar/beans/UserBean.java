@@ -1,24 +1,23 @@
 package jp.co.seminar.beans;
 
-import java.io.Serializable; // これを追加
+import java.io.Serializable;
 
-public class UserBean implements Serializable { // abstractを消して、implements Serializableを追加
+/**
+ * ユーザー情報を保持するBeanクラス
+ */
+public class UserBean implements Serializable {
 
-	// 直列化用バージョン番号
-	private static final long serialVersionUID = 1L;
+    // フィールド
+    private String id;
+    private String password;
+    private String name;
+    private String address;
+    private static final long serialVersionUID = 1L;
 
-	// フィールド
-	private String id; // 利用者ID
-	private String name; // 氏名
-	private String address; // アドレス
-	private String password; // パスワード
-	private Boolean isAdmin;
-
-	// コンストラクタ
-	public UserBean() {
-		// デフォルトコンストラクタ
-	}
-
+    // コンストラクタ（引数なし）
+    public UserBean() {
+    }
+ 
 	public UserBean(String id, String name, String address, String password, Boolean isAdmin) {
 		this.id = id;
 		this.name = name;
@@ -51,4 +50,11 @@ public class UserBean implements Serializable { // abstractを消して、implem
 	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
+  
+      // 文字列表現（デバッグ用）
+    @Override
+    public String toString() {
+        return "UserBean [id=" + id + ", password=" + password +
+                ", name=" + name + ", address=" + address + "]";
+    }
 }
