@@ -2,9 +2,12 @@ package jp.co.seminar.beans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+
 
 public class MeetingRoom implements Serializable {
 
@@ -79,10 +82,12 @@ public class MeetingRoom implements Serializable {
 	public RoomBean getRoom(String roomId) {
 		//会議室予約システムで利用できるすべての会議室を返します
 		for (RoomBean roB : rooms) {
-			if (roomId.equals(roB.getId)) {
+			if (roomId.equals(roB.getId())) {
 				return roB;
 			}
 		}
+		return null;
+
 	}
 
 	public RoomBean[] getRooms() {
@@ -106,18 +111,21 @@ public class MeetingRoom implements Serializable {
 		//会議室予約情報で会議室Daoを利用し、予約します。
 		//現在の時刻を取得
 		LocalDateTime nowTime = LocalDateTime.now();
-		//予約時刻を取得し比較できる形式に
-		LocalDateTime reservationTime = LocalDateTime.of(reservation.getDate(), reservation.getStart());
+		//予約時刻を取得し比較できる形式に その前にgetDateとStartはStringなのでキャストを挟む
+		LocalDate date = LocalDate.parse(reservation.getDate());
+		LocalTime time = LocalTime.parse(reservation.getStart());
+		LocalDateTime reservationTime = LocalDateTime.of(date, time);
 		ReservationDao reD = new ReservationDao();
-		List<ReservetionBean> reservationCheck = reD.findByDate(reservation.getDate);
+		List<ReservationBean> reservationCheck = reD.findByDate(reservation.getDate());
+		//--ここから予約処理判定--
 		//時刻を過ぎている場合
 		if (nowTime.isAfter(reservationTime)) {//isAfeterで現在時刻が予約時刻を過ぎていないか確認
 			throw new Exception("時刻が過ぎているため予約できません");
 		}
 		//予約済みかどうか判定
 		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
-		for (String reC : reservationCheck) {
-			if (reC.getRoomId.equals(reservation.getRoomId) && reC.getStart.equals(reservation.getStart)) {
+		for (ReservationBean reC : reservationCheck) {
+			if (reC.getRoomId().equals(reservation.getRoomId()) && reC.getStart().equals(reservation.getStart())) {
 				throw new Exception("すでに予約されています");
 			}
 		}

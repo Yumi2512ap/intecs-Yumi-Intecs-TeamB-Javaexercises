@@ -17,49 +17,41 @@ public class UserBean implements Serializable {
     // コンストラクタ（引数なし）
     public UserBean() {
     }
+ 
+	public UserBean(String id, String name, String address, String password, Boolean isAdmin) {
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.password = password;
+		this.isAdmin = isAdmin;
+	}
 
-    // コンストラクタ（全フィールド初期化用）
-    public UserBean(String id, String password, String name, String address) {
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.address = address;
-    }
+	public UserBean(String id, String name, String address, String password) {
+		this(id, name, address, password, false);
+	}
 
-    // Getter / Setter
-    public String getId() {
-        return id;
-    }
+	// Getter / Setter
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    // 文字列表現（デバッグ用）
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+  
+      // 文字列表現（デバッグ用）
     @Override
     public String toString() {
         return "UserBean [id=" + id + ", password=" + password +

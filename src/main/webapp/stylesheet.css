@@ -196,3 +196,13 @@ header input[type="submit"]:hover {
 .list tr th{
     padding: 5px 15px;
 }
+.list{
+    text-align: center;
+	border: solid 1px #434343;
+	border-collapse: collapse;
+	font-family: monospace;
+}
+.list th,
+.list td{
+    border: solid 1px #434343;
+}
