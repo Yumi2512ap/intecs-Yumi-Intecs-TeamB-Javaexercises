@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
+import jp.co.seminar.beans.ReservationBean;
+import jp.co.seminar.beans.RoomBean;
 
 /**
  * Servlet implementation class ReserveCreateServlet

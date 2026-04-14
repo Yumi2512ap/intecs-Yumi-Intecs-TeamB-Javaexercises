@@ -12,6 +12,7 @@ public class UserBean implements Serializable {
     private String password;
     private String name;
     private String address;
+    private Boolean isAdmin;
     private static final long serialVersionUID = 1L;
 
     // コンストラクタ（引数なし）
