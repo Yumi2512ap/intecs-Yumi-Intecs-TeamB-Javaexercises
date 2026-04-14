@@ -2,6 +2,7 @@ package jp.co.seminar.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,6 +54,12 @@ public class addUserServlet extends HttpServlet {
 		String userPw = request.getParameter("userPw");
 		String address = request.getParameter("address");
 
+		// ユーザーチェック:ID(ID被りなし　MR→userDao
+		//ユーザー登録:all（MR→userDao）
+
+		// フォワード
+		RequestDispatcher rd = request.getRequestDispatcher("addAdmin.jsp");
+		rd.forward(request, response);
 	}
 
 }
