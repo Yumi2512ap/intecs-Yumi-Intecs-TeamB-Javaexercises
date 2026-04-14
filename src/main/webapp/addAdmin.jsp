@@ -11,11 +11,27 @@
 	<h1>管理者追加</h1>
 	<hr>
 	<form action="<%=request.getContextPath()%>/addUser" method="post">
-		利用者ID：<input type="text" name="userId" value=""> <br>
-		パスワード：<input type="password" name="userPw" value=""> <br>
-		表示ユーザー名：<input type="text" name="userName" value=""> <br>
-		居住地：<input type="text" name="address" value="" placeholder="都道府県を入力"> <br>
-			<input type="hidden" name="admin" value="true"> 
+	
+		<table class="result">
+			<tr>
+				<th>利用者ID：</th>
+				<td><input type="text" name="userId" value=""></td>
+			</tr>
+			<tr>
+				<th>パスワード：</th>
+				<td><input type="password" name="userPw" value=""></td>
+			</tr>
+			<tr>
+				<th>表示ユーザー名：</th>
+				<td><input type="text" name="userName" value=""></td>
+			</tr>
+			<tr>
+				<th>居住地：</th>
+				<td><input type="text" name="address" value="" placeholder="都道府県を入力"></td>
+			</tr>
+		</table>
+	
+		<input type="hidden" name="admin" value="true"> 
 			
 		<input type="submit" value="アカウント作成">
 	</form>
