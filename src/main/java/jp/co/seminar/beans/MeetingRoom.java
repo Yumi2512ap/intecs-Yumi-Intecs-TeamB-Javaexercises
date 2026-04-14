@@ -20,6 +20,7 @@ public class MeetingRoom implements Serializable {
 	private static long serialVersionUID = 1L;
 	private UserBean user;
 
+	// コンストラクタ　loginサーブレットでログイン成功時インスタンス生成
 	public MeetingRoom() {
 		// rooms をセット
 		RoomDao roD = new RoomDao();
@@ -30,8 +31,8 @@ public class MeetingRoom implements Serializable {
 		this.date = sdf.format(nowDate);
 	}
 
+	// 予約キャンセル処理
 	public void cancel(ReservationBean reservation) throws Exception {
-		//予約キャンセル
 		//会議室予約情報で会議室をキャンセルします。
 		try {
 			ReservationDao reD = new ReservationDao();
@@ -41,12 +42,9 @@ public class MeetingRoom implements Serializable {
 		}
 	}
 
+	//予約情報の生成
 	public ReservationBean createReservation(String roomId, String start) {
-		//予約生成
 		//予約日で会議室と時間帯を指定した会議室予約情報を生成します。
-		//また、開始時刻を基に終了時刻を生成し利用する。
-		// しおり46
-		// end情報→スタートの次
 		String end = PERIOD[startPeriod(start) + 1];
 		ReservationBean reB = new ReservationBean(roomId, date, start, end, user.getId());
 		return reB;
@@ -61,6 +59,7 @@ public class MeetingRoom implements Serializable {
 		return PERIOD;
 	}
 
+	// 一日分の予約状況を二次元配列で返す
 	public ReservationBean[][] getReservations() {
 		//会議室予約システムの利用日における予約状況を返します。
 		// null の2次元配列とDAOを用意
@@ -81,6 +80,7 @@ public class MeetingRoom implements Serializable {
 		return reBs;
 	}
 
+	// ルームIDが一致するものを検索
 	public RoomBean getRoom(String roomId) {
 		//会議室予約システムで利用できるすべての会議室を返します
 		for (RoomBean roB : rooms) {
@@ -89,7 +89,6 @@ public class MeetingRoom implements Serializable {
 			}
 		}
 		return null;
-
 	}
 
 	public RoomBean[] getRooms() {
@@ -100,14 +99,19 @@ public class MeetingRoom implements Serializable {
 		return user;
 	}
 
+	// ログイン処理
 	public boolean login(String id, String password) {
 		//会議室予約システムにログインします。
-		// しおり26 , 47
 		UserDao uD = new UserDao();
 		UserBean uB = uD.certificate(id, password);
-		return uB != null;
+		if (uB != null) {
+			this.user = uB;
+			return true;
+		}
+		return false;
 	}
-
+	
+	// 予約の処理
 	public void reserve(ReservationBean reservation) throws Exception {
 		//予約登録
 		//会議室予約情報で会議室Daoを利用し、予約します。
@@ -117,8 +121,9 @@ public class MeetingRoom implements Serializable {
 		LocalDate date = LocalDate.parse(reservation.getDate());
 		LocalTime time = LocalTime.parse(reservation.getStart());
 		LocalDateTime reservationTime = LocalDateTime.of(date, time);
+		
 		ReservationDao reD = new ReservationDao();
-		List<ReservationBean> reservationCheck = reD.findByDate(reservation.getDate());
+		List<ReservationBean> reservationCheckList = reD.findByDate(reservation.getDate());
 		//--ここから予約処理判定--
 		//時刻を過ぎている場合
 		if (nowTime.isAfter(reservationTime)) {//isAfeterで現在時刻が予約時刻を過ぎていないか確認
@@ -126,8 +131,8 @@ public class MeetingRoom implements Serializable {
 		}
 		//予約済みかどうか判定
 		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
-		for (ReservationBean reC : reservationCheck) {
-			if (reC.getRoomId().equals(reservation.getRoomId()) && reC.getStart().equals(reservation.getStart())) {
+		for (ReservationBean reB : reservationCheckList) {
+			if (reB.getRoomId().equals(reservation.getRoomId()) && reB.getStart().equals(reservation.getStart())) {
 				throw new Exception("すでに予約されています");
 			}
 		}
@@ -135,7 +140,8 @@ public class MeetingRoom implements Serializable {
 			throw new Exception("予約できませんでした");
 		}
 	}
-
+	
+	// MR内で使用するプライベートメソッド
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
 		//roomIdが配列にあった場合その添え字を返すメソッド
 		//		RoomDao roD = new RoomDao();
@@ -147,11 +153,13 @@ public class MeetingRoom implements Serializable {
 		}
 		throw new IndexOutOfBoundsException("会議室が存在しません");
 	}
-
+	
+	// 日付変更
 	public void setDate(String date) {
 		this.date = date;
 	}
-
+	
+	// MR内で使用するプライベートメソッド
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
 		//受け取った入力時間を添え字で返す
 		int startTime = 9;
@@ -170,11 +178,11 @@ public class MeetingRoom implements Serializable {
 		UserDao uD = new UserDao();
 		return uD.existsByUserId(userId);
 	}
-	
+
 	// ユーザー登録
-	public void addUser(UserBean user) throws Exception{
+	public void addUser(UserBean user) throws Exception {
 		UserDao uD = new UserDao();
-		if(!uD.addUser(user)) {
+		if (!uD.addUser(user)) {
 			throw new Exception("ユーザー登録に失敗しました");
 		}
 	}
