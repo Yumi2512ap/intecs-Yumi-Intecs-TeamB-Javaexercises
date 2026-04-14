@@ -11,7 +11,6 @@ import java.util.List;
 import jp.co.seminar.dao.ReservationDao;
 import jp.co.seminar.dao.UserDao;
 
-
 public class MeetingRoom implements Serializable {
 
 	private String date;
@@ -163,6 +162,21 @@ public class MeetingRoom implements Serializable {
 		}
 		return time - startTime;
 
+	}
+
+	// 以下追加メソッド
+	// ユーザーIDの存在チェック
+	public boolean existsByUserId(String userId) {
+		UserDao uD = new UserDao();
+		return uD.existsByUserId(userId);
+	}
+	
+	// ユーザー登録
+	public void addUser(UserBean user) throws Exception{
+		UserDao uD = new UserDao();
+		if(!uD.addUser(user)) {
+			throw new Exception("ユーザー登録に失敗しました");
+		}
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class UserDao {
 	public UserDao() {
 	}
 
-	public static UserBean certificate(String id, String password) {
+	public UserBean certificate(String id, String password) {
 
 		UserBean user = null;
 

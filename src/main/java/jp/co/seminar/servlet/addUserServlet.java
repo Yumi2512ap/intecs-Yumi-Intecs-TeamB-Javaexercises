@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
+import jp.co.seminar.beans.UserBean;
 
 /**
  * Servlet implementation class addUserServlet
@@ -53,11 +54,32 @@ public class addUserServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String userPw = request.getParameter("userPw");
 		String address = request.getParameter("address");
+		String admin = request.getParameter("admin");
 
-		// ユーザーチェック:ID(ID被りなし　MR→userDao
-		//ユーザー登録:all（MR→userDao）
+		Boolean isAdmin = false;
+		if (admin.equals("true")) {
+			isAdmin = true;
+		}
+		String msg;
+
+		UserBean user = new UserBean(userId, userName, address, userPw, isAdmin);
+
+		// ユーザーチェック(ID被りなし?
+		if (!MR.existsByUserId(userId)) {
+			//ユーザー登録
+			try {
+				MR.addUser(user);
+				msg = "ユーザー登録に成功しました";
+				
+			} catch (Exception e) {
+				msg = "登録に失敗しました";
+			}
+		} else {
+			msg = "登録に失敗しました";
+		}
 
 		// フォワード
+		request.setAttribute("msg", msg);
 		RequestDispatcher rd = request.getRequestDispatcher("addAdmin.jsp");
 		rd.forward(request, response);
 	}
