@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import jp.co.seminar.dao.ReservationDao;
+import jp.co.seminar.dao.RoomDao;
 import jp.co.seminar.dao.UserDao;
 
 public class MeetingRoom implements Serializable {
@@ -162,16 +163,6 @@ public class MeetingRoom implements Serializable {
 		}
 		return time - startTime;
 	}
-	
-	public void addRoom(String roomname,String roomId) {
-		//追加要件 会議室の追加
-		try {
-			RoomDao roD = new RoomDao();
-			roD.addRoom(roomname,roomId);
-		} catch (Exception e) {
-			System.err.println("追加エラー");
-		}
-	}
 
 	// 以下追加メソッド
 	// ユーザーIDの存在チェック
@@ -179,12 +170,22 @@ public class MeetingRoom implements Serializable {
 		UserDao uD = new UserDao();
 		return uD.existsByUserId(userId);
 	}
-	
+
 	// ユーザー登録
-	public void addUser(UserBean user) throws Exception{
+	public void addUser(UserBean user) throws Exception {
 		UserDao uD = new UserDao();
-		if(!uD.addUser(user)) {
+		if (!uD.addUser(user)) {
 			throw new Exception("ユーザー登録に失敗しました");
+		}
+	}
+
+	//追加要件 会議室の追加
+	public void addRoom(String roomname, String roomId) {
+		try {
+			RoomDao roD = new RoomDao();
+			roD.addRoom(roomname, roomId);
+		} catch (Exception e) {
+			System.err.println("追加エラー");
 		}
 	}
 

@@ -1,11 +1,11 @@
 ------テスト用データ　ここから下をコピペして----------------------
 
-INSERT INTO user VALUES('1100003','xxxxxx','情報太郎','東京都');
-INSERT INTO user VALUES('1100015','yyyyyy','情報花子','大阪府');
+INSERT INTO user VALUES('1100003','xxxxxx','情報太郎','東京都','0');
+INSERT INTO user VALUES('1100015','yyyyyy','情報花子','大阪府','0');
 
-INSERT INTO room VALUES('0501','大会議室');
-INSERT INTO room VALUES('0502','５Ａ会議室');
-INSERT INTO room VALUES('0503','５Ｂ会議室');
+INSERT INTO room VALUES('0501','大会議室','0');
+INSERT INTO room VALUES('0502','５Ａ会議室','0');
+INSERT INTO room VALUES('0503','５Ｂ会議室','0');
 
 INSERT INTO reservation VALUES(NULL,'0501','テスト実施前日','09:00:00','10:00:00','1100003');
 INSERT INTO reservation VALUES(NULL,'0501','テスト実施前日','11:00:00','12:00:00','1100003');
