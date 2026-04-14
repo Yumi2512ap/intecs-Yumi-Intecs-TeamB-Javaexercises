@@ -10,14 +10,19 @@ import java.util.List;
 import jp.co.seminar.beans.ReservationBean;
 import jp.co.seminar.util.MRConnectionProvider;
 
+
 public class ReservationDao {
 	//コンストラクタ
 	public ReservationDao() {
+
 	}
 
 	//利用日による予約情報取得 
 
 	public List<ReservationBean> findByDate(String date) {
+
+		//////利用日を指定し、該当日の予約情報を取得する
+
 		//DB取得結果を格納 
 		List<ReservationBean> List = new ArrayList<ReservationBean>();
 		//データベース接続
@@ -27,6 +32,7 @@ public class ReservationDao {
 		try (
 				Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
 			//プレスホルダー(?)に値を設定
 			pstmt.setString(1, date);
 			//SQL文を実行して結果を取得
@@ -69,6 +75,7 @@ public class ReservationDao {
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			//SQL文を実行
+
 			int autoIncrementKey = 0;
 			ret = pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -97,6 +104,7 @@ public class ReservationDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			//SQL文を実行
 			ret = pstmt.executeUpdate();
+
 			return ret != 0;
 
 		} catch (ClassNotFoundException e) {

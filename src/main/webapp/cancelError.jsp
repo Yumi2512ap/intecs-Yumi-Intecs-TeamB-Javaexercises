@@ -1,20 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>会議室予約エラー</title>
+<title>キャンセルエラー</title>
 </head>
 <body>
-<label>キャンセルエラー</label><br>
-<label>${errorReason}既にキャンセルされています</label><br>
-予約日<label>${reservation.date }4月22日</label><br>
-会議室<label>${room.name}</label>大会議室<br>
-予約時刻<label>${reservation.start}</label>10:00<label>${reservation.end}</label><br>
-予約者<label>${meetingRoom.user.name}</label>太郎<br>
-<form action="<%=request.getContextPath()%>/menu.jsp"method="get">
-<input type="submit" value="確認">
-</form>
+	<%@ include file="header.jsp"%>
+
+	<h1>会議室予約キャンセル</h1>
+	<hr>
+	<h2>キャンセルエラー</h2>
+	<label>${errorReason}既にキャンセルされています</label>
+	<table class="result">
+		<tr>
+			<th>予約日</th>
+			<td>${reservation.date}2023-02-02</td>
+		</tr>
+		<tr>
+			<th>会議室</th>
+			<td>${room.name}大会議室</td>
+		</tr>
+		<tr>
+			<th>予約時刻</th>
+			<td>${reservation.start}14:00～${reservation.end}15:00</td>
+		</tr>
+		<tr>
+			<th>予約者</th>
+			<td>${meetingRoom.user.name}情報太郎</td>
+		</tr>
+	</table>
+	<hr>
+	<form action="<%=request.getContextPath()%>/menu.jsp" method="get">
+		<input type="submit" value="確認">
+	</form>
+	
+	<%@ include file="footer.jsp"%>
 </body>
 </html>
