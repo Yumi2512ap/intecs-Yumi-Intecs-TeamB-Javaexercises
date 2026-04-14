@@ -169,7 +169,16 @@ public class MeetingRoom implements Serializable {
 			throw new IndexOutOfBoundsException("利用時間帯の範囲外です");
 		}
 		return time - startTime;
-
+	}
+	
+	public void addRoom(String roomname,String roomId) {
+		//追加要件 会議室の追加
+		try {
+			RoomDao roD = new RoomDao();
+			roD.addRoom(roomname,roomId);
+		} catch (Exception e) {
+			System.err.println("追加エラー");
+		}
 	}
 
 	// 以下追加メソッド
