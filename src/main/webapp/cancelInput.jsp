@@ -21,7 +21,7 @@
 	
 		
 	 <form action="<%= request.getContextPath() %>/CancelCreate" method="post">
-	 <table>
+	 <table class="list">
 	 
 	 <tr>
 		<th>会議室名＼時間帯</th>
