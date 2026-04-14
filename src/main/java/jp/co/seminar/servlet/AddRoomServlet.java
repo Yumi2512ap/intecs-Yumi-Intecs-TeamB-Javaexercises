@@ -7,11 +7,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import jp.co.seminar.beans.MeetingRoom;
 
 /**
  * Servlet implementation class AddRoomServlet
  */
-@WebServlet("/AddRoomServlet")
+@WebServlet("/AddRoom")
 public class AddRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +24,8 @@ public class AddRoomServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.sendRedirect("login.jsp");
+		return;
 	}
 
 	/**
@@ -28,6 +33,27 @@ public class AddRoomServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		//セッションから取得
+		HttpSession session = request.getSession();
+		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
+		String roomname = request.getParameter("roomname");
+		String roomId = request.getParameter("roomId");
+		String message;
+		if (roomname.length() <= 25 && roomId.matches(".*[0-9]{4}.*")) {
+			meetingRoom.addRoom(roomname, roomId);
+			message = "会議室の追加に成功しました";
+		} else {
+			if (roomname.length() >= 25) {
+				message = "会議室の追加に失敗しました 会議室名は２５文字以下にしてください";
+			} else {
+				message = "会議室の追加に失敗しました";
+			}
+		}
+		request.setAttribute("message", message);
+		request.getRequestDispatcher("addRoom.jsp").forward(request, response);
+		
+
 	}
 
 }
