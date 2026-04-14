@@ -38,12 +38,11 @@ public class CancelServlet extends HttpServlet {
 			request.getRequestDispatcher("canceld.jsp")
 					.forward(request, response);
 		} catch (Exception e) {
-			nextPage = "/cancelError.jsp";
 			request.setAttribute("errorReason", e.getMessage());
-			request.getRequestDispatcher(nextPage)
+			request.getRequestDispatcher("cancelError.jsp")
 					.forward(request, response);
 		}
-		
+
 	}
 
 }
