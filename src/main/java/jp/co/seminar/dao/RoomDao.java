@@ -33,15 +33,21 @@ public class RoomDao {
 				id = rs.getString("id");
 				name = rs.getString("name");
 				nameDataList.add(new RoomBean(id, name));
-				// サイズ→RoomBean[]に
 			}
+			// List型の配列を、固定の長さの配列にする。（nameDataListのデータ数でカウント）
+			RoomBean[] roB = new RoomBean[nameDataList.size()];
+			
+			for (int i = 0; i < roB.length; i++) {
+				roB[i] = nameDataList.get(i);
+			}
+			return roB;//  会議室の配列（見つからない場合は、nullを返却）
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("SQLに関するエラーです。");
-			return null;
-
+		} catch (ClassNotFoundException e) {
+			System.err.println("ドライバ");
 		}
-		return rom();//  会議室の配列（見つからない場合は、nullを返却）
-
+		return null;
 	}
 }
