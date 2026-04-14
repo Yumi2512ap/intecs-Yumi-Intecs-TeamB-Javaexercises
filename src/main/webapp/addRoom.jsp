@@ -33,14 +33,14 @@
 <hr>
 <h2>会議室追加</h2>
   <form action="<%= request.getContextPath() %>/AddRoom">
-		<input type="text" placeholder="追加したい部屋名">
-		<input type="number" placeholder="会議室ID（数字4桁）">
+		<input type="text" placeholder="追加したい部屋名" required="required">
+		<input type="number" placeholder="会議室ID (数字4桁)" required="required">
 		<input type="submit" value="追加">
   </form>
   
   <hr>
   
-  <form action="<%= request.getContextPath() %>/menu.jsp" method="post">
+  <form action="<%= request.getContextPath() %>/adminMenu.jsp" method="post">
   	<input type="submit" value="戻る">
   </form>	
 
