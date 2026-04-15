@@ -96,6 +96,22 @@ public class MeetingRoom implements Serializable {
 		return rooms;
 	}
 
+	public String[] getRoomsName() {
+		String[] roomsName = new String[rooms.length];
+		for (int i = 0; i < roomsName.length; i++) {
+			roomsName[i] = rooms[i].getName();
+		}
+		return roomsName;
+	}
+
+	public String[] getRoomsId() {
+		String[] roomsId = new String[rooms.length];
+		for (int i = 0; i < roomsId.length; i++) {
+			roomsId[i] = rooms[i].getId();
+		}
+		return roomsId;
+	}
+
 	public UserBean getUser() {
 		return user;
 	}
