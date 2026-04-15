@@ -27,22 +27,22 @@ public class CancelServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		//セッションから取得
 		HttpSession session = request.getSession();
+		//キャストしながらセッションから取得
 		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
 		ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
-		String nextPage;
 		try {
 			meetingRoom.cancel(reservation);
-			nextPage = "/canceld.jsp";
-			request.getRequestDispatcher(nextPage)
+			request.getRequestDispatcher("canceld.jsp")
 					.forward(request, response);
 		} catch (Exception e) {
-			nextPage = "/cancelError.jsp";
 			request.setAttribute("errorReason", e.getMessage());
-			request.getRequestDispatcher(nextPage)
+			request.getRequestDispatcher("cancelError.jsp")
 					.forward(request, response);
 		}
-		
+
 	}
 
 }

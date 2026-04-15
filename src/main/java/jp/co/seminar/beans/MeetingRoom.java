@@ -172,16 +172,6 @@ public class MeetingRoom implements Serializable {
 		return time - startTime;
 	}
 
-	public void addRoom(String roomname, String roomId) {
-		//追加要件 会議室の追加
-		try {
-			RoomDao roD = new RoomDao();
-			roD.addRoom(roomname, roomId);
-		} catch (Exception e) {
-			System.err.println("追加エラー");
-		}
-	}
-
 	// 以下追加メソッド
 	// ユーザーIDの存在チェック
 	public boolean existsByUserId(String userId) {
@@ -197,6 +187,7 @@ public class MeetingRoom implements Serializable {
 		}
 	}
 
+
 	//　予約一覧を取得
 	public String getReservationList() {
 		ReservationDao rD = new ReservationDao();
@@ -211,6 +202,15 @@ public class MeetingRoom implements Serializable {
 					+ "</tr>";
 		}
 		return result;
+
+	//追加要件 会議室の追加
+	public void addRoom(String roomname, String roomId) {
+		try {
+			RoomDao roD = new RoomDao();
+			roD.addRoom(roomname, roomId);
+		} catch (Exception e) {
+			System.err.println("追加エラー");
+		}
 	}
 
 	@Override

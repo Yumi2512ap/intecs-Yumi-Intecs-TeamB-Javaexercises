@@ -12,10 +12,10 @@ import jp.co.seminar.util.MRConnectionProvider;
 
 public class RoomDao {
 	// インスタンス化を防ぐため、コンストラクタをprivateで定義
-	private RoomDao() {
+	public RoomDao() {
 	}
 
-	public static RoomBean[] findAll() {
+	public RoomBean[] findAll() {
 		String id;
 		String name;
 		// SELECTの結果格納用の配列を用意
@@ -36,7 +36,7 @@ public class RoomDao {
 			}
 			// List型の配列を、固定の長さの配列にする。（nameDataListのデータ数でカウント）
 			RoomBean[] roB = new RoomBean[nameDataList.size()];
-			
+
 			for (int i = 0; i < roB.length; i++) {
 				roB[i] = nameDataList.get(i);
 			}
@@ -49,5 +49,23 @@ public class RoomDao {
 			System.err.println("ドライバ");
 		}
 		return null;
+	}
+
+	//会議室の追加
+	public Boolean addRoom(String id, String name) {
+
+		String sql = "INSERT INTO room(id,name,deleteFlg) VALUES(?,?,?)";
+		int deleteFlg = 0;
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setInt(3, deleteFlg);
+			return pstmt.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("会議室の追加に失敗しました");
+			return false;
+		}
 	}
 }
