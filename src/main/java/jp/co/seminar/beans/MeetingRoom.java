@@ -220,10 +220,10 @@ public class MeetingRoom implements Serializable {
 	}
 
 	//追加要件 会議室の追加
-	public void addRoom(String roomname, String roomId) {
+	public void addRoom(String roomId, String roomName) {
 		try {
 			RoomDao roD = new RoomDao();
-			roD.addRoom(roomname, roomId);
+			roD.addRoom(roomId, roomName);
 		} catch (Exception e) {
 			System.err.println("追加エラー");
 		}
