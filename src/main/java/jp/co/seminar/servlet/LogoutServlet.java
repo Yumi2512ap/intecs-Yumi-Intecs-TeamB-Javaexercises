@@ -28,7 +28,7 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();
 		}
 		// ログイン画面にリダイレクト
-		response.sendRedirect(request.getContextPath() + "login.jsp");
+		response.sendRedirect("login.jsp");
 
 	}
 
