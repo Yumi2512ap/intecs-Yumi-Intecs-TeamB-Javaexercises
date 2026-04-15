@@ -20,7 +20,8 @@
 		method="get">
 		<input type="submit" value="予約キャンセル">
 	</form>
-	<form action="">
+	<form action="<%=request.getContextPath()%>/Logout.java"
+		method="post">
 		<input type="submit" value="ログアウト">
 	</form>
 	<%@ include file="footer.jsp"%>
