@@ -1,5 +1,4 @@
 package jp.co.seminar.servlet;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import jp.co.seminar.beans.MeetingRoom;
 
 @WebServlet("/ChangeDate")
 public class ChangeDateServlet extends HttpServlet {
@@ -30,34 +31,22 @@ public class ChangeDateServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
-		String newDate = request.getParameter("date");
-		String from = request.getParameter("from");
-
-		if (newDate != null && !newDate.isEmpty()) {
-
-			HttpSession session = request.getSession();
-			session.setAttribute("reservedDate", newDate);
-
-			if ("cancel".equals(from)) {
-				response.sendRedirect("cancelInput.jsp");
-			} else {
-				response.sendRedirect("reserveInput.jsp");
-			}
-
-			String newDate = request.getParameter("date");
-
-			if (newDate != null && !newDate.isEmpty()) {
-
-				HttpSession session = request.getSession();
-				session.setAttribute("reservedDate", newDate);
-
-				response.sendRedirect("reserved.jsp");
-
-				response.sendRedirect("reserveInput.jsp");
-			} else {
-
-				response.sendRedirect("reserveRoom.jsp?error=1");
-			}
+		String date = request.getParameter("date");
+		String nextPage = request.getParameter("page");
+		
+		HttpSession session = request.getSession();
+		
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
+		if (MR == null) {
+		    response.sendRedirect("login.jsp");
+		    return; 
 		}
+			
+		if (date != null && !date.isEmpty()) {
+		    session.setAttribute("reservedDate", date);
+		}
+
+		request.getRequestDispatcher(nextPage).forward(request, response);	
+
 	}
 }
