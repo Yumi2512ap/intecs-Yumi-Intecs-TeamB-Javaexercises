@@ -17,6 +17,7 @@
 		パスワード：<input type="password" name="userPw" value=""> <br>
 		<input type="submit" value="ログイン">
 	</form>
+	<a href="addUser.jsp"><p>新規ユーザー登録</p></a>
 	
 	<%@ include file="footer.jsp"%>
 </body>
