@@ -143,8 +143,8 @@ public class ReservationDao {
 					//結果セットから取得　※カラム名
 					String[] res = new String[5];
 					res[0] = rs.getString("date");
-					res[1] = rs.getString("start");
-					res[2] = rs.getString("end");
+					res[1] = rs.getString("start").substring(0,5);
+					res[2] = rs.getString("end").substring(0,5);
 					res[3] = rs.getString("room_name");
 					res[4] = rs.getString("user_name");
 
