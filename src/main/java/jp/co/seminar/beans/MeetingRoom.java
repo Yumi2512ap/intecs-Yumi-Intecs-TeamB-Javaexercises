@@ -2,8 +2,14 @@ package jp.co.seminar.beans;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+
+import jp.co.seminar.dao.ReservationDao;
+import jp.co.seminar.dao.UserDao;
 
 public class MeetingRoom implements Serializable {
 
@@ -24,7 +30,9 @@ public class MeetingRoom implements Serializable {
 		this.date = sdf.format(nowDate);
 	}
 
-	public void cancel(ResevationBean reservation) throws Exception {
+	public void cancel(ReservationBean reservation) throws Exception {
+		//予約キャンセル
+		//会議室予約情報で会議室をキャンセルします。
 		try {
 			ReservationDao reD = new ReservationDao();
 			reD.delete(reservation);
@@ -34,6 +42,9 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public ReservationBean createReservation(String roomId, String start) {
+		//予約生成
+		//予約日で会議室と時間帯を指定した会議室予約情報を生成します。
+		//また、開始時刻を基に終了時刻を生成し利用する。
 		// しおり46
 		// end情報→スタートの次
 		String end = PERIOD[startPeriod(start) + 1];
@@ -51,7 +62,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public ReservationBean[][] getReservations() {
-
+		//会議室予約システムの利用日における予約状況を返します。
 		// null の2次元配列とDAOを用意
 		ReservationBean[][] reBs = new ReservationBean[rooms.length][PERIOD.length];
 		ReservationDao reD = new ReservationDao();
@@ -71,11 +82,14 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public RoomBean getRoom(String roomId) {
+		//会議室予約システムで利用できるすべての会議室を返します
 		for (RoomBean roB : rooms) {
-			if(roomId.equals(roB.getId)) {
+			if (roomId.equals(roB.getId())) {
 				return roB;
 			}
 		}
+		return null;
+
 	}
 
 	public RoomBean[] getRooms() {
@@ -87,6 +101,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public boolean login(String id, String password) {
+		//会議室予約システムにログインします。
 		// しおり26 , 47
 		UserDao uD = new UserDao();
 		UserBean uB = uD.certificate(id, password);
@@ -94,19 +109,43 @@ public class MeetingRoom implements Serializable {
 	}
 
 	public void reserve(ReservationBean reservation) throws Exception {
-
+		//予約登録
+		//会議室予約情報で会議室Daoを利用し、予約します。
+		//現在の時刻を取得
+		LocalDateTime nowTime = LocalDateTime.now();
+		//予約時刻を取得し比較できる形式に その前にgetDateとStartはStringなのでキャストを挟む
+		LocalDate date = LocalDate.parse(reservation.getDate());
+		LocalTime time = LocalTime.parse(reservation.getStart());
+		LocalDateTime reservationTime = LocalDateTime.of(date, time);
+		ReservationDao reD = new ReservationDao();
+		List<ReservationBean> reservationCheck = reD.findByDate(reservation.getDate());
+		//--ここから予約処理判定--
+		//時刻を過ぎている場合
+		if (nowTime.isAfter(reservationTime)) {//isAfeterで現在時刻が予約時刻を過ぎていないか確認
+			throw new Exception("時刻が過ぎているため予約できません");
+		}
+		//予約済みかどうか判定
+		//ここは予約をリスト形式で受け取る　Forで取り出しifで判定
+		for (ReservationBean reC : reservationCheck) {
+			if (reC.getRoomId().equals(reservation.getRoomId()) && reC.getStart().equals(reservation.getStart())) {
+				throw new Exception("すでに予約されています");
+			}
+		}
+		if (!reD.insert(reservation)) {
+			throw new Exception("予約できませんでした");
+		}
 	}
 
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
-
-		String[] room = { "0501", "0502", "0503" };
-		for (int i = 0; i < room.length; i++) {
-			if (room.equals(roomId)) {
+		//roomIdが配列にあった場合その添え字を返すメソッド
+		//		RoomDao roD = new RoomDao();
+		//		RoomBean[] Rooms = roD.findAll();
+		for (int i = 0; i < this.rooms.length; i++) {
+			if (this.rooms[i].getId().equals(roomId)) {
 				return i;
 			}
 		}
 		throw new IndexOutOfBoundsException("会議室が存在しません");
-
 	}
 
 	public void setDate(String date) {
@@ -114,7 +153,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
-
+		//受け取った入力時間を添え字で返す
 		int startTime = 9;
 		int endTime = 16;
 		int time = Integer.parseInt(start.substring(0, 2));
@@ -123,6 +162,21 @@ public class MeetingRoom implements Serializable {
 		}
 		return time - startTime;
 
+	}
+
+	// 以下追加メソッド
+	// ユーザーIDの存在チェック
+	public boolean existsByUserId(String userId) {
+		UserDao uD = new UserDao();
+		return uD.existsByUserId(userId);
+	}
+	
+	// ユーザー登録
+	public void addUser(UserBean user) throws Exception{
+		UserDao uD = new UserDao();
+		if(!uD.addUser(user)) {
+			throw new Exception("ユーザー登録に失敗しました");
+		}
 	}
 
 	@Override

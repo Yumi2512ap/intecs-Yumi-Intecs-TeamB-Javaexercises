@@ -6,7 +6,7 @@
 <title>予約確定</title>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+	<%@ include file="header.jsp"%>
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>予約完了</h2>
@@ -36,6 +36,6 @@
 	<form action="menu.jsp">
 		<input type="submit" value="完了">
 	</form>
-<%@ include file="footer.jsp" %>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

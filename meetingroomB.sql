@@ -1,6 +1,12 @@
-DROP DATABASE IF EXISTS meetingroom;
-CREATE DATABASE meetingroom;
-USE meetingroom;
+CREATE USER IF NOT EXISTS 'user'@'localhost' IDENTIFIED BY 'pass';
+
+GRANT SELECT, UPDATE, INSERT, DELETE 
+ON meetingroomB.* 
+TO 'user'@'localhost';
+
+DROP DATABASE IF EXISTS meetingroomB;
+CREATE DATABASE meetingroomB;
+USE meetingroomB;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS reservation;
@@ -9,7 +15,8 @@ CREATE TABLE user (
         id VARCHAR(7) PRIMARY KEY,
         password VARCHAR(10) NOT NULL,
         name VARCHAR(10),
-        address VARCHAR(30)
+        address VARCHAR(30),
+        is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE room (

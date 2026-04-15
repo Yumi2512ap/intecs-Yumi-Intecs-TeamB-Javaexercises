@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="stylesheet.css">
 <title>キャンセル確認</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
 	<h1>会議室予約キャンセル</h1>
 	<hr>
 	<h2>キャンセル確認</h2>
@@ -30,11 +30,12 @@
 		</tr>
 	</table>
 	<hr>
-	<form action="cancelConfirm.jsp">
+	<form action="cancelInput.jsp">
 		<input type="submit" value="戻る">
 	</form>
-	<form action="Reserve">
+	<form action="cancelServret.java">
 		<input type="submit" value="決定">
 	</form>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

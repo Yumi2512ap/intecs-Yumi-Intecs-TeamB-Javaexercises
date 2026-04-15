@@ -1,4 +1,5 @@
-package calculation;
+
+package jp.co.seminar.beans;
 
 import java.io.Serializable;
 
@@ -29,20 +30,18 @@ public class ReservationBean implements Serializable {
 
 	//コンストラクタ　予約ID未定で予約情報を初期化する
 	public ReservationBean(String roomId, String date, String start, String end, String userId) {
-		this.roomId = roomId;
-		this.date = date;
-		this.start = start;
-		this.end = end;
-		this.userId = userId;
+
+		this(0, roomId, date, start, end, userId);
 	}
 
 	//予約番号取得　予約番号設定
-	public int getid() {
+	public int getId() {
 		return id;
 	}
 
 	//予約番号設定　予約番号設定
-	public void setid(int id) {
+
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -56,22 +55,21 @@ public class ReservationBean implements Serializable {
 		return date;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
 
 	//開始時刻取得　開始時刻出力
-	public String start() {
+	public String getStart() {
 		return start;
 	}
 
 	//終了時刻取得　終了時刻取得
-	public String end() {
+
+	public String getEnd() {
 		return end;
 	}
 
 	//利用者ID取得　利用者ID出力
-	public String userId() {
+
+	public String getUserId() {
 		return userId;
 	}
 
@@ -87,3 +85,4 @@ public class ReservationBean implements Serializable {
 	}
 
 }
+
