@@ -57,8 +57,12 @@ public class addUserServlet extends HttpServlet {
 		String admin = request.getParameter("admin");
 
 		Boolean isAdmin = false;
+		String nextPage;
 		if (admin.equals("true")) {
 			isAdmin = true;
+			nextPage = "addAdmin.jsp";
+		} else {
+			nextPage = "addUser.jsp";
 		}
 		String msg;
 
@@ -70,7 +74,7 @@ public class addUserServlet extends HttpServlet {
 			try {
 				MR.addUser(user);
 				msg = "ユーザー登録に成功しました";
-				
+
 			} catch (Exception e) {
 				msg = "登録に失敗しました";
 			}
@@ -80,7 +84,7 @@ public class addUserServlet extends HttpServlet {
 
 		// フォワード
 		request.setAttribute("msg", msg);
-		RequestDispatcher rd = request.getRequestDispatcher("addAdmin.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
 	}
 
