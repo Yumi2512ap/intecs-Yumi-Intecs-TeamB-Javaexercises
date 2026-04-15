@@ -16,7 +16,7 @@ public class UserDao {
 
 		UserBean user = null;
 
-		String sql = "SELECT id, password, name, address  FROM user WHERE id = ? AND password = ?";
+		String sql = "SELECT id, password, name, address, is_admin FROM user WHERE id = ? AND password = ?";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
 
@@ -30,7 +30,11 @@ public class UserDao {
 				if (rs.next()) {
 					String name = rs.getString("name");
 					String address = rs.getString("address");
-
+					int is_admin = rs.getInt("is_admin");
+					if (is_admin == 1) {
+						user = new UserBean(id,password,name,address,true);
+						return user;
+					}
 					user = new UserBean(id, password, name, address);
 				}
 			}

@@ -36,12 +36,12 @@ public class AddRoomServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//セッションから取得
 		HttpSession session = request.getSession();
-		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("meetingRoom");
 		String roomname = request.getParameter("roomname");
 		String roomId = request.getParameter("roomId");
 		String message;
 		if (roomname.length() <= 25 && roomId.matches(".*[0-9]{4}.*")) {
-			meetingRoom.addRoom(roomname, roomId);
+			MR.addRoom(roomname, roomId);
 			message = "会議室の追加に成功しました";
 		} else {
 			if (roomname.length() >= 25) {
