@@ -20,6 +20,9 @@
 		method="get">
 		<input type="submit" value="予約キャンセル">
 	</form>
+	<form action="<%= request.getContextPath() %>/adminMenu.jsp">
+		<input type="submit" value="管理者メニュー">
+	</form>
 	<form action="<%=request.getContextPath()%>/Logout.java"
 		method="post">
 		<input type="submit" value="ログアウト">
