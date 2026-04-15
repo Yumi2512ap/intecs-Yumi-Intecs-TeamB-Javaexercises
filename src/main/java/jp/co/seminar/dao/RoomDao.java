@@ -52,16 +52,16 @@ public class RoomDao {
 	}
 
 	//会議室の追加
-	public Boolean addRoom(String id, String name) {
+	public Boolean addRoom(String roomId, String roomName) {
 
 		String sql = "INSERT INTO room(id,name,deleteFlg) VALUES(?,?,?)";
 		int deleteFlg = 0;
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, id);
-			pstmt.setString(2, name);
+			pstmt.setString(1, roomId);
+			pstmt.setString(2, roomName);
 			pstmt.setInt(3, deleteFlg);
-			return pstmt.execute();
+			return pstmt.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("会議室の追加に失敗しました");
