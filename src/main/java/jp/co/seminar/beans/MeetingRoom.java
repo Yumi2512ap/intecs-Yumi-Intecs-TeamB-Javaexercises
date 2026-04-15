@@ -111,7 +111,7 @@ public class MeetingRoom implements Serializable {
 		}
 		return false;
 	}
-	
+
 	// 予約の処理
 	public void reserve(ReservationBean reservation) throws Exception {
 		//予約登録
@@ -122,7 +122,7 @@ public class MeetingRoom implements Serializable {
 		LocalDate date = LocalDate.parse(reservation.getDate());
 		LocalTime time = LocalTime.parse(reservation.getStart());
 		LocalDateTime reservationTime = LocalDateTime.of(date, time);
-		
+
 		ReservationDao reD = new ReservationDao();
 		List<ReservationBean> reservationCheckList = reD.findByDate(reservation.getDate());
 		//--ここから予約処理判定--
@@ -141,7 +141,7 @@ public class MeetingRoom implements Serializable {
 			throw new Exception("予約できませんでした");
 		}
 	}
-	
+
 	// MR内で使用するプライベートメソッド
 	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
 		//roomIdが配列にあった場合その添え字を返すメソッド
@@ -154,12 +154,12 @@ public class MeetingRoom implements Serializable {
 		}
 		throw new IndexOutOfBoundsException("会議室が存在しません");
 	}
-	
+
 	// 日付変更
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 	// MR内で使用するプライベートメソッド
 	private int startPeriod(String start) throws IndexOutOfBoundsException {
 		//受け取った入力時間を添え字で返す
@@ -186,6 +186,22 @@ public class MeetingRoom implements Serializable {
 			throw new Exception("ユーザー登録に失敗しました");
 		}
 	}
+
+
+	//　予約一覧を取得
+	public String getReservationList() {
+		ReservationDao rD = new ReservationDao();
+		List<String[]> list = rD.findAll();
+		String result = "";
+		for (String[] str : list) {
+			result += "<tr>"
+					+ "<td>" + str[0] + "</td>"
+					+ "<td>" + str[1] + "～" + str[2] + "</td>"
+					+ "<td>" + str[3] + "</td>"
+					+ "<td>" + str[4] + "</td>"
+					+ "</tr>";
+		}
+		return result;
 
 	//追加要件 会議室の追加
 	public void addRoom(String roomname, String roomId) {
