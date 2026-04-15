@@ -187,7 +187,6 @@ public class MeetingRoom implements Serializable {
 		}
 	}
 
-
 	//　予約一覧を取得
 	public String getReservationList() {
 		ReservationDao rD = new ReservationDao();
@@ -202,6 +201,7 @@ public class MeetingRoom implements Serializable {
 					+ "</tr>";
 		}
 		return result;
+	}
 
 	//追加要件 会議室の追加
 	public void addRoom(String roomname, String roomId) {
