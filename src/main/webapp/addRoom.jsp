@@ -23,7 +23,6 @@
 		<tr>
 			<td><%= roomId[i] %></td> 
 			<td><%= room[i] %></td>
-			<td><input type="submit" name="update" value="修正"></td>
 			<td><input type="submit" name="delete" value="削除"></td>
 		</tr>
 		<% } %>      
