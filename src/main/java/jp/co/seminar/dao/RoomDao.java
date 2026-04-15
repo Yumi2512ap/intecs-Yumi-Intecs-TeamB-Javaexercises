@@ -68,4 +68,9 @@ public class RoomDao {
 			return false;
 		}
 	}
+
+//	public Boolean deleteRoom(String id) {
+//		String sql = "UPDATE room (deleteFlg) VALUES(?)";
+//		
+//	}
 }
