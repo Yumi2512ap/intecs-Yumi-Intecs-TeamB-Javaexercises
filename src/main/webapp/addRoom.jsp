@@ -12,7 +12,7 @@
 <hr>
 <h2>会議室管理</h2>
 	 <form action="<%= request.getContextPath() %>/AdminPage" method="post">
-		 <table class="list">
+		<table class="list">
 		<% String room[] = {"大会議室","5A会議室","5B会議室","5C会議室（テスト）","5D会議室（テスト）"};  %>
 		<% String roomId[] = {"0501","0502","0503","0504","0505"}; %>
 		<tr>
@@ -23,7 +23,7 @@
 		<tr>
 			<td><%= roomId[i] %></td> 
 			<td><%= room[i] %></td>
-			<td><input type="submit" name="delete" value="削除"></td>
+			<td><button type="submit" name="delete" value="<%= roomId[i] %>">削除</button></td>
 		</tr>
 		<% } %>      
 	  </table>
@@ -31,7 +31,7 @@
   
 <hr>
 <h2>会議室追加</h2>
-  <form action="<%= request.getContextPath() %>/AddRoom">
+  <form action="<%= request.getContextPath() %>/AddRoom" method="post">
 		<input type="text" name="roomname" placeholder="追加したい部屋名" required="required">
 		<input type="number" name="roomId" placeholder="会議室ID (数字4桁)" required="required">
 		<input type="submit" value="追加">
