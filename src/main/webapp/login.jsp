@@ -12,7 +12,7 @@
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>ログイン</h2>
-	<form action="<%=request.getContextPath()%>/LoginServlet" method="post">
+	<form action="<%=request.getContextPath()%>/Login" method="post">
 		利用者ID：<input type="text" name="userId" value=""> <br>
 		パスワード：<input type="password" name="userPw" value=""> <br>
 		<input type="submit" value="ログイン">
