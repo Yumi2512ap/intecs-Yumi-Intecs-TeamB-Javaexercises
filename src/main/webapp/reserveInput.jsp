@@ -37,7 +37,6 @@
 			</tr>
 	
 			<% for(int i = 0; i < roomsName.length; i++){ %>
-				<label></label>
 				<tr>
 					<td><%= roomsName[i] %></td>
 					<% for(int j = 0;j < times.length; j++) { %>
