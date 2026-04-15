@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="jp.co.seminar.beans.MeetingRoom" %>
+<%@ page import="jp.co.seminar.beans.ReservationBean" %>
+<%@ page import="jp.co.seminar.beans.UserBean" %>
 <% 
 	MeetingRoom MR = new MeetingRoom();
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
 	String[] times = MR.getPeriod();
+	ReservationBean[][] rBs = MR.getReservations();
 %>
 <!DOCTYPE html>
 <html>
@@ -27,7 +30,6 @@
 	
 	<h2>キャンセル可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
 		
-	<form action="<%= request.getContextPath() %>/CancelCreate" method="post">
 		<table class="list">
 			<tr>
 				<th>会議室名＼時間帯</th>
@@ -41,14 +43,18 @@
 					<td><%= roomsName[i] %></td>
 					<% for(int j = 0;j < times.length; j++) { %>
 						<td class="cell">
-							<input type="submit" name="time" value=<%= times[j] %>>
-							<input type="hidden" name="roomId" value="<%= roomsId[i] %>">
+							<form action="<%= request.getContextPath() %>/CancelCreate" method="post">
+								<input type="submit" name="time"
+									value="<%= rBs[i][j] != null ? times[j] : "不可" %>"
+									<%= rBs[i][j] == null ? "disabled" : "" %>
+									class="<%= rBs[i][j] != null ? "can" : "cant" %>">
+								<input type="hidden" name="roomId" value="<%= roomsId[i] %>">
+							</form>
 						</td> 
 					<% } %>
 				</tr>
 			<% } %>      
   		</table>
-  	</form>
   	
   	<hr>
   

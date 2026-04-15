@@ -81,6 +81,27 @@ public class MeetingRoom implements Serializable {
 		return reBs;
 	}
 
+	// 予約状況boolean
+	public String[][] getDisabled() {
+		//会議室予約システムの利用日における予約状況を返します。
+		// null の2次元配列とDAOを用意
+		String[][] disabled = new String[rooms.length][PERIOD.length];
+		ReservationDao reD = new ReservationDao();
+		// 予約一覧を取得
+		List<ReservationBean> reList = reD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
+		// 予約リストの全件
+		for (ReservationBean reB : reList) {
+			// 部屋番号と時間
+			String roomId = reB.getRoomId();
+			String start = reB.getStart();
+
+			// 配列の[room添え字][時間添え字]に代入
+			disabled[roomIndex(roomId)][startPeriod(start)] = "disabled";
+
+		}
+		return disabled;
+	}
+
 	// ルームIDが一致するものを検索
 	public RoomBean getRoom(String roomId) {
 		//会議室予約システムで利用できるすべての会議室を返します

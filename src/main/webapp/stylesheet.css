@@ -65,7 +65,7 @@ body {
 }
 
 /* サブミットボタン */
-input[type="submit"] {
+input[type="submit"]:not(.can):not(.cant) {
     background-color: #ffffff;
     color: #414c82;
     border: 1px solid #414c82;
@@ -76,11 +76,11 @@ input[type="submit"] {
     cursor: pointer;          /* マウスホバーでポインタ表示 */
     transition: background-color 0.2s; /* ホバー時の変化を滑らかに */
 }
-input[type="submit"]:active { /* クリック（アクティブ）時のスタイル */
+input[type="submit"]:not(.can):not(.cant) :active { /* クリック（アクティブ）時のスタイル */
   transform: translateY(2px); /* 2px下に下げる */
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:not(.can):not(.cant) :hover {
     background-color: #414c82;
     color: #ffffff;
     transform: translateY(-1px);
@@ -169,17 +169,12 @@ header input[type="submit"]:hover {
 /* 表部分 */
 .cell {
   padding: 0; /* td側の余白を消す */
+  line-height: 0;
+  font-size: 0; 
+  margin: 0;
 }
 
-.cell input[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 16px 0;
-    margin: 0;
-    border: none;
-    border-radius: 0;
-    box-sizing: border-box;
-
+.list .cell .can {
     background-color: #ffffff;
     color: #414c82;
     font-weight: 600;
@@ -187,10 +182,10 @@ header input[type="submit"]:hover {
     transition: background-color 0.2s;
 }
 
-.cell input[type="submit"]:hover {
+.list .cell .can:hover {
     background-color: #414c82;
     color: #ffffff;
-    transform: translateY(-1px);
+    transform: none;   /* 表内では動かさない */
 }
 
 .list tr th{
@@ -201,8 +196,40 @@ header input[type="submit"]:hover {
 	border: solid 1px #434343;
 	border-collapse: collapse;
 	font-family: monospace;
+    table-layout: fixed;  
 }
 .list th,
 .list td{
     border: solid 1px #434343;
+    padding: 0;  
+}
+.list .cell .cant {
+    background-color: #c5c6cb;
+    color: #c95f5f;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+.list .cell .can,
+.list .cell .cant {
+    display: block;
+    width: 100%;
+    min-height: 56px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    font-size: 1rem;
+    line-height: 1.4;
+    appearance: none;
+    -webkit-appearance: none;
+}
+td.cell form {
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 0;
+    font-size: 0;
 }

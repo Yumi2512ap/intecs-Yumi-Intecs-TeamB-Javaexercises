@@ -6,6 +6,7 @@
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
 	String[] times = MR.getPeriod();
+	String[][] disabled = MR.getDisabled();
 %>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,6 @@
 	
 	<h2>予約可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
 	
-	<form action="<%= request.getContextPath() %>/ReserveCreate" method="post">
 		<table class="list">
 			<tr>
 				<th>会議室名＼時間帯</th>
@@ -37,19 +37,22 @@
 			</tr>
 	
 			<% for(int i = 0; i < roomsName.length; i++){ %>
-				<label></label>
 				<tr>
 					<td><%= roomsName[i] %></td>
 					<% for(int j = 0;j < times.length; j++) { %>
-						<td class="cell">
-							<input type="submit" name="time" value=<%= times[j] %>>
-							<input type="hidden" name="roomId" value="<%= roomsId[i] %>">
-						</td> 
+						<form action="<%= request.getContextPath() %>/ReserveCreate" method="post">
+							<td class="cell">
+								<input type="submit" name="time"
+									value="<%= disabled[i][j] != null ? "予約済" : times[j] %>"
+									<%= disabled[i][j] != null ? "disabled" : "" %>
+									class="<%= disabled[i][j] != null ? "cant" : "can" %>">
+								<input type="hidden" name="roomId" value="<%= roomsId[i] %>">
+							</td> 
+						</form>
 					<% } %>
 				</tr>
 			<% } %>      
 		</table>
- 	</form>
  	<hr>
   
   	<form action="<%= request.getContextPath() %>/menu.jsp" method="post">
