@@ -33,7 +33,7 @@
 	<form action="cancelInput.jsp">
 		<input type="submit" value="戻る">
 	</form>
-	<form action="cancelServret.java">
+	<form action="cancel.java">
 		<input type="submit" value="決定">
 	</form>
 	<%@ include file="footer.jsp"%>
