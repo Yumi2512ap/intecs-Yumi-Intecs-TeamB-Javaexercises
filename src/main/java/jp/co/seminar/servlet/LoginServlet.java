@@ -12,58 +12,54 @@ import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
 
-
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		// セッションオブジェクトの生成
 		HttpSession session = request.getSession();
 
-
-		
 		//リクエストで受信したUTF-8文字コードで受信する
 		request.setCharacterEncoding("UTF-8");
-		
-		//JSPからのリクエストパラメーター
-		String userId=request.getParameter("userId");
-		String userPw=request.getParameter("userPw");
-		
-		//インスタンス
-		MeetingRoom MR =new MeetingRoom();
-        boolean result =MR.login(userId,userPw);
-        
-        //MRを送る（setattribute)
-        session.setAttribute("MR", MR);
-        
-        String nextPage;
-        
-        	if(result){
-        		nextPage="/menu.jsp";
-        	}else {
-        		nextPage="/login.jsp";
-        	}
-         
-        
-        //nextPageに遷移するためのディスパッチャを作成する
-        RequestDispatcher rd=request.getRequestDispatcher(nextPage);
-        //フォワードする
-        rd.forward(request, response);
-        
-		
-	}
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//遷移先ページ格納変数
-		String nextPage2="login.jsp";
-		//nextPageに遷移するためのディスパッチャを作成する
-				RequestDispatcher rd=request.getRequestDispatcher(nextPage2);
-				//リダイレクトする
-				response.sendRedirect(nextPage2);
-				return;
-	}
-		
-	
 
+		//JSPからのリクエストパラメーター
+		String userId = request.getParameter("userId");
+		String userPw = request.getParameter("userPw");
+
+		//インスタンス
+		MeetingRoom MR = new MeetingRoom();
+		boolean result = MR.login(userId, userPw);
+
+		//MRを送る（setattribute)
+		session.setAttribute("MR", MR);
+
+		String nextPage;
+
+		if (result) {
+			nextPage = "/menu.jsp";
+		} else {
+			nextPage = "/login.jsp";
+		}
+
+		//nextPageに遷移するためのディスパッチャを作成する
+		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+		//フォワードする
+		rd.forward(request, response);
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		//遷移先ページ格納変数
+		String nextPage2 = "login.jsp";
+		//nextPageに遷移するためのディスパッチャを作成する
+		RequestDispatcher rd = request.getRequestDispatcher(nextPage2);
+		//リダイレクトする
+		response.sendRedirect(nextPage2);
+		return;
+	}
 
 }
