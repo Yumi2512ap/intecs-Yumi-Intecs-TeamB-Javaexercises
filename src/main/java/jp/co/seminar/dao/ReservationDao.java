@@ -212,7 +212,7 @@ public class ReservationDao {
 
 	//利用日と時間による予約情報取得 
 
-	public ReservationBean findCancel(String date, String time ,String roomID) {
+	public ReservationBean findCancel(String date, String time, String roomID) {
 
 		//////利用日を指定し、該当日の予約情報を取得する
 
@@ -237,8 +237,8 @@ public class ReservationDao {
 					int intid = rs.getInt("id");
 					String StringroomId = rs.getString("roomId");
 					String strdate = rs.getString("date");
-					String strstart = rs.getString("start");
-					String strend = rs.getString("end");
+					String strstart = rs.getString("start").substring(0, 5);
+					String strend = rs.getString("end").substring(0, 5);
 					String struserId = rs.getString("userId");
 					//ReservationBeanオブジェクトを生成
 					ReservationBean rese = new ReservationBean(intid, StringroomId, strdate, strstart, strend,
