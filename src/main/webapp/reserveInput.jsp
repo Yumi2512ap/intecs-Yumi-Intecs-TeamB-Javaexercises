@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="jp.co.seminar.beans.MeetingRoom" %>
 <% 
-	MeetingRoom MR = new MeetingRoom();
+	MeetingRoom MR = (MeetingRoom)session.getAttribute("MR");
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
 	String[] times = MR.getPeriod();

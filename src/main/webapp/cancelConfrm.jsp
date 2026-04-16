@@ -30,10 +30,10 @@
 		</tr>
 	</table>
 	<hr>
-	<form action="cancelInput.jsp">
+	<form action="cancelInput.jsp" method="post">
 		<input type="submit" value="戻る">
 	</form>
-	<form action="cancel.java">
+	<form action="Cancel" method="post">
 		<input type="submit" value="決定">
 	</form>
 	<%@ include file="footer.jsp"%>

@@ -47,7 +47,7 @@ public class addUserServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		// セッションからミーティングルームを取得
 		HttpSession session = request.getSession();
-		MeetingRoom MR = (MeetingRoom) session.getAttribute("meetingRoom");
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 
 		// JSPからデータを受け取る
 		String userId = request.getParameter("userId");

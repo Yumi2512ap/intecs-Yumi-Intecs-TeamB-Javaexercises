@@ -4,7 +4,7 @@
 <%@ page import="jp.co.seminar.beans.ReservationBean" %>
 <%@ page import="jp.co.seminar.beans.UserBean" %>
 <% 
-	MeetingRoom MR = new MeetingRoom();
+	MeetingRoom MR = (MeetingRoom)session.getAttribute("MR");
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
 	String[] times = MR.getPeriod();
