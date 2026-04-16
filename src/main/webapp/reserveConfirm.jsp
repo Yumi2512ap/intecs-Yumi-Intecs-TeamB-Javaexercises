@@ -25,7 +25,7 @@
 		</tr>
 		<tr>
 			<th>予約者</th>
-			<td>${meetingRoom.user.name}情報太郎</td>
+			<td>${MR.user.name}</td>
 		</tr>
 	</table>
 	<hr>

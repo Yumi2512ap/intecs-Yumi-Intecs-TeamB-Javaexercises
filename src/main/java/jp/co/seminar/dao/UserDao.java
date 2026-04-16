@@ -32,10 +32,10 @@ public class UserDao {
 					String address = rs.getString("address");
 					int is_admin = rs.getInt("is_admin");
 					if (is_admin == 1) {
-						user = new UserBean(id,password,name,address,true);
+						user = new UserBean(id, name, address, password, true);
 						return user;
 					}
-					user = new UserBean(id, password, name, address);
+					user = new UserBean(id, name, address, password);
 				}
 			}
 		} catch (Exception e) {
@@ -77,7 +77,7 @@ public class UserDao {
 			pstmt.setString(3, user.getName());
 			pstmt.setString(4, user.getAddress());
 			pstmt.setBoolean(5, user.getIsAdmin());
-			
+
 			// 更新が一行だけある？
 			return pstmt.executeUpdate() == 1;
 
