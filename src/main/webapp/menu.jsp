@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="jp.co.seminar.beans.UserBean" %>
+<%
+	UserBean uB = new UserBean("test", "テストユーザ", "大阪", "pass",true);
+    session.setAttribute("user", uB);
+
+    UserBean user = (UserBean) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,10 +27,12 @@
 		method="get">
 		<input type="submit" value="予約キャンセル">
 	</form>
+	<% if(user != null && user.getIsAdmin()){ %>
 	<form action="<%= request.getContextPath() %>/adminMenu.jsp">
 		<input type="submit" value="管理者メニュー">
 	</form>
-	<form action="<%=request.getContextPath()%>/Logout.java"
+	<% } %>
+	<form action="<%=request.getContextPath()%>/Logout"
 		method="post">
 		<input type="submit" value="ログアウト">
 	</form>
