@@ -163,10 +163,7 @@ public class MeetingRoom implements Serializable {
 		//予約時刻を取得し比較できる形式に その前にgetDateとStartはStringなのでキャストを挟む
 		LocalDate date = LocalDate.parse(reservation.getDate());
 		LocalTime time = LocalTime.parse((reservation.getStart()));
-		System.out.println(date);
-		System.out.println(time);
 		LocalDateTime reservationTime = LocalDateTime.of(date, time);
-
 		ReservationDao reD = new ReservationDao();
 		List<ReservationBean> reservationCheckList = reD.findByDate(reservation.getDate());
 		//--ここから予約処理判定--
