@@ -22,7 +22,7 @@ public class RoomDao {
 		// 拡張可能なリストの作成
 		List<RoomBean> nameDataList = new ArrayList<RoomBean>();
 		// パラメータを含む動的SQL文を用意
-		String sql = "SELECT * FROM room where id";
+		String sql = "SELECT * FROM room";
 		// try-with-resourcesでリソースを自動的にクローズ
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -44,7 +44,7 @@ public class RoomDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("SQLに関するエラーです。");
+			System.out.println("RoomDao SQLに関するエラーです。");
 		} catch (ClassNotFoundException e) {
 			System.err.println("ドライバ");
 		}

@@ -1,9 +1,11 @@
 package jp.co.seminar.dao;//p164 p42 データベースdate型　
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class ReservationDao {
 		//DB取得結果を格納 
 		List<ReservationBean> List = new ArrayList<ReservationBean>();
 		//データベース接続
-		String sql = "SELECT * FROM meetingroom WHERE date = ?";
+		String sql = "SELECT * FROM reservation WHERE date = ?";
 
 		//try-with-resources構文
 		try (
@@ -66,37 +68,66 @@ public class ReservationDao {
 	//--予約情報を格納する　
 	public boolean insert(ReservationBean reservation) {
 
-		//-1が帰ってきたら格納できていない P31参考
-		int ret = -1;
+	    int ret = -1;
 
-		String sql = "INSERT INTO meetingroom WHERE date = ?";
-		try (Connection conn = MRConnectionProvider.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			//SQL文を実行
+	    String sql = "INSERT INTO reservation (roomid, date, start, end, userid) VALUES (?, ?, ?, ?, ?)";
 
-			int autoIncrementKey = 0;
-			ret = pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			ResultSet rs = pstmt.getGeneratedKeys();
-			return ret != 0;
+	    try (Connection conn = MRConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("ドライバが見つかりません。");
-			return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("SQLに関するエラーです");
-			return false;
-		}
+	        pstmt.setString(1, reservation.getRoomId());
+	        pstmt.setDate(2, Date.valueOf(reservation.getDate()));
+	        pstmt.setTime(3, Time.valueOf(reservation.getStart()));
+	        pstmt.setTime(4, Time.valueOf(reservation.getEnd()));
+	        pstmt.setString(5, reservation.getUserId());
+
+	        ret = pstmt.executeUpdate();
+
+	        ResultSet rs = pstmt.getGeneratedKeys();
+	        if (rs.next()) {
+	            reservation.setId(rs.getInt(1));
+	        }
+
+	        return ret != 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+	
+//	public boolean insert(ReservationBean reservation) {
+//
+//		//-1が帰ってきたら格納できていない P31参考
+//		int ret = -1;
+//
+//		String sql = "INSERT INTO reservation WHERE date = ?";
+//		try (Connection conn = MRConnectionProvider.getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//			//SQL文を実行
+//
+//			int autoIncrementKey = 0;
+//			ret = pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			return ret != 0;
+//
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//			System.err.println("ドライバが見つかりません。");
+//			return false;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.err.println("SQLに関するエラーです");
+//			return false;
+//		}
+//	}
 
-	//try-with-resourcesによりconnとpstmtは自動的にクローズされる
 
 	//--予約情報を削除する  P37
 	public boolean delete(ReservationBean reservation) {
 		int ret = -1;
 		//SQLでデータベース削除
-		String sql = "DELETE FROM meetingroom WHERE date = ?";
+		String sql = "DELETE FROM reservation WHERE date = ?";
 		//try-with-resources構文でリソースを自動的にクローズ
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -5,8 +5,6 @@
 	MeetingRoom MR = (MeetingRoom)session.getAttribute("MR");
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
-	String[] times = MR.getPeriod();
-	session.setAttribute("meetingRoom", MR);
 %>
 <!DOCTYPE html>
 <html>
