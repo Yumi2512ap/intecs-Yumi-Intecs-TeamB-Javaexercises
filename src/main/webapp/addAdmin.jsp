@@ -10,7 +10,7 @@
 	<%@ include file="header.jsp"%>
 	<h1>管理者追加</h1>
 	<hr>
-	<form action="<%=request.getContextPath()%>/addUser" method="post">
+	<form action="<%=request.getContextPath()%>/AddUser" method="post">
 	
 		<table class="result">
 			<tr>

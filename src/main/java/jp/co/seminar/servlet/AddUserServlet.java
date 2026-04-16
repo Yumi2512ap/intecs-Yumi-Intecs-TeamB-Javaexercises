@@ -16,14 +16,14 @@ import jp.co.seminar.beans.UserBean;
 /**
  * Servlet implementation class addUserServlet
  */
-@WebServlet("/addUser")
-public class addUserServlet extends HttpServlet {
+@WebServlet("/AddUser")
+public class AddUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public addUserServlet() {
+	public AddUserServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
