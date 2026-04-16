@@ -29,7 +29,7 @@ public class ReserveServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
+		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("MR");
 		ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
 		String nextPage;
 		try {

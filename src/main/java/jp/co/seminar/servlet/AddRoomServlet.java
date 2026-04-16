@@ -36,7 +36,7 @@ public class AddRoomServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//セッションから取得
 		HttpSession session = request.getSession();
-		MeetingRoom MR = (MeetingRoom) session.getAttribute("meetingRoom");
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 		String roomName = request.getParameter("roomname");
 		String roomId = request.getParameter("roomId");
 		String message;
