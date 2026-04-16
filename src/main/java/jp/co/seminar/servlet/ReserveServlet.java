@@ -29,7 +29,7 @@ public class ReserveServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
+		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("MR");
 		ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
 		String nextPage;
 		try {
@@ -40,7 +40,7 @@ public class ReserveServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			nextPage = "reserveError.jsp";
-			request.setAttribute("errReason", e.getMessage());
+			request.setAttribute("errorReason", "予約時刻を過ぎているため予約できません");
 			request.getRequestDispatcher(nextPage)
 					.forward(request, response);
 

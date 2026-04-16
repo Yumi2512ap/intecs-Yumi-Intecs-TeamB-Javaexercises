@@ -12,23 +12,23 @@
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>予約エラー</h2>
-	<label>${errorReason}時刻が過ぎているため予約できません</label>
+	<label>${errorReason}</label>
 	<table class="result">
 		<tr>
 			<th>予約日</th>
-			<td>${reservation.date}2023-02-02</td>
+			<td>${reservation.date}</td>
 		</tr>
 		<tr>
 			<th>会議室</th>
-			<td>${room.name}大会議室</td>
+			<td>${room.name}</td>
 		</tr>
 		<tr>
 			<th>予約時刻</th>
-			<td>${reservation.start}14:00～${reservation.end}15:00</td>
+			<td>${reservation.start}～${reservation.end}</td>
 		</tr>
 		<tr>
 			<th>予約者</th>
-			<td>${meetingRoom.user.name}情報太郎</td>
+			<td>${MR.user.name}</td>
 		</tr>
 	</table>
 	<hr>

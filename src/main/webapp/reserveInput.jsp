@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="jp.co.seminar.beans.MeetingRoom" %>
 <% 
-	MeetingRoom MR = new MeetingRoom();
+	MeetingRoom MR = (MeetingRoom)session.getAttribute("MR");
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
 	String[] times = MR.getPeriod();
@@ -26,7 +26,7 @@
 		<input type="submit" value="日付変更">
 	</form>
 	
-	<h2>予約可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
+	<h2>予約可能時間帯(${MR.user.name})</h2>
 	
 		<table class="list">
 			<tr>

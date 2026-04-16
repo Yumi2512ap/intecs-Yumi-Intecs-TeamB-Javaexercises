@@ -31,7 +31,7 @@ public class CancelServlet extends HttpServlet {
 		//セッションから取得
 		HttpSession session = request.getSession();
 		//キャストしながらセッションから取得
-		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("meetingRoom");
+		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("MR");
 		ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
 		try {
 			meetingRoom.cancel(reservation);
