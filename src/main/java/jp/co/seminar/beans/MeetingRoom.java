@@ -56,6 +56,13 @@ public class MeetingRoom implements Serializable {
 		return reB;
 
 	}
+	//キャンセル情報の生成
+	public ReservationBean createCancel(String roomId, String start) {
+
+		ReservationBean reB = new ReservationDao().findCancel(date, start, roomId);
+		return reB;
+
+	}
 
 	public String getDate() {
 		return date;
