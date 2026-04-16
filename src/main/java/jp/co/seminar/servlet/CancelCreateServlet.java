@@ -62,7 +62,7 @@ public class CancelCreateServlet extends HttpServlet {
 		session.setAttribute("reservation", reservation);
 		
 		// フォワード
-		RequestDispatcher rd = request.getRequestDispatcher("cancelConfirm.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("cancelConfrim.jsp");
 		rd.forward(request, response);
 
 	}
