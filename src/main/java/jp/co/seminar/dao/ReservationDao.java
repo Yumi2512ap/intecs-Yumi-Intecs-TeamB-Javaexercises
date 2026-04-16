@@ -74,9 +74,11 @@ public class ReservationDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pstmt.setString(1, reservation.getRoomId());
+
 			pstmt.setString(2, reservation.getDate());
 			pstmt.setString(3, reservation.getStart());
 			pstmt.setString(4, reservation.getEnd());
+
 			pstmt.setString(5, reservation.getUserId());
 
 			ret = pstmt.executeUpdate();
@@ -205,6 +207,53 @@ public class ReservationDao {
 		}
 		//try-with-resourcesによりconn,pstmtは自動的にクローズされる
 		return List;//画面に返す
+
+	}
+
+	//利用日と時間による予約情報取得 
+
+	public ReservationBean findCancel(String date, String time ,String roomID) {
+
+		//////利用日を指定し、該当日の予約情報を取得する
+
+		//DB取得結果を格納 
+		//データベース接続
+		String sql = "SELECT * FROM reservation WHERE date = ? AND start = ? AND roomId = ?";
+
+		//try-with-resources構文
+		try (
+				Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			//プレスホルダー(?)に値を設定
+			pstmt.setString(1, date);
+			pstmt.setString(2, time);
+			pstmt.setString(3, roomID);
+			//SQL文を実行して結果を取得
+			try (ResultSet rs = pstmt.executeQuery()) {
+				//結果セットをviewへ送るための準備
+				if (rs.next()) {
+					//結果セットから取得
+					int intid = rs.getInt("id");
+					String StringroomId = rs.getString("roomId");
+					String strdate = rs.getString("date");
+					String strstart = rs.getString("start");
+					String strend = rs.getString("end");
+					String struserId = rs.getString("userId");
+					//ReservationBeanオブジェクトを生成
+					ReservationBean rese = new ReservationBean(intid, StringroomId, strdate, strstart, strend,
+							struserId);
+					return rese;
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("ドライバが見つかりません。");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("SQLに関するエラーです");
+		}
+		return null;
 
 	}
 }

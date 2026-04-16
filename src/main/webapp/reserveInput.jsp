@@ -43,7 +43,7 @@
 						<form action="<%= request.getContextPath() %>/ReserveCreate" method="post">
 							<td class="cell">
 								<input type="submit" name="time"
-									value="<%= disabled[i][j] != null ? "予約済" : times[j] %>"
+									value="<%= times[j] %>"
 									<%= disabled[i][j] != null ? "disabled" : "" %>
 									class="<%= disabled[i][j] != null ? "cant" : "can" %>">
 								<input type="hidden" name="roomId" value="<%= roomsId[i] %>">

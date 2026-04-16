@@ -45,7 +45,7 @@
 						<td class="cell">
 							<form action="<%= request.getContextPath() %>/CancelCreate" method="post">
 								<input type="submit" name="time"
-									value="<%= rBs[i][j] != null ? times[j] : "不可" %>"
+									value="<%= times[j] %>"
 									<%= rBs[i][j] == null ? "disabled" : "" %>
 									class="<%= rBs[i][j] != null ? "can" : "cant" %>">
 								<input type="hidden" name="roomId" value="<%= roomsId[i] %>">
