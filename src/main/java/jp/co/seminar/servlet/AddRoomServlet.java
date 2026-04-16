@@ -42,6 +42,7 @@ public class AddRoomServlet extends HttpServlet {
 		String message;
 		if (roomName.length() <= 25 && roomId.matches(".*[0-9]{4}.*")) {
 			MR.addRoom(roomId, roomName);
+			session.setAttribute("MR", MR);
 			message = "会議室の追加に成功しました";
 		} else {
 			if (roomName.length() >= 25) {

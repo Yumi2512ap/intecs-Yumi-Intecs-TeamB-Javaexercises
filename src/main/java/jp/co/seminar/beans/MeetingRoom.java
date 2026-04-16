@@ -46,7 +46,12 @@ public class MeetingRoom implements Serializable {
 	//予約情報の生成
 	public ReservationBean createReservation(String roomId, String start) {
 		//予約日で会議室と時間帯を指定した会議室予約情報を生成します。
-		String end = PERIOD[startPeriod(start) + 1];
+		String end;
+		if (start.equals("16:00")) {
+			end = "17:00";
+		} else {
+			end = PERIOD[startPeriod(start) + 1];
+		}
 		ReservationBean reB = new ReservationBean(roomId, date, start, end, user.getId());
 		return reB;
 
@@ -157,7 +162,9 @@ public class MeetingRoom implements Serializable {
 		LocalDateTime nowTime = LocalDateTime.now();
 		//予約時刻を取得し比較できる形式に その前にgetDateとStartはStringなのでキャストを挟む
 		LocalDate date = LocalDate.parse(reservation.getDate());
-		LocalTime time = LocalTime.parse(reservation.getStart());
+		LocalTime time = LocalTime.parse((reservation.getStart()));
+		System.out.println(date);
+		System.out.println(time);
 		LocalDateTime reservationTime = LocalDateTime.of(date, time);
 
 		ReservationDao reD = new ReservationDao();

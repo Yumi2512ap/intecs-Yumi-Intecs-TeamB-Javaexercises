@@ -55,16 +55,15 @@ public class ReservationBean implements Serializable {
 		return date;
 	}
 
-
 	//開始時刻取得　開始時刻出力
 	public String getStart() {
-		return start;
+		return start + ":00";
 	}
 
 	//終了時刻取得　終了時刻取得
 
 	public String getEnd() {
-		return end;
+		return end + ":00";
 	}
 
 	//利用者ID取得　利用者ID出力
@@ -85,4 +84,3 @@ public class ReservationBean implements Serializable {
 	}
 
 }
-
