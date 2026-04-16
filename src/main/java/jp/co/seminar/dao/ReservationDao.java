@@ -1,11 +1,9 @@
 package jp.co.seminar.dao;//p164 p42 データベースdate型　
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,9 +74,9 @@ public class ReservationDao {
 	         PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 	        pstmt.setString(1, reservation.getRoomId());
-	        pstmt.setDate(2, Date.valueOf(reservation.getDate()));
-	        pstmt.setTime(3, Time.valueOf(reservation.getStart()));
-	        pstmt.setTime(4, Time.valueOf(reservation.getEnd()));
+	        pstmt.setString(2, reservation.getDate());
+	        pstmt.setString(3, reservation.getStart());
+	        pstmt.setString(4, reservation.getEnd());
 	        pstmt.setString(5, reservation.getUserId());
 
 	        ret = pstmt.executeUpdate();
