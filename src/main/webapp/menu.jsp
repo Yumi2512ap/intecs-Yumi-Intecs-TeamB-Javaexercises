@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="jp.co.seminar.beans.UserBean" %>
-<%
-	UserBean uB = new UserBean("test", "テストユーザ", "大阪", "pass",true);
-    session.setAttribute("user", uB);
+<%@ page import="jp.co.seminar.beans.MeetingRoom" %>
 
-    UserBean user = (UserBean) session.getAttribute("user");
+<%
+	MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
+    UserBean user = MR.getUser();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
