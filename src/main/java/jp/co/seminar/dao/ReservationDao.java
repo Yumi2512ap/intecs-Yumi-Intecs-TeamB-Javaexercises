@@ -66,85 +66,101 @@ public class ReservationDao {
 	//--予約情報を格納する　
 	public boolean insert(ReservationBean reservation) {
 
-	    int ret = -1;
+		int ret = -1;
 
-	    String sql = "INSERT INTO reservation (roomid, date, start, end, userid) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO reservation (roomid, date, start, end, userid) VALUES (?, ?, ?, ?, ?)";
 
-	    try (Connection conn = MRConnectionProvider.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-	        pstmt.setString(1, reservation.getRoomId());
-	        pstmt.setString(2, reservation.getDate());
-	        pstmt.setString(3, reservation.getStart());
-	        pstmt.setString(4, reservation.getEnd());
-	        pstmt.setString(5, reservation.getUserId());
+			pstmt.setString(1, reservation.getRoomId());
+			pstmt.setString(2, reservation.getDate());
+			pstmt.setString(3, reservation.getStart());
+			pstmt.setString(4, reservation.getEnd());
+			pstmt.setString(5, reservation.getUserId());
 
-	        ret = pstmt.executeUpdate();
+			ret = pstmt.executeUpdate();
 
-	        ResultSet rs = pstmt.getGeneratedKeys();
-	        if (rs.next()) {
-	            reservation.setId(rs.getInt(1));
-	        }
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				reservation.setId(rs.getInt(1));
+			}
 
-	        return ret != 0;
+			return ret != 0;
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
-	
-//	public boolean insert(ReservationBean reservation) {
-//
-//		//-1が帰ってきたら格納できていない P31参考
-//		int ret = -1;
-//
-//		String sql = "INSERT INTO reservation WHERE date = ?";
-//		try (Connection conn = MRConnectionProvider.getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//			//SQL文を実行
-//
-//			int autoIncrementKey = 0;
-//			ret = pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-//			ResultSet rs = pstmt.getGeneratedKeys();
-//			return ret != 0;
-//
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//			System.err.println("ドライバが見つかりません。");
-//			return false;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.err.println("SQLに関するエラーです");
-//			return false;
-//		}
-//	}
 
+	//	public boolean insert(ReservationBean reservation) {
+	//
+	//		//-1が帰ってきたら格納できていない P31参考
+	//		int ret = -1;
+	//
+	//		String sql = "INSERT INTO reservation WHERE date = ?";
+	//		try (Connection conn = MRConnectionProvider.getConnection();
+	//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	//			//SQL文を実行
+	//
+	//			int autoIncrementKey = 0;
+	//			ret = pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+	//			ResultSet rs = pstmt.getGeneratedKeys();
+	//			return ret != 0;
+	//
+	//		} catch (ClassNotFoundException e) {
+	//			e.printStackTrace();
+	//			System.err.println("ドライバが見つかりません。");
+	//			return false;
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//			System.err.println("SQLに関するエラーです");
+	//			return false;
+	//		}
+	//	}
 
 	//--予約情報を削除する  P37
 	public boolean delete(ReservationBean reservation) {
 		int ret = -1;
-		//SQLでデータベース削除
-		String sql = "DELETE FROM reservation WHERE date = ?";
-		//try-with-resources構文でリソースを自動的にクローズ
+		String sql = "DELETE FROM reservation WHERE id = ?";
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			//SQL文を実行
+
+			pstmt.setInt(1, reservation.getId());
+
 			ret = pstmt.executeUpdate();
 
 			return ret != 0;
 
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("ドライバが見つかりません。");
 			return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("SQLに関するエラーです");
-			return false;
-		} //try-with-resourcesによりconnとpstmtは自動的にクローズされる
-
+		}
 	}
+
+	//	public boolean delete(ReservationBean reservation) {
+	//		int ret = -1;
+	//		//SQLでデータベース削除
+	//		String sql = "DELETE FROM reservation WHERE date = ?";
+	//		//try-with-resources構文でリソースを自動的にクローズ
+	//		try (Connection conn = MRConnectionProvider.getConnection();
+	//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	//			//SQL文を実行
+	//			ret = pstmt.executeUpdate();
+	//
+	//			return ret != 0;
+	//
+	//		} catch (ClassNotFoundException e) {
+	//			e.printStackTrace();
+	//			System.err.println("ドライバが見つかりません。");
+	//			return false;
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//			System.err.println("SQLに関するエラーです");
+	//			return false;
+	//		} //try-with-resourcesによりconnとpstmtは自動的にクローズされる
+	// }
 
 	//　追加要件
 	// 予約の全件取得
@@ -172,8 +188,8 @@ public class ReservationDao {
 					//結果セットから取得　※カラム名
 					String[] res = new String[5];
 					res[0] = rs.getString("date");
-					res[1] = rs.getString("start").substring(0,5);
-					res[2] = rs.getString("end").substring(0,5);
+					res[1] = rs.getString("start").substring(0, 5);
+					res[2] = rs.getString("end").substring(0, 5);
 					res[3] = rs.getString("room_name");
 					res[4] = rs.getString("user_name");
 

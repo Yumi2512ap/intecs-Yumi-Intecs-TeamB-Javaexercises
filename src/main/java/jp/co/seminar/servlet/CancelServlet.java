@@ -35,8 +35,7 @@ public class CancelServlet extends HttpServlet {
 		ReservationBean reservation = (ReservationBean) session.getAttribute("reservation");
 		try {
 			meetingRoom.cancel(reservation);
-			request.getRequestDispatcher("canceld.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("canceled.jsp").forward(request, response);
 		} catch (Exception e) {
 			request.setAttribute("errorReason", e.getMessage());
 			request.getRequestDispatcher("cancelError.jsp")
