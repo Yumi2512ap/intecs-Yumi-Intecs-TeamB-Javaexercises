@@ -57,13 +57,13 @@ public class ReservationBean implements Serializable {
 
 	//開始時刻取得　開始時刻出力
 	public String getStart() {
-		return start + ":00";
+		return start ;
 	}
 
 	//終了時刻取得　終了時刻取得
 
 	public String getEnd() {
-		return end + ":00";
+		return end ;
 	}
 
 	//利用者ID取得　利用者ID出力
