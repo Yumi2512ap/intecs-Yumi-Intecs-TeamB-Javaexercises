@@ -51,9 +51,11 @@ public class LoginFilter extends HttpFilter implements Filter {
 		boolean isLoginServlet = rURI.equals(contextPath + "/Login");
 		boolean isCss = rURI.startsWith(contextPath + "/stylesheet.css");
 		boolean isJs = rURI.startsWith(contextPath + "/sample.js");
+		boolean isAddUserServlet = rURI.startsWith(contextPath + "/AddUser");
+		boolean isAddUser = rURI.startsWith(contextPath + "/addUser.jsp");
 
 		// ログインJSP,サーブレット,CSS,JSは処理してよい
-		if (isLoginJsp || isLoginServlet || isCss || isJs) {
+		if (isLoginJsp || isLoginServlet || isCss || isJs || isAddUser || isAddUserServlet) {
 			chain.doFilter(request, response);
 			return;
 		}
