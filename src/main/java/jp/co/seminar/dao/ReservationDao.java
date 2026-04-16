@@ -1,11 +1,9 @@
 package jp.co.seminar.dao;//p164 p42 データベースdate型　
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,9 +74,11 @@ public class ReservationDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pstmt.setString(1, reservation.getRoomId());
-			pstmt.setDate(2, Date.valueOf(reservation.getDate()));
-			pstmt.setTime(3, Time.valueOf(reservation.getStart()));
-			pstmt.setTime(4, Time.valueOf(reservation.getEnd()));
+
+			pstmt.setString(2, reservation.getDate());
+			pstmt.setString(3, reservation.getStart());
+			pstmt.setString(4, reservation.getEnd());
+
 			pstmt.setString(5, reservation.getUserId());
 
 			ret = pstmt.executeUpdate();
@@ -125,27 +125,44 @@ public class ReservationDao {
 	//--予約情報を削除する  P37
 	public boolean delete(ReservationBean reservation) {
 		int ret = -1;
-		//SQLでデータベース削除
-		String sql = "DELETE FROM reservation WHERE date = ?";
-		//try-with-resources構文でリソースを自動的にクローズ
+		String sql = "DELETE FROM reservation WHERE id = ?";
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			//SQL文を実行
+
+			pstmt.setInt(1, reservation.getId());
+
 			ret = pstmt.executeUpdate();
 
 			return ret != 0;
 
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("ドライバが見つかりません。");
 			return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("SQLに関するエラーです");
-			return false;
-		} //try-with-resourcesによりconnとpstmtは自動的にクローズされる
-
+		}
 	}
+
+	//	public boolean delete(ReservationBean reservation) {
+	//		int ret = -1;
+	//		//SQLでデータベース削除
+	//		String sql = "DELETE FROM reservation WHERE date = ?";
+	//		//try-with-resources構文でリソースを自動的にクローズ
+	//		try (Connection conn = MRConnectionProvider.getConnection();
+	//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	//			//SQL文を実行
+	//			ret = pstmt.executeUpdate();
+	//
+	//			return ret != 0;
+	//
+	//		} catch (ClassNotFoundException e) {
+	//			e.printStackTrace();
+	//			System.err.println("ドライバが見つかりません。");
+	//			return false;
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//			System.err.println("SQLに関するエラーです");
+	//			return false;
+	//		} //try-with-resourcesによりconnとpstmtは自動的にクローズされる
+	// }
 
 	//　追加要件
 	// 予約の全件取得
