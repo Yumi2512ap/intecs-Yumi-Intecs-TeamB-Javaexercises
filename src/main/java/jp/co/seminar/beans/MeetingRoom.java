@@ -89,6 +89,7 @@ public class MeetingRoom implements Serializable {
 	// 予約状況boolean
 	public String[][] getDisabled() {
 		//会議室予約システムの利用日における予約状況を返します。
+
 		// null の2次元配列とDAOを用意
 		String[][] disabled = new String[rooms.length][PERIOD.length];
 		ReservationDao reD = new ReservationDao();
@@ -103,6 +104,24 @@ public class MeetingRoom implements Serializable {
 			// 配列の[room添え字][時間添え字]に代入
 			disabled[roomIndex(roomId)][startPeriod(start)] = "disabled";
 
+		}
+
+		//現在の時刻を取得
+		LocalDateTime nowTime = LocalDateTime.now();
+		//予約時刻を取得し比較できる形式に その前にgetDateとStartはStringなのでキャストを挟む
+		LocalDate date1 = LocalDate.parse(date);
+
+		for (int i = 0; i < disabled.length; i++) {
+			for (int j = 0; j < PERIOD.length; j++) {
+				LocalTime time = LocalTime.parse(PERIOD[j]);
+				// 表の時刻
+				LocalDateTime cellTime = LocalDateTime.of(date1, time);
+				// 現在時刻が表の時刻より後なら
+				if (nowTime.isAfter(cellTime)) {
+					disabled[i][j] = "disabled";
+				}
+
+			}
 		}
 		return disabled;
 	}
