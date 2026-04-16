@@ -40,7 +40,7 @@ public class ReserveServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			nextPage = "reserveError.jsp";
-			request.setAttribute("errReason", e.getMessage());
+			request.setAttribute("errorReason", "予約時刻を過ぎているため予約できません");
 			request.getRequestDispatcher(nextPage)
 					.forward(request, response);
 

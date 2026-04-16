@@ -26,7 +26,7 @@
 		<input type="submit" value="日付変更">
 	</form>
 	
-	<h2>予約可能時間帯${meetingRoom.user.name}(ダミーネーム)</h2>
+	<h2>予約可能時間帯(${MR.user.name})</h2>
 	
 		<table class="list">
 			<tr>
