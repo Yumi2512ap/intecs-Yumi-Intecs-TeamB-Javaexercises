@@ -45,15 +45,21 @@ public class LoginFilter extends HttpFilter implements Filter {
 		// パスを取得
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String rURI = httpRequest.getRequestURI();
+		String contextPath = httpRequest.getContextPath();
 
-		// ログインJSPとサーブレットは処理してよい
-		if (rURI.equals("/MeetingRoom/login.jsp") || rURI.equals("/MeetingRoom/Login")) {
+		boolean isLoginJsp = rURI.equals(contextPath + "/login.jsp");
+		boolean isLoginServlet = rURI.equals(contextPath + "/Login");
+		boolean isCss = rURI.startsWith(contextPath + "/stylesheet.css");
+		boolean isJs = rURI.startsWith(contextPath + "/sample.js");
+
+		// ログインJSP,サーブレット,CSS,JSは処理してよい
+		if (isLoginJsp || isLoginServlet || isCss || isJs) {
 			chain.doFilter(request, response);
 			return;
 		}
 
 		// それ以外のページはセッションにMRがあれば処理してよい
-		HttpSession session = ((HttpServletRequest) request).getSession(false);
+		HttpSession session = ((HttpServletRequest) request).getSession();
 
 		if (session.getAttribute("MR") != null) {
 			chain.doFilter(request, response);
