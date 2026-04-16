@@ -43,7 +43,7 @@ public class ChangeDateServlet extends HttpServlet {
 		}
 			
 		if (date != null && !date.isEmpty()) {
-		    session.setAttribute("reservedDate", date);
+			MR.setDate(date);
 		}
 
 		request.getRequestDispatcher(nextPage).forward(request, response);	
