@@ -17,28 +17,34 @@
 <h1>管理者用ページ</h1>
 <hr>
 <h2>会議室管理</h2>
-	 <form action="<%= request.getContextPath() %>/AdminPage" method="post">
+		<font color=red>${deleteErrorMessage}</font>
+		${deleteSuccessMessage}
 		<table class="list">
 		<tr>
 			<td>会議室ID</td>
 			<td>会議室名</td>
 		</tr>
 		<% for(int i = 0; i < roomsName.length; i++){ %>
-		<tr>
-			<td><%= roomsId[i] %></td> 
-			<td><%= roomsName[i] %></td>
-			<td><button type="submit" name="delete" value="<%= roomsId[i] %>">削除</button></td>
-		</tr>
+	 		<form action="<%= request.getContextPath() %>/DeleteRoom" method="post">
+				<tr>
+					<td><%= roomsId[i] %></td> 
+					<td><%= roomsName[i] %></td>
+					<td><input type="submit" value="削除"></td>
+					<td><input type="hidden" name="roomId" value="<%= roomsId[i] %>"></td>
+					<td><input type="hidden" name="roomName" value="<%= roomsName[i] %>"></td>
+				</tr>
+			 </form>
 		<% } %>      
 	  </table>
-  </form>
   
 <hr>
 <h2>会議室追加</h2>
+		<font color=red>${errorMessage}</font>
+		${successMessage}
   <form action="<%= request.getContextPath() %>/AddRoom" method="post">
 		<input type="number" name="roomId" placeholder="会議室ID (数字4桁)" required="required">
 		<input type="text" name="roomname" placeholder="追加したい部屋名" required="required">
-		<input type="submit" value="追加">
+		<input type="submit" value="追加"><br>
   </form>
   
   <hr>

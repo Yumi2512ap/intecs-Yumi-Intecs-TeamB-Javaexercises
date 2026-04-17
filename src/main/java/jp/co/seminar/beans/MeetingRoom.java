@@ -305,8 +305,20 @@ public class MeetingRoom implements Serializable {
 		try {
 			RoomDao roD = new RoomDao();
 			roD.addRoom(roomId, roomName);
+			this.rooms = roD.findAll();//表示のためのroomsをここで更新
 		} catch (Exception e) {
-			System.err.println("追加エラー");
+			System.err.println("MeetingRoom:addRoomエラー");
+		}
+	}
+
+	//会議室の削除
+	public void deleteRoom(String roomId) {
+		try {
+			RoomDao roD = new RoomDao();
+			roD.deleteRoom(roomId);
+			this.rooms = roD.findAll();
+		} catch (Exception e) {
+			System.err.println("MeetingRoom:deleteRoomエラー");
 		}
 	}
 

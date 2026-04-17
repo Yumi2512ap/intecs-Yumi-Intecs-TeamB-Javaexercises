@@ -64,13 +64,22 @@ public class RoomDao {
 			return pstmt.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("会議室の追加に失敗しました");
+			System.err.println("RoomDao:会議室の追加に失敗しました");
 			return false;
 		}
 	}
 
-//	public Boolean deleteRoom(String id) {
-//		String sql = "UPDATE room (deleteFlg) VALUES(?)";
-//		
-//	}
+	//会議室の削除
+	public Boolean deleteRoom(String roomId) {
+		String sql = "DELETE FROM room  WHERE id = ?";
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, roomId);
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("RoomDao:会議室の削除に失敗しました");
+			return false;
+		}
+	}
 }
