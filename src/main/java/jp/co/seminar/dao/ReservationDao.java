@@ -172,11 +172,59 @@ public class ReservationDao {
 
 		//DB取得結果を格納 
 		List<String[]> List = new ArrayList<String[]>();
-		//データベース接続 ※テーブル名
+		//データベース接続 
 		String sql = "SELECT date, start, end, room.name AS room_name, user.name AS user_name "
 				+ "FROM reservation AS r "
 				+ "INNER JOIN room ON r.roomid = room.id "
-				+ "INNER JOIN user ON r.userid = user.id";
+				+ "INNER JOIN user ON r.userid = user.id "
+				+ "ORDER BY date, start";
+		// order between where where
+		//try-with-resources構文
+		try (
+				Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			//SQL文を実行して結果を取得
+			try (ResultSet rs = pstmt.executeQuery()) {
+				//結果セットをviewへ送るための準備
+				while (rs.next()) {
+					//結果セットから取得　※カラム名
+					String[] res = new String[5];
+					res[0] = rs.getString("date");
+					res[1] = rs.getString("start").substring(0, 5);
+					res[2] = rs.getString("end").substring(0, 5);
+					res[3] = rs.getString("room_name");
+					res[4] = rs.getString("user_name");
+
+					List.add(res);
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("ドライバが見つかりません。");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("SQLに関するエラーです");
+		}
+		//try-with-resourcesによりconn,pstmtは自動的にクローズされる
+		return List;//画面に返す
+
+	}
+
+	// 予約の全件取得
+	public List<String[]> findAll(String order, String date1, String date2, String room, String user) {
+
+		//////利用日を指定し、該当日の予約情報を取得する
+
+		//DB取得結果を格納 
+		List<String[]> List = new ArrayList<String[]>();
+		//データベース接続 
+		String sql = "SELECT date, start, end, room.name AS room_name, user.name AS user_name "
+				+ "FROM reservation AS r "
+				+ "INNER JOIN room ON r.roomid = room.id "
+				+ "INNER JOIN user ON r.userid = user.id "
+				+ "ORDER BY date, start";
+		// order between where where
 
 		//try-with-resources構文
 		try (
