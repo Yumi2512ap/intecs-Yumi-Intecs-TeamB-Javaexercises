@@ -8,7 +8,7 @@
 	String[] roomsName = MR.getRoomsName();
 	String[] roomsId = MR.getRoomsId();
 	String[] times = MR.getPeriod();
-	ReservationBean[][] rBs = MR.getReservations();
+	String[][] can = MR.getCanCancels();
 %>
 <!DOCTYPE html>
 <html>
@@ -46,8 +46,8 @@
 							<form action="<%= request.getContextPath() %>/CancelCreate" method="post">
 								<input type="submit" name="time"
 									value="<%= times[j] %>"
-									<%= rBs[i][j] == null ? "disabled" : "" %>
-									class="<%= rBs[i][j] != null ? "can" : "cant" %>">
+									<%= can[i][j] == null ? "disabled" : "" %>
+									class="<%= can[i][j] == null ? "cant" : "can" %>">
 								<input type="hidden" name="roomId" value="<%= roomsId[i] %>">
 							</form>
 						</td> 
