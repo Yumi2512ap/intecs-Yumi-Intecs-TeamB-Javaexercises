@@ -56,6 +56,7 @@ public class MeetingRoom implements Serializable {
 		return reB;
 
 	}
+
 	//キャンセル情報の生成
 	public ReservationBean createCancel(String roomId, String start) {
 
@@ -93,7 +94,7 @@ public class MeetingRoom implements Serializable {
 		return reBs;
 	}
 
-	// 予約状況boolean
+	// 予約状況String
 	public String[][] getDisabled() {
 		//会議室予約システムの利用日における予約状況を返します。
 
@@ -113,24 +114,53 @@ public class MeetingRoom implements Serializable {
 
 		}
 
+		for (int i = 0; i < disabled.length; i++) {
+			for (int j = 0; j < PERIOD.length; j++) {
+				// 現在時刻が表の時刻より後なら
+				if (!AfterNow(PERIOD[j])) {
+					disabled[i][j] = "disabled";
+				}
+			}
+		}
+		return disabled;
+	}
+
+	// キャンセル可能状況String
+	public String[][] getCanCancels() {
+		//会議室予約システムの利用日における予約状況を返します。
+
+		// null の2次元配列とDAOを用意
+		String[][] cans = new String[rooms.length][PERIOD.length];
+		ReservationDao reD = new ReservationDao();
+		// 予約一覧を取得
+		List<ReservationBean> reList = reD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
+		// 予約リストの全件
+		for (ReservationBean reB : reList) {
+			// 予約のユーザーIDと自信のユーザーIDが一致かつスタートが現在時刻より後
+			if (reB.getUserId().equals(this.user.getId()) && AfterNow(reB.getStart())) {
+				String roomId = reB.getRoomId();
+				String start = reB.getStart();
+
+				// 配列の[room添え字][時間添え字]に代入
+				cans[roomIndex(roomId)][startPeriod(start)] = "can";
+			}
+
+		}
+
+		return cans;
+	}
+
+	private boolean AfterNow(String time) {
 		//現在の時刻を取得
 		LocalDateTime nowTime = LocalDateTime.now();
 		//予約時刻を取得し比較できる形式に その前にgetDateとStartはStringなのでキャストを挟む
 		LocalDate date1 = LocalDate.parse(date);
+		LocalTime Time = LocalTime.parse(time);
+		// 表の時刻
+		LocalDateTime cellTime = LocalDateTime.of(date1, Time);
+		// 現在時刻が表の時刻より後なら
+		return cellTime.isAfter(nowTime);
 
-		for (int i = 0; i < disabled.length; i++) {
-			for (int j = 0; j < PERIOD.length; j++) {
-				LocalTime time = LocalTime.parse(PERIOD[j]);
-				// 表の時刻
-				LocalDateTime cellTime = LocalDateTime.of(date1, time);
-				// 現在時刻が表の時刻より後なら
-				if (nowTime.isAfter(cellTime)) {
-					disabled[i][j] = "disabled";
-				}
-
-			}
-		}
-		return disabled;
 	}
 
 	// ルームIDが一致するものを検索
