@@ -39,22 +39,19 @@ public class AddRoomServlet extends HttpServlet {
 		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 		String roomName = request.getParameter("roomname");
 		String roomId = request.getParameter("roomId");
-		String message;
-		if (roomName.length() <= 25 && roomId.matches(".*[0-9]{4}.*")) {
+		String successMessage = null;
+		String errorMessage = null;
+		if (roomName.length() <= 25 && roomId.matches("[0-9]{4}") && MR.getRoom(roomName) == null) {
 			MR.addRoom(roomId, roomName);
 			session.setAttribute("MR", MR);
-			message = "会議室の追加に成功しました";
-		} else {
-			if (roomName.length() >= 25) {
-				message = "会議室の追加に失敗しました 会議室名は２５文字以下にしてください";
-			} else {
-				message = "会議室の追加に失敗しました";
-			}
+			successMessage = "会議室の追加に成功しました <br>会議室ID:"+roomId+"会議室名:"+roomName;
+		} else if (roomName.length() > 25) {
+			errorMessage = "会議室の追加に失敗しました 会議室名は２５文字以下にしてください";
+		} else if(MR.getRoom(roomName) != null){
+			errorMessage = "会議室の追加に失敗しました 登録済みの会議室を追加することはできません";
 		}
-		request.setAttribute("message", message);
+		request.setAttribute("errorMessage", errorMessage);
+		request.setAttribute("successMessage", successMessage);
 		request.getRequestDispatcher("addRoom.jsp").forward(request, response);
-		
-
 	}
-
 }
