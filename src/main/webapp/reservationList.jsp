@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="jp.co.seminar.beans.MeetingRoom" %>
+<%@ page import="jp.co.seminar.beans.MeetingRoom"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,10 +20,10 @@
 			<th>予約者</th>
 		</tr>
 		<%
-			MeetingRoom MR =new MeetingRoom();
-			out.print(MR.getReservationList());
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
+		out.print(MR.getReservationList());
 		%>
-		${ ReservationList }
+		
 	</table>
 
 	<hr>

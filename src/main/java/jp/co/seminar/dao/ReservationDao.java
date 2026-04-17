@@ -176,7 +176,8 @@ public class ReservationDao {
 		String sql = "SELECT date, start, end, room.name AS room_name, user.name AS user_name "
 				+ "FROM reservation AS r "
 				+ "INNER JOIN room ON r.roomid = room.id "
-				+ "INNER JOIN user ON r.userid = user.id";
+				+ "INNER JOIN user ON r.userid = user.id "
+				+ "ORDER BY date, start;";
 
 		//try-with-resources構文
 		try (

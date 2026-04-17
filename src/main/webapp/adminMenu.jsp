@@ -19,6 +19,11 @@
 		method="get">
 		<input type="submit" value="会議室管理">
 	</form>
+		<form action="<%=request.getContextPath()%>/reservationList.jsp"
+		method="get">
+		<input type="submit" value="全ユーザー予約一覧">
+	</form>
+	
 	<form action="<%= request.getContextPath() %>/menu.jsp" method="get">
 		<input type="submit" value="戻る">
 	</form>
