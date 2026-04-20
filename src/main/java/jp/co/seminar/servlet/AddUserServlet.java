@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
 import jp.co.seminar.beans.UserBean;
@@ -45,14 +44,12 @@ public class AddUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		// セッションからミーティングルームを取得
-		HttpSession session = request.getSession();
-		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 
 		// JSPからデータを受け取る
 		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
 		String userPw = request.getParameter("userPw");
+		String userPw2 = request.getParameter("userPw2");
 		String address = request.getParameter("address");
 		String admin = request.getParameter("admin");
 
@@ -65,10 +62,19 @@ public class AddUserServlet extends HttpServlet {
 			nextPage = "addUser.jsp";
 		}
 		String msg;
+		
+		if (!userPw.equals(userPw2)) {
+			msg = "同じパスワードを入力してください";
+			request.setAttribute("msg", msg);
+			RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+			rd.forward(request, response);
+			return;
+		}
 
 		UserBean user = new UserBean(userId, userName, address, userPw, isAdmin);
 
 		// ユーザーチェック(ID被りなし?
+		MeetingRoom MR = new MeetingRoom();
 		if (!MR.existsByUserId(userId)) {
 			//ユーザー登録
 			try {
