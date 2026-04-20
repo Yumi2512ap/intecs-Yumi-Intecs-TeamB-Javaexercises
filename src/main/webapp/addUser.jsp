@@ -22,6 +22,10 @@
 				<td><input type="password" name="userPw" value=""></td>
 			</tr>
 			<tr>
+				<th>パスワード(2回目)：</th>
+				<td><input type="password" name="userPw2" value=""></td>
+			</tr>
+			<tr>
 				<th>表示ユーザー名：</th>
 				<td><input type="text" name="userName" value=""></td>
 			</tr>

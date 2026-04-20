@@ -49,6 +49,7 @@ public class AddUserServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
 		String userPw = request.getParameter("userPw");
+		String userPw2 = request.getParameter("userPw2");
 		String address = request.getParameter("address");
 		String admin = request.getParameter("admin");
 
@@ -61,6 +62,14 @@ public class AddUserServlet extends HttpServlet {
 			nextPage = "addUser.jsp";
 		}
 		String msg;
+		
+		if (!userPw.equals(userPw2)) {
+			msg = "同じパスワードを入力してください";
+			request.setAttribute("msg", msg);
+			RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+			rd.forward(request, response);
+			return;
+		}
 
 		UserBean user = new UserBean(userId, userName, address, userPw, isAdmin);
 
