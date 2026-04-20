@@ -31,7 +31,11 @@ public class LoginServlet extends HttpServlet {
 
 		//インスタンス
 		MeetingRoom MR = new MeetingRoom();
-		boolean result = MR.login(userId, userPw);
+		
+		// ipアドレスとユーザーのデバイス等の情報
+		String ip = request.getRemoteAddr();
+		String agent = request.getHeader("User-Agent");
+		boolean result = MR.login(userId, userPw, ip, agent);
 
 		//MRを送る（setattribute)
 		session.setAttribute("MR", MR);

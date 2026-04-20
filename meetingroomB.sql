@@ -10,6 +10,7 @@ USE meetingroomB;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS reservation;
+DROP TABLE IF EXISTS access_log;
 
 CREATE TABLE user (
         id VARCHAR(7) PRIMARY KEY,
@@ -35,4 +36,13 @@ CREATE TABLE reservation (
         FOREIGN KEY(roomid) REFERENCES room(id),
         FOREIGN KEY(userid) REFERENCES user(id),
         UNIQUE(roomid, date, start)
+);
+
+CREATE TABLE access_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    try_user_id VARCHAR(50),
+    result VARCHAR(10) NOT NULL,
+    ip_address VARCHAR(45),
+    user_agent VARCHAR(255),
+    when_access DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

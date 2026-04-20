@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
+import jp.co.seminar.dao.AccessLogDao;
 import jp.co.seminar.dao.ReservationDao;
 import jp.co.seminar.dao.RoomDao;
 import jp.co.seminar.dao.UserDao;
@@ -199,15 +200,22 @@ public class MeetingRoom implements Serializable {
 	}
 
 	// ログイン処理
-	public boolean login(String id, String password) {
+	public boolean login(String id, String password, String ip, String agent) {
 		//会議室予約システムにログインします。
 		UserDao uD = new UserDao();
 		UserBean uB = uD.certificate(id, password);
+		boolean result;
 		if (uB != null) {
 			this.user = uB;
-			return true;
+			result = true;
+		} else {
+			result = false;
 		}
-		return false;
+		// 以下ログ記録
+		AccessLogDao ALD = new AccessLogDao();
+
+		ALD.addLog(id, result ? "OK" : "NG", ip, agent);
+		return result;
 	}
 
 	// 予約の処理
@@ -330,6 +338,25 @@ public class MeetingRoom implements Serializable {
 		} catch (Exception e) {
 			System.err.println("MeetingRoom:deleteRoomエラー");
 		}
+	}
+
+	// アクセスログの取得
+	public String getAccessLog() {
+
+		AccessLogDao ALD = new AccessLogDao();
+		List<AccessLogBean> list = ALD.findAll();
+		String result = "";
+		for (AccessLogBean ALB : list) {
+			result += "<tr>"
+					+ "<td>" + ALB.getId() + "</td>"
+					+ "<td>" + ALB.getUserId() + "</td>"
+					+ "<td>" + ALB.getResult() + "</td>"
+					+ "<td>" + ALB.getWhenTime() + "</td>"
+					+ "<td>" + ALB.getIp() + "</td>"
+					+ "<td>" + ALB.getAgent() + "</td>"
+					+ "</tr>";
+		}
+		return result;
 	}
 
 	@Override
