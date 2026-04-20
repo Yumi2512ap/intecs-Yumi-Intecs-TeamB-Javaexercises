@@ -340,6 +340,25 @@ public class MeetingRoom implements Serializable {
 		}
 	}
 
+	// アクセスログの取得
+	public String getAccessLog() {
+
+		AccessLogDao ALD = new AccessLogDao();
+		List<AccessLogBean> list = ALD.findAll();
+		String result = "";
+		for (AccessLogBean ALB : list) {
+			result += "<tr>"
+					+ "<td>" + ALB.getId() + "</td>"
+					+ "<td>" + ALB.getUserId() + "</td>"
+					+ "<td>" + ALB.getResult() + "</td>"
+					+ "<td>" + ALB.getWhenTime() + "</td>"
+					+ "<td>" + ALB.getIp() + "</td>"
+					+ "<td>" + ALB.getAgent() + "</td>"
+					+ "</tr>";
+		}
+		return result;
+	}
+
 	@Override
 	public String toString() {
 		return "利用日:" + this.date + "利用時間:" + INTERVAL;

@@ -23,6 +23,10 @@
 		method="post">
 		<input type="submit" value="全ユーザー予約一覧">
 	</form>
+	<form action="<%=request.getContextPath()%>/accessLog.jsp"
+		method="get">
+		<input type="submit" value="アクセスログ">
+	</form>
 	
 	<form action="<%= request.getContextPath() %>/menu.jsp" method="get">
 		<input type="submit" value="戻る">
