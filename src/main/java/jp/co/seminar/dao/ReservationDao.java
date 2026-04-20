@@ -165,51 +165,6 @@ public class ReservationDao {
 	// }
 
 	//　追加要件
-	// 予約の全件取得
-	public List<String[]> findAll() {
-
-		//////利用日を指定し、該当日の予約情報を取得する
-
-		//DB取得結果を格納 
-		List<String[]> List = new ArrayList<String[]>();
-		//データベース接続 
-		String sql = "SELECT date, start, end, room.name AS room_name, user.name AS user_name "
-				+ "FROM reservation AS r "
-				+ "INNER JOIN room ON r.roomid = room.id "
-				+ "INNER JOIN user ON r.userid = user.id "
-				+ "ORDER BY date, start";
-		// order between where where
-		//try-with-resources構文
-		try (
-				Connection conn = MRConnectionProvider.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-			//SQL文を実行して結果を取得
-			try (ResultSet rs = pstmt.executeQuery()) {
-				//結果セットをviewへ送るための準備
-				while (rs.next()) {
-					//結果セットから取得　※カラム名
-					String[] res = new String[5];
-					res[0] = rs.getString("date");
-					res[1] = rs.getString("start").substring(0, 5);
-					res[2] = rs.getString("end").substring(0, 5);
-					res[3] = rs.getString("room_name");
-					res[4] = rs.getString("user_name");
-
-					List.add(res);
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("ドライバが見つかりません。");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("SQLに関するエラーです");
-		}
-		//try-with-resourcesによりconn,pstmtは自動的にクローズされる
-		return List;//画面に返す
-
-	}
 
 	// 予約の全件取得
 	public List<String[]> findAll(String order, String date1, String date2, String room, String user) {
@@ -218,19 +173,61 @@ public class ReservationDao {
 
 		//DB取得結果を格納 
 		List<String[]> List = new ArrayList<String[]>();
-		//データベース接続 
-		String sql = "SELECT date, start, end, room.name AS room_name, user.name AS user_name "
-				+ "FROM reservation AS r "
-				+ "INNER JOIN room ON r.roomid = room.id "
-				+ "INNER JOIN user ON r.userid = user.id "
-				+ "ORDER BY date, start";
-		// order between where where
+		// sql文を用意
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT date, start, end, room.name AS room_name, user.name AS user_name ");
+		sql.append("FROM reservation AS r ");
+		sql.append("INNER JOIN room ON r.roomid = room.id ");
+		sql.append("INNER JOIN user ON r.userid = user.id ");
+		sql.append("WHERE 1=1 ");
 
+		if (date1 != null && !date1.isEmpty()) {
+			sql.append("AND date >= ? ");
+		}
+		if (date2 != null && !date2.isEmpty()) {
+			sql.append("AND date <= ? ");
+		}
+		if (room != null && !room.isEmpty()) {
+			sql.append("AND room.name = ? ");
+		}
+		if (user != null && !user.isEmpty()) {
+			sql.append("AND user.name = ? ");
+		}
+
+		if ("DESC".equalsIgnoreCase(order)) {
+			sql.append(" ORDER BY date DESC, start DESC ");
+		} else {
+			sql.append(" ORDER BY date ASC, start ASC ");
+		}
+
+		String SQL = sql.toString();
 		//try-with-resources構文
 		try (
 				Connection conn = MRConnectionProvider.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				PreparedStatement pstmt = conn.prepareStatement(SQL)) {
 
+			int index = 1;
+
+			if (date1 != null && !date1.isEmpty()) {
+				pstmt.setString(index++, date1);
+			}
+			if (date2 != null && !date2.isEmpty()) {
+				pstmt.setString(index++, date2);
+			}
+			if (room != null && !room.isEmpty()) {
+				pstmt.setString(index++, room);
+			}
+			if (user != null && !user.isEmpty()) {
+				pstmt.setString(index++, user);
+			}
+			
+			
+			// デバッグ
+			System.out.println("SQL = " + SQL);
+			System.out.println("date1 = " + date1);
+			System.out.println("date2 = " + date2);
+			System.out.println("room = " + room);
+			System.out.println("user = " + user);
 			//SQL文を実行して結果を取得
 			try (ResultSet rs = pstmt.executeQuery()) {
 				//結果セットをviewへ送るための準備

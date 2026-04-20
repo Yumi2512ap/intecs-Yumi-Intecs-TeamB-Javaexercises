@@ -284,10 +284,20 @@ public class MeetingRoom implements Serializable {
 		}
 	}
 
-	//　予約一覧を取得
+	//　予約一覧を取得(情報なし
 	public String getReservationList() {
+		return getReservationList(null, null, null, null, null);
+	}
+
+	//　予約一覧を取得
+	public String getReservationList(String order, String date1, String date2, String room, String user) {
+		if ("all".equals(room)) {
+			room = null;
+		} else if (room != null) {
+			room = rooms[Integer.parseInt(room)].getName();
+		}
 		ReservationDao rD = new ReservationDao();
-		List<String[]> list = rD.findAll();
+		List<String[]> list = rD.findAll(order, date1, date2, room, user);
 		String result = "";
 		for (String[] str : list) {
 			result += "<tr>"
