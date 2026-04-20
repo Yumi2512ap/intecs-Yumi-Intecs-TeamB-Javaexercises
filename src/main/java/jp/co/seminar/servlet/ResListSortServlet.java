@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
+import jp.co.seminar.beans.SearchBean;
 
 /**
  * Servlet implementation class ResListSortServlet
@@ -51,8 +52,9 @@ public class ResListSortServlet extends HttpServlet {
 		String date2 = request.getParameter("date2");
 		String room = request.getParameter("room");
 		String user = request.getParameter("user");
-
+		
 		request.setAttribute("reservations", MR.getReservationList(order, date1, date2, room, user));
+		request.setAttribute("searchBean", new SearchBean(order, date1, date2, room, user));
 
 		request.getRequestDispatcher("reservationList.jsp").forward(request, response);
 	}
