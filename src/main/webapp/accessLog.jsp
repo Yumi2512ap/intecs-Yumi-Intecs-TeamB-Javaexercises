@@ -8,6 +8,8 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
+	<h1>アクセスログ</h1>
+	<hr>
 	<table>
 		<tr>
 			<th>アクセスログID</th>
