@@ -182,10 +182,10 @@ public class ReservationDao {
 		sql.append("WHERE 1=1 ");
 
 		if (date1 != null && !date1.isEmpty()) {
-			sql.append("AND start <= ? ");
+			sql.append("AND date >= ? ");
 		}
 		if (date2 != null && !date2.isEmpty()) {
-			sql.append("AND end >= ? ");
+			sql.append("AND date <= ? ");
 		}
 		if (room != null && !room.isEmpty()) {
 			sql.append("AND room.name = ? ");
@@ -194,12 +194,10 @@ public class ReservationDao {
 			sql.append("AND user.name = ? ");
 		}
 
-		sql.append("ORDER BY date, start");
-
 		if ("DESC".equalsIgnoreCase(order)) {
-			sql.append(" DESC");
+			sql.append(" ORDER BY date DESC, start DESC ");
 		} else {
-			sql.append(" ASC");
+			sql.append(" ORDER BY date ASC, start ASC ");
 		}
 
 		String SQL = sql.toString();
@@ -222,7 +220,14 @@ public class ReservationDao {
 			if (user != null && !user.isEmpty()) {
 				pstmt.setString(index++, user);
 			}
-
+			
+			
+			// デバッグ
+			System.out.println("SQL = " + SQL);
+			System.out.println("date1 = " + date1);
+			System.out.println("date2 = " + date2);
+			System.out.println("room = " + room);
+			System.out.println("user = " + user);
 			//SQL文を実行して結果を取得
 			try (ResultSet rs = pstmt.executeQuery()) {
 				//結果セットをviewへ送るための準備

@@ -14,24 +14,22 @@ String[] roomsName = MR.getRoomsName();
 <body>
 	<%@ include file="header.jsp"%>
 	<h1>予約履歴</h1>
-	<form action="/ResListSort">
-		並び順：
-		<select name="order">
+	<form action="<%=request.getContextPath()%>/ResListSort" method="post">
+		並び順： <select name="order">
 			<option value="ASC">古い順</option>
 			<option value="DESC">新しい順</option>
-		</select>
-		<br>日付：
-		<input type="date" name="date1" value="">～
-		<input type="date" name="date2" value="">
-		<br>会議室：
-		<select name="room">
+		</select> <br>日付： <input type="date" name="date1" value="">～ <input
+			type="date" name="date2" value=""> <br>会議室： <select
+			name="room">
 			<option value="all">全て</option>
-			<% for(int i = 0; i < roomsName.length; i++){ %>
-				<option value="<%= i %>"><%= roomsName[i] %></option>
-			<% } %>
-		</select>
-		<br>ユーザー：
-		<input type="text" name="user" placeholder="ユーザー名を入力"><br>
+			<%
+			for (int i = 0; i < roomsName.length; i++) {
+			%>
+			<option value="<%=i%>"><%=roomsName[i]%></option>
+			<%
+			}
+			%>
+		</select> <br>ユーザー： <input type="text" name="user" placeholder="ユーザー名を入力"><br>
 		<input type="submit" value="検索">
 	</form>
 	<hr>
@@ -43,9 +41,7 @@ String[] roomsName = MR.getRoomsName();
 			<th>会議室</th>
 			<th>予約者</th>
 		</tr>
-		<%
-		out.print(MR.getReservationList());
-		%>
+		${reservations }
 
 	</table>
 
