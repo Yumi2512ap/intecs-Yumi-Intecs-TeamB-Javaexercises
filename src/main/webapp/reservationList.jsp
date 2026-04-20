@@ -17,8 +17,8 @@ String[] roomsName = MR.getRoomsName();
 	<form action="/ResListSort">
 		並び順：
 		<select name="order">
-			<option value="asc">古い順</option>
-			<option value="desc">新しい順</option>
+			<option value="ASC">古い順</option>
+			<option value="DESC">新しい順</option>
 		</select>
 		<br>日付：
 		<input type="date" name="date1" value="">～
