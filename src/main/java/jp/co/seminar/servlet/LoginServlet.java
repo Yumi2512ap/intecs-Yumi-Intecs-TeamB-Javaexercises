@@ -31,19 +31,18 @@ public class LoginServlet extends HttpServlet {
 
 		//インスタンス
 		MeetingRoom MR = new MeetingRoom();
-		
+
 		// ipアドレスとユーザーのデバイス等の情報
 		String ip = request.getRemoteAddr();
 		String agent = request.getHeader("User-Agent");
 		boolean result = MR.login(userId, userPw, ip, agent);
 
-		//MRを送る（setattribute)
-		session.setAttribute("MR", MR);
-
 		String nextPage;
 
 		if (result) {
 			nextPage = "/menu.jsp";
+			//MRを送る（setattribute)
+			session.setAttribute("MR", MR);
 		} else {
 			nextPage = "/login.jsp";
 		}
@@ -59,8 +58,6 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		//遷移先ページ格納変数
 		String nextPage2 = "login.jsp";
-		//nextPageに遷移するためのディスパッチャを作成する
-		RequestDispatcher rd = request.getRequestDispatcher(nextPage2);
 		//リダイレクトする
 		response.sendRedirect(nextPage2);
 		return;
