@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
+import jp.co.seminar.beans.UserBean;
+import jp.co.seminar.dao.UserDao;
 
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
@@ -31,26 +33,35 @@ public class LoginServlet extends HttpServlet {
 
 		//インスタンス
 		MeetingRoom MR = new MeetingRoom();
-		
+
 		// ipアドレスとユーザーのデバイス等の情報
 		String ip = request.getRemoteAddr();
 		String agent = request.getHeader("User-Agent");
 		boolean result = MR.login(userId, userPw, ip, agent);
 
-		//MRを送る（setattribute)
-		session.setAttribute("MR", MR);
-
+		UserBean UB;
 		String nextPage;
 
 		if (result) {
+
+			// 認証が成功したら、UserDaoを使って詳細データを取ってくる
+			UserDao dao = new UserDao();
+
+			// certificateメソッドはIDとPWでUserBeanを返してくれるので、これを利用する
+			UB = dao.certificate(userId, userPw);
+			// MRを送る（setattribute)
+			session.setAttribute("MR", MR);
+			// UBを送る（setattribute)
+			session.setAttribute("UB", UB);
+
 			nextPage = "/menu.jsp";
 		} else {
 			nextPage = "/login.jsp";
 		}
 
-		//nextPageに遷移するためのディスパッチャを作成する
+		// nextPageに遷移するためのディスパッチャを作成する
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
-		//フォワードする
+		// フォワードする
 		rd.forward(request, response);
 
 	}
