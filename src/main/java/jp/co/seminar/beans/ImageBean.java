@@ -1,7 +1,7 @@
 package jp.co.seminar.beans;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class ImageBean implements Serializable {
 	private int imageId;
@@ -10,9 +10,20 @@ public class ImageBean implements Serializable {
 	private String imageType;
 	private byte[] imageContent;
 	private int imageSize;
-	private Timestamp create_At;
+	private Timestamp createdAt;
 
-	public int getImage_id() {
+	public ImageBean(int imageId, String roomId, String imageName, String imageType,
+			byte[] imageContent, int imageSize, Timestamp createdAt) {
+		this.imageId = imageId;
+		this.roomId = roomId;
+		this.imageName = imageName;
+		this.imageType = imageType;
+		this.imageContent = imageContent;
+		this.imageSize = imageSize;
+		this.createdAt = createdAt;
+	}
+
+	public int getImageId() {
 		return imageId;
 	}
 
@@ -36,9 +47,10 @@ public class ImageBean implements Serializable {
 		return imageSize;
 	}
 
-	public Timestamp getCreate_At() {
-		return create_At;
+	public Timestamp getCreateAt() {
+		return createdAt;
 	}
+
 	@Override
 	public String toString() {
 		return "ImageBean[";
