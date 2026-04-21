@@ -11,7 +11,6 @@
 	<h1>管理者メニュー</h1>
 	<hr>
 	<h2>メニュー</h2>
-
 	<div class="menu" id="admin">
 		<form action="<%=request.getContextPath()%>/addAdmin.jsp"
 			method="get">
