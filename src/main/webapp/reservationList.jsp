@@ -56,6 +56,9 @@ String[] roomsName = MR.getRoomsName();
 		${reservations }
 
 	</table>
+	<form action="<%= request.getContextPath() %>/Csv" method="post">
+		<input type="submit" value="CSV保存">
+	</form>
 
 	<hr>
 	<form action="adminMenu.jsp">

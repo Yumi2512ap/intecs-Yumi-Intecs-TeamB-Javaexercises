@@ -58,8 +58,6 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		//遷移先ページ格納変数
 		String nextPage2 = "login.jsp";
-		//nextPageに遷移するためのディスパッチャを作成する
-		RequestDispatcher rd = request.getRequestDispatcher(nextPage2);
 		//リダイレクトする
 		response.sendRedirect(nextPage2);
 		return;
