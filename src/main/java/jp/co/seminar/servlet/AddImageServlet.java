@@ -1,7 +1,6 @@
 package jp.co.seminar.servlet;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -13,13 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import jp.co.seminar.dao.ImageDao;
+import jp.co.seminar.beans.MeetingRoom;
 
 @WebServlet("/AddImage")
-@MultipartConfig(
-		fileSizeThreshold = 1024 * 1024, 
-		maxFileSize = 5 * 1024 * 1024, 
-		maxRequestSize = 10 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 10 * 1024 * 1024)
 public class AddImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,55 +24,45 @@ public class AddImageServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
+		String nextPage = "/addImage.jsp";
 
-		String roomId = request.getParameter("roomId");
-		Part filePart = request.getPart("picture");
+		try {
+			String roomId = request.getParameter("roomId");
+			//Part型（ファイル形式やら名前やら取得できる便利な型）
+			Part filePart = request.getPart("picture");
 
-		if (filePart == null || filePart.getSize() == 0) {
-			request.setAttribute("message", "画像ファイルが選択されていません。");
-			request.getRequestDispatcher("/addImage.jsp").forward(request, response);
-			return;
-		}
-
-		String fileName = getFileName(filePart);
-		String contentType = filePart.getContentType();
-		long fileSize = filePart.getSize();
-
-		if (!"image/jpeg".equals(contentType) && !"image/png".equals(contentType)) {
-			request.setAttribute("message", "JPEGまたはPNGのみアップロード可能です。");
-			request.getRequestDispatcher("/addImage.jsp").forward(request, response);
-			return;
-		}
-
-		try (InputStream inputStream = filePart.getInputStream()) {
-			ImageDao imageDao = new ImageDao();
-			imageDao.insertImage(
-					roomId,
-					fileName,
-					contentType,
-					inputStream,
-					(int) fileSize,
-					Timestamp.valueOf(LocalDateTime.now()));
-
+			if (roomId == null || roomId.isEmpty()) {
+				request.setAttribute("message", "会議室IDが取得できませんでした。");
+				request.getRequestDispatcher(nextPage).forward(request, response);
+				return;
+			}
+			//ファイルがちゃんと送信されているかのバリデーション
+			if (filePart == null || filePart.getSize() == 0) {
+				request.setAttribute("message", "画像ファイルが選択されていません。");
+				request.getRequestDispatcher(nextPage).forward(request, response);
+				return;
+			}
+			String imageName = filePart.getSubmittedFileName();
+			String imageType = filePart.getContentType();
+			int imageSize = (int) filePart.getSize();
+			byte[] imageContent = filePart.getInputStream().readAllBytes();//バイナリデータをすべて呼び出す,readAllBytes
+			Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
+			//ファイル形式が正しいかどうかのバリデーション
+			if (!"image/jpeg".equals(imageType) && !"image/png".equals(imageType)) {
+				request.setAttribute("message", "JPEGまたはPNG形式の画像のみ登録できます。");
+				request.getRequestDispatcher(nextPage).forward(request, response);
+				return;
+			}
+			//処理はMeetingRoomで行う
+			MeetingRoom MR = new MeetingRoom();
+			MR.addImage(imageSize, roomId, imageName, imageType, imageContent, createdAt);
 			request.setAttribute("message", "画像を登録しました。");
-			request.getRequestDispatcher("/addImage.jsp").forward(request, response);
+			request.getRequestDispatcher(nextPage).forward(request, response);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("message", "画像登録に失敗しました: " + e.getMessage());
-			request.getRequestDispatcher("/addImage.jsp").forward(request, response);
+			request.setAttribute("message", "画像の登録に失敗しました。");
+			request.getRequestDispatcher(nextPage).forward(request, response);
 		}
-	}
-
-	private String getFileName(Part part) {
-		String contentDisposition = part.getHeader("content-disposition");
-		if (contentDisposition != null) {
-			for (String token : contentDisposition.split(";")) {
-				if (token.trim().startsWith("filename")) {
-					return token.substring(token.indexOf("=") + 2, token.length() - 1);
-				}
-			}
-		}
-		return null;
 	}
 }

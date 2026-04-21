@@ -2,6 +2,7 @@ package jp.co.seminar.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.dao.AccessLogDao;
+import jp.co.seminar.dao.ImageDao;
 import jp.co.seminar.dao.ReservationDao;
 import jp.co.seminar.dao.RoomDao;
 import jp.co.seminar.dao.UserDao;
@@ -363,6 +365,26 @@ public class MeetingRoom implements Serializable {
 					+ "</tr>";
 		}
 		return result;
+	}
+
+	//画像の追加
+	public void addImage(int imageSize, String roomId, String imageName, String imageType,
+			byte[] imageContent, Timestamp createdAt) {
+		ImageBean image = new ImageBean(
+				null,
+				roomId,
+				imageName,
+				imageType,
+				imageContent,
+				imageSize,
+				createdAt);
+		ImageDao iD = new ImageDao();
+		try {
+			iD.insertImage(image);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("MeetingRoom addImageエラー");
+		}
 	}
 
 	// CSV出力メソッド

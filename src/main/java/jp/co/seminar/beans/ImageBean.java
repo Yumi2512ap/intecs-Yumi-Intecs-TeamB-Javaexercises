@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class ImageBean implements Serializable {
-	private int imageId;
+	private String imageId;
 	private String roomId;
 	private String imageName;
 	private String imageType;
@@ -12,7 +12,10 @@ public class ImageBean implements Serializable {
 	private int imageSize;
 	private Timestamp createdAt;
 
-	public ImageBean(int imageId, String roomId, String imageName, String imageType,
+	public ImageBean() {
+	}
+
+	public ImageBean(String imageId, String roomId, String imageName, String imageType,
 			byte[] imageContent, int imageSize, Timestamp createdAt) {
 		this.imageId = imageId;
 		this.roomId = roomId;
@@ -23,7 +26,7 @@ public class ImageBean implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public int getImageId() {
+	public String getImageId() {
 		return imageId;
 	}
 
@@ -43,16 +46,18 @@ public class ImageBean implements Serializable {
 		return imageContent;
 	}
 
-	public int getImage_size() {
+	public int getImageSize() {
 		return imageSize;
 	}
 
-	public Timestamp getCreateAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
 	@Override
 	public String toString() {
-		return "ImageBean[";
+		return "ImageBean[imageId" + imageId + ",roomId" + roomId
+				+ ",imageName" + imageName + ",imageType" + imageType
+				+ ",cereatedAt" + createdAt;
 	}
 }
