@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="jp.co.seminar.beans.UserBean" %>
-<%@ page import="jp.co.seminar.beans.MeetingRoom" %>
+<%@ page import="jp.co.seminar.beans.UserBean"%>
+<%@ page import="jp.co.seminar.beans.MeetingRoom"%>
 
 <%
-	MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
-    UserBean user = MR.getUser();
+MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
+UserBean user = MR.getUser();
 %>
 
 <!DOCTYPE html>
@@ -20,6 +20,7 @@
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>メニュー</h2>
+
 	<div class="menu">
 		<form action="<%=request.getContextPath()%>/reserveInput.jsp"
 			method="get">
@@ -29,15 +30,28 @@
 			method="get">
 			<input type="submit" value="予約キャンセル">
 		</form>
-		<% if(user != null && user.getIsAdmin()){ %>
-		<form action="<%= request.getContextPath() %>/adminMenu.jsp">
+		<%
+		if (user != null && user.getIsAdmin()) {
+		%>
+		<form action="<%=request.getContextPath()%>/adminMenu.jsp">
 			<input type="submit" value="管理者メニュー">
 		</form>
-		<% } %>
+		<%
+		}
+		%>
+		<%
+		if (user != null && !user.getIsAdmin()) {
+		%>
+		<form action="<%=request.getContextPath()%>/userMenu.jsp">
+			<input type="submit" value="ユーザーメニュー">
+		</form>
+		<%
+		}
+		%>
 	</div>
 	<hr>
-	<form action="<%=request.getContextPath()%>/Logout"
-		method="post">
+
+	<form action="<%=request.getContextPath()%>/Logout" method="post">
 		<input type="submit" value="ログアウト">
 	</form>
 	<%@ include file="footer.jsp"%>
