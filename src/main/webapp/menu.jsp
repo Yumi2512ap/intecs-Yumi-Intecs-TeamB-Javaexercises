@@ -20,19 +20,22 @@
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>メニュー</h2>
-	<form action="<%=request.getContextPath()%>/reserveInput.jsp"
-		method="get">
-		<input type="submit" value="会議室予約">
-	</form>
-	<form action="<%=request.getContextPath()%>/cancelInput.jsp"
-		method="get">
-		<input type="submit" value="予約キャンセル">
-	</form>
-	<% if(user != null && user.getIsAdmin()){ %>
-	<form action="<%= request.getContextPath() %>/adminMenu.jsp">
-		<input type="submit" value="管理者メニュー">
-	</form>
-	<% } %>
+	<div class="menu">
+		<form action="<%=request.getContextPath()%>/reserveInput.jsp"
+			method="get">
+			<input type="submit" value="会議室予約">
+		</form>
+		<form action="<%=request.getContextPath()%>/cancelInput.jsp"
+			method="get">
+			<input type="submit" value="予約キャンセル">
+		</form>
+		<% if(user != null && user.getIsAdmin()){ %>
+		<form action="<%= request.getContextPath() %>/adminMenu.jsp">
+			<input type="submit" value="管理者メニュー">
+		</form>
+		<% } %>
+	</div>
+	<hr>
 	<form action="<%=request.getContextPath()%>/Logout"
 		method="post">
 		<input type="submit" value="ログアウト">
