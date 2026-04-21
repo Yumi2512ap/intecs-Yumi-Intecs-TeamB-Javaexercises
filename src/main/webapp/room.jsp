@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+		String error = (String) request.getAttribute("err");
+		String imageSrc = (String) request.getAttribute("imageSrc");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +15,12 @@
 	<h1>詳細ページ</h1>
 	<hr>
 	<h2>会議室名</h2>
-	<img alt="" src="">
+	${err }
+	<% if (imageSrc != null) { %>
+			<img src="<%= imageSrc %>" alt="部屋画像">
+		<% } else { %>
+			<p>画像データがありません。</p>
+		<% } %>
 	
 	<%@ include file="footer.jsp"%>
 </body>

@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import jp.co.seminar.beans.ImageBean;
@@ -32,6 +33,12 @@ public class ImageDao {
 							rs.getTimestamp("created_at"));
 				}
 			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("ドライバが見つかりません。");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("SQLに関するエラーです");
 		}
 		return null;
 	}
@@ -53,6 +60,12 @@ public class ImageDao {
 			pstmt.setTimestamp(6, createdAt);
 
 			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("ドライバが見つかりません。");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("SQLに関するエラーです");
 		}
 	}
 }
