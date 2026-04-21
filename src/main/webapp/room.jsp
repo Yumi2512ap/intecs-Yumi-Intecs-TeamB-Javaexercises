@@ -12,6 +12,7 @@
 	<hr>
 	<h2>会議室名</h2>
 	<img alt="" src="">
+	
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
