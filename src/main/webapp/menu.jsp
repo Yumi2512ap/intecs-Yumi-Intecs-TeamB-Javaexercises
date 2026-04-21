@@ -33,6 +33,11 @@
 		<input type="submit" value="管理者メニュー">
 	</form>
 	<% } %>
+	<% if(user != null && !user.getIsAdmin()){ %>
+	<form action="<%= request.getContextPath() %>/userMenu.jsp">
+		<input type="submit" value="ユーザーメニュー">
+	</form>
+	<% } %>
 	<form action="<%=request.getContextPath()%>/Logout"
 		method="post">
 		<input type="submit" value="ログアウト">
