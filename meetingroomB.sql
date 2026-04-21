@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS reservation;
 DROP TABLE IF EXISTS access_log;
+DROP TABLE IF EXISTS room_image;
 
 CREATE TABLE user (
         id VARCHAR(7) PRIMARY KEY,
@@ -47,7 +48,7 @@ CREATE TABLE access_log (
         when_access DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE image (
+CREATE TABLE room_image (
         image_id INT AUTO_INCREMENT PRIMARY KEY,
         room_id VARCHAR(4) NOT NULL,
         image_name VARCHAR(256),

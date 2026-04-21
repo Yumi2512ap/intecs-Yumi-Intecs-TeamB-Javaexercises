@@ -13,7 +13,7 @@ public class ImageDao {
 
 	public ImageBean findById(String roomId){
 		String sql = "SELECT image_id, room_id, image_name, image_type, image_content, image_size, created_at "
-				+ "FROM image WHERE image_id = ?";
+				+ "FROM room_image WHERE image_id = ?";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -45,7 +45,7 @@ public class ImageDao {
 	public void insertImage(ImageBean image) throws Exception {
 
 
-		String sql = "INSERT INTO image (room_id, image_name, image_type, image_content, image_size, created_at) "
+		String sql = "INSERT INTO room_image (room_id, image_name, image_type, image_content, image_size, created_at) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
