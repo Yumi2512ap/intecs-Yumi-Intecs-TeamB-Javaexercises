@@ -1,12 +1,19 @@
 package jp.co.seminar.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.dao.AccessLogDao;
 import jp.co.seminar.dao.ReservationDao;
@@ -292,13 +299,9 @@ public class MeetingRoom implements Serializable {
 		}
 	}
 
-	//　予約一覧を取得(情報なし
-	public String getReservationList() {
-		return getReservationList(null, null, null, null, null);
-	}
-
-	//　予約一覧を取得
-	public String getReservationList(String order, String date1, String date2, String room, String user) {
+	//　予約一覧を取得 セッションにCSV用のデータを格納
+	public String getReservationList(String order, String date1, String date2, String room, String user,
+			HttpServletRequest request) {
 		if ("all".equals(room)) {
 			room = null;
 		} else if (room != null) {
@@ -306,6 +309,9 @@ public class MeetingRoom implements Serializable {
 		}
 		ReservationDao rD = new ReservationDao();
 		List<String[]> list = rD.findAll(order, date1, date2, room, user);
+		// セッションにlistをセット
+		HttpSession session = request.getSession();
+		session.setAttribute("CSVdata", list);
 		String result = "";
 		for (String[] str : list) {
 			result += "<tr>"
@@ -357,6 +363,68 @@ public class MeetingRoom implements Serializable {
 					+ "</tr>";
 		}
 		return result;
+	}
+
+	// CSV出力メソッド
+	public void writeDataToCSV(List<String[]> data, HttpServletResponse response, String fileName)
+			throws IOException {
+
+		// CSVダウンロード用のレスポンス設定
+		response.setContentType("text/csv; charset=UTF-8");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+		try (ServletOutputStream out = response.getOutputStream()) {
+
+			// Excel文字化け対策用 BOM
+			out.write(0xEF);
+			out.write(0xBB);
+			out.write(0xBF);
+
+			//
+			out.write("予約日,開始,終了,会議室,予約者\n".getBytes(StandardCharsets.UTF_8));
+
+			// 一行ずつ
+			for (String[] row : data) {
+				StringBuilder csvRow = new StringBuilder();
+
+				// 1情報ずつ
+				for (String value : row) {
+					String escapedValue = escapeSpecialCharacters(value);
+					// エスケープしたものとカンマを入力
+					csvRow.append(escapedValue).append(",");
+				}
+
+				if (csvRow.length() > 0) {
+					csvRow.deleteCharAt(csvRow.length() - 1); // 最後のカンマ削除
+				}
+				// 改行と書き込み
+				csvRow.append("\n");
+				out.write(csvRow.toString().getBytes(StandardCharsets.UTF_8));
+			}
+
+			// ダウンロード出力
+			out.flush();
+		}
+	}
+
+	// エスケープ処理
+	private static String escapeSpecialCharacters(String value) {
+		if (value == null) {
+			return "";
+		}
+
+		// ダブルクォートを二重化
+		String escapedValue = value.replace("\"", "\"\"");
+
+		// カンマ、改行、ダブルクォートを含む場合は全体をダブルクォートで囲む
+		if (escapedValue.contains(",")
+				|| escapedValue.contains("\n")
+				|| escapedValue.contains("\r")
+				|| escapedValue.contains("\"")) {
+			escapedValue = "\"" + escapedValue + "\"";
+		}
+
+		return escapedValue;
 	}
 
 	@Override

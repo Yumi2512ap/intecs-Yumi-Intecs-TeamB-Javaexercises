@@ -172,13 +172,6 @@ public class ReservationDao {
 				pstmt.setString(index++, user);
 			}
 			
-			
-			// デバッグ
-			System.out.println("SQL = " + SQL);
-			System.out.println("date1 = " + date1);
-			System.out.println("date2 = " + date2);
-			System.out.println("room = " + room);
-			System.out.println("user = " + user);
 			//SQL文を実行して結果を取得
 			try (ResultSet rs = pstmt.executeQuery()) {
 				//結果セットをviewへ送るための準備
