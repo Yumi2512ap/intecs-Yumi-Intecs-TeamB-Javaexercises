@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +11,7 @@
 	<h1>管理者メニュー</h1>
 	<hr>
 	<h2>メニュー</h2>
+
 	<div class="menu" id="admin">
 		<form action="<%=request.getContextPath()%>/addAdmin.jsp"
 			method="get">
@@ -32,6 +33,7 @@
 	
 	<hr>
 	<form action="<%= request.getContextPath() %>/menu.jsp" method="get">
+
 		<input type="submit" value="戻る">
 	</form>
 	<%@ include file="footer.jsp"%>
