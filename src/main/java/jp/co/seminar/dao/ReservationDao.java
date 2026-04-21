@@ -96,32 +96,6 @@ public class ReservationDao {
 		}
 	}
 
-	//	public boolean insert(ReservationBean reservation) {
-	//
-	//		//-1が帰ってきたら格納できていない P31参考
-	//		int ret = -1;
-	//
-	//		String sql = "INSERT INTO reservation WHERE date = ?";
-	//		try (Connection conn = MRConnectionProvider.getConnection();
-	//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	//			//SQL文を実行
-	//
-	//			int autoIncrementKey = 0;
-	//			ret = pstmt.executeUpdate(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-	//			ResultSet rs = pstmt.getGeneratedKeys();
-	//			return ret != 0;
-	//
-	//		} catch (ClassNotFoundException e) {
-	//			e.printStackTrace();
-	//			System.err.println("ドライバが見つかりません。");
-	//			return false;
-	//		} catch (SQLException e) {
-	//			e.printStackTrace();
-	//			System.err.println("SQLに関するエラーです");
-	//			return false;
-	//		}
-	//	}
-
 	//--予約情報を削除する  P37
 	public boolean delete(ReservationBean reservation) {
 		int ret = -1;
@@ -140,29 +114,6 @@ public class ReservationDao {
 			return false;
 		}
 	}
-
-	//	public boolean delete(ReservationBean reservation) {
-	//		int ret = -1;
-	//		//SQLでデータベース削除
-	//		String sql = "DELETE FROM reservation WHERE date = ?";
-	//		//try-with-resources構文でリソースを自動的にクローズ
-	//		try (Connection conn = MRConnectionProvider.getConnection();
-	//				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	//			//SQL文を実行
-	//			ret = pstmt.executeUpdate();
-	//
-	//			return ret != 0;
-	//
-	//		} catch (ClassNotFoundException e) {
-	//			e.printStackTrace();
-	//			System.err.println("ドライバが見つかりません。");
-	//			return false;
-	//		} catch (SQLException e) {
-	//			e.printStackTrace();
-	//			System.err.println("SQLに関するエラーです");
-	//			return false;
-	//		} //try-with-resourcesによりconnとpstmtは自動的にクローズされる
-	// }
 
 	//　追加要件
 
@@ -221,13 +172,6 @@ public class ReservationDao {
 				pstmt.setString(index++, user);
 			}
 			
-			
-			// デバッグ
-			System.out.println("SQL = " + SQL);
-			System.out.println("date1 = " + date1);
-			System.out.println("date2 = " + date2);
-			System.out.println("room = " + room);
-			System.out.println("user = " + user);
 			//SQL文を実行して結果を取得
 			try (ResultSet rs = pstmt.executeQuery()) {
 				//結果セットをviewへ送るための準備
