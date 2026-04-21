@@ -300,7 +300,8 @@ public class MeetingRoom implements Serializable {
 	}
 
 	//　予約一覧を取得 セッションにCSV用のデータを格納
-	public String getReservationList(String order, String date1, String date2, String room, String user,HttpServletRequest request) {
+	public String getReservationList(String order, String date1, String date2, String room, String user,
+			HttpServletRequest request) {
 		if ("all".equals(room)) {
 			room = null;
 		} else if (room != null) {
@@ -363,60 +364,68 @@ public class MeetingRoom implements Serializable {
 		}
 		return result;
 	}
-	
+
 	// CSV出力メソッド
 	public void writeDataToCSV(List<String[]> data, HttpServletResponse response, String fileName)
-            throws IOException {
+			throws IOException {
 
-        // CSVダウンロード用のレスポンス設定
-        response.setContentType("text/csv; charset=UTF-8");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		// CSVダウンロード用のレスポンス設定
+		response.setContentType("text/csv; charset=UTF-8");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
-        try (ServletOutputStream out = response.getOutputStream()) {
+		try (ServletOutputStream out = response.getOutputStream()) {
 
-            // Excel文字化け対策用 BOM
-            out.write(0xEF);
-            out.write(0xBB);
-            out.write(0xBF);
+			// Excel文字化け対策用 BOM
+			out.write(0xEF);
+			out.write(0xBB);
+			out.write(0xBF);
 
-            for (String[] row : data) {
-                StringBuilder csvRow = new StringBuilder();
+			//
+			out.write("予約日,開始,終了,会議室,予約者\n".getBytes(StandardCharsets.UTF_8));
 
-                for (String value : row) {
-                    String escapedValue = escapeSpecialCharacters(value);
-                    csvRow.append(escapedValue).append(",");
-                }
+			// 一行ずつ
+			for (String[] row : data) {
+				StringBuilder csvRow = new StringBuilder();
 
-                if (csvRow.length() > 0) {
-                    csvRow.deleteCharAt(csvRow.length() - 1); // 最後のカンマ削除
-                }
+				// 1情報ずつ
+				for (String value : row) {
+					String escapedValue = escapeSpecialCharacters(value);
+					// エスケープしたものとカンマを入力
+					csvRow.append(escapedValue).append(",");
+				}
 
-                csvRow.append("\n");
-                out.write(csvRow.toString().getBytes(StandardCharsets.UTF_8));
-            }
+				if (csvRow.length() > 0) {
+					csvRow.deleteCharAt(csvRow.length() - 1); // 最後のカンマ削除
+				}
+				// 改行と書き込み
+				csvRow.append("\n");
+				out.write(csvRow.toString().getBytes(StandardCharsets.UTF_8));
+			}
 
-            out.flush();
-        }
-    }
+			// ダウンロード出力
+			out.flush();
+		}
+	}
+
 	// エスケープ処理
-    private static String escapeSpecialCharacters(String value) {
-        if (value == null) {
-            return "";
-        }
+	private static String escapeSpecialCharacters(String value) {
+		if (value == null) {
+			return "";
+		}
 
-        // ダブルクォートを二重化
-        String escapedValue = value.replace("\"", "\"\"");
+		// ダブルクォートを二重化
+		String escapedValue = value.replace("\"", "\"\"");
 
-        // カンマ、改行、ダブルクォートを含む場合は全体をダブルクォートで囲む
-        if (escapedValue.contains(",")
-                || escapedValue.contains("\n")
-                || escapedValue.contains("\r")
-                || escapedValue.contains("\"")) {
-            escapedValue = "\"" + escapedValue + "\"";
-        }
+		// カンマ、改行、ダブルクォートを含む場合は全体をダブルクォートで囲む
+		if (escapedValue.contains(",")
+				|| escapedValue.contains("\n")
+				|| escapedValue.contains("\r")
+				|| escapedValue.contains("\"")) {
+			escapedValue = "\"" + escapedValue + "\"";
+		}
 
-        return escapedValue;
-    }
+		return escapedValue;
+	}
 
 	@Override
 	public String toString() {
