@@ -16,6 +16,7 @@
 <%@ include file="header.jsp"%>
 <h1>会議室画像追加</h1>
 <hr>
+	${message}
 	<form action="AddImage" method="post" enctype="multipart/form-data">
 		<select name="roomId">
 			<% for(int i = 0 ; i < roomsName.length; i++){ %>
@@ -27,7 +28,7 @@
 		<input type="submit" value="登録">
 	</form><br>
 <hr>
-<form action="adminMenu.jsp">
+<form action="addRoom.jsp" method="get">
 	<input type="submit" value="戻る">
 </form>
 <%@ include file="footer.jsp"%>

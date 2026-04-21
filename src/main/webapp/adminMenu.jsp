@@ -17,9 +17,6 @@
 	<form action="<%=request.getContextPath()%>/addRoom.jsp" method="get">
 		<input type="submit" value="会議室管理">
 	</form>
-	<form action="<%=request.getContextPath()%>/addImage.jsp" method="get">
-		<input type="submit" value="会議室画像追加">
-	</form>
 	<form action="<%=request.getContextPath()%>/ResListSort" method="post">
 		<input type="submit" value="全ユーザー予約一覧">
 	</form>
