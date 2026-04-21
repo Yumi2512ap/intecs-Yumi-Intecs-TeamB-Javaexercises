@@ -55,5 +55,5 @@ CREATE TABLE image (
         image_content MEDIUMBLOB,
         image_size INT,
         created_at DATETIME,
-        FOREIGN KEY (roomid) REFERENCES room(id)
+        FOREIGN KEY (room_id) REFERENCES room(id)
 );
