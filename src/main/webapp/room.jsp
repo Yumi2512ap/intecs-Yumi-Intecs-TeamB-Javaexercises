@@ -17,10 +17,9 @@
 	<h2>会議室名</h2>
 	${err }
 	<% if (imageSrc != null) { %>
-			<img src="<%= imageSrc %>" alt="部屋画像">
-		<% } else { %>
-			<p>画像データがありません。</p>
-		<% } %>
+		<img src="<%= imageSrc %>" alt="部屋画像">
+	<% }%>
+			
 	
 	<%@ include file="footer.jsp"%>
 </body>

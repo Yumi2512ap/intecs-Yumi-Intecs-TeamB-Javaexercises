@@ -1,7 +1,6 @@
 package jp.co.seminar.servlet;
 
 import java.io.IOException;
-import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,9 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import jp.co.seminar.beans.ImageBean;
 import jp.co.seminar.beans.MeetingRoom;
-import jp.co.seminar.dao.ImageDao;
 
 /**
  * Servlet implementation class RoomImageServlet
@@ -39,37 +36,24 @@ public class RoomImageServlet extends HttpServlet {
 		//セッションから取得
 		HttpSession session = request.getSession();
 		//キャストしながらセッションから取得
-		MeetingRoom meetingRoom = (MeetingRoom) session.getAttribute("MR");
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 		String roomId = request.getParameter("roomId");
 		// ルームIDなし
 		if (roomId == null || roomId.isEmpty()) {
-			request.setAttribute("err", "roomIdを入力してください。");
-			request.getRequestDispatcher("/menu.jsp").forward(request, response);
-			return;
-		}
-		
-		try {
-			ImageBean image = new ImageDao().findById(Integer.parseInt(roomId));
-
-			if (image == null) {
-				request.setAttribute("err", "該当する画像が見つかりません。");
-				request.getRequestDispatcher("/room.jsp").forward(request, response);
-				return;
-			}
-
-			String imageSrc = null;
-			if (image.getImageContent() != null && image.getImageType() != null) {
-				String base64 = Base64.getEncoder().encodeToString(image.getImageContent());
-				imageSrc = "data:" + image.getImageType() + ";base64," + base64;
-			}
-
-			request.setAttribute("image", image);
+			request.setAttribute("err", "roomIdが不明です");
+		} else {
+			// イメージ画像のバイナリ
+			String imageSrc = MR.getImageSrc(roomId);
 			request.setAttribute("imageSrc", imageSrc);
-
-			request.getRequestDispatcher("/room.jsp").forward(request, response);
-		} catch (Exception e) {
-			// TODO: handle exception
+			request.setAttribute("roomName", MR.getRoom(roomId).getName());
+			// イメージ取得不可
+			if (imageSrc == null) {
+				request.setAttribute("err", "該当する画像が見つかりません。");
+			}
 		}
+
+		request.getRequestDispatcher("/room.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -77,7 +61,7 @@ public class RoomImageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// リダイレクト
+		doGet(request, response);
 	}
 
 }
