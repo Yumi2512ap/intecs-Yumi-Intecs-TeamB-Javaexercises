@@ -2,12 +2,13 @@ package jp.co.seminar.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -385,6 +386,27 @@ public class MeetingRoom implements Serializable {
 			e.printStackTrace();
 			System.err.println("MeetingRoom addImageエラー");
 		}
+	}
+
+	// 画像の表示
+	public String getImageSrc(String roomId) {
+		String result = null;
+		ImageDao imageDao = new ImageDao();
+		ImageBean image = imageDao.findById(roomId);
+		// 検索結果なし
+		if (image == null) {
+			return null;
+		}
+
+		String imageSrc = null;
+		// コンテンツと画像タイプがあるか？
+		if (image.getImageContent() != null && image.getImageType() != null) {
+			String base64 = Base64.getEncoder().encodeToString(image.getImageContent());
+			imageSrc = "data:" + image.getImageType() + ";base64," + base64;
+			result = base64;
+		}
+
+		return result;
 	}
 
 	// CSV出力メソッド
