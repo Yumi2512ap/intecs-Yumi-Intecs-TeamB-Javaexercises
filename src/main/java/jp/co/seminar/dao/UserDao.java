@@ -3,6 +3,7 @@ package jp.co.seminar.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import jp.co.seminar.beans.UserBean;
 import jp.co.seminar.util.MRConnectionProvider;
@@ -86,4 +87,20 @@ public class UserDao {
 			throw new RuntimeException("ユーザー登録に失敗しました", e);
 		}
 	}
+	
+	// 削除処理メソッド SQLの実行と削除フラグの更新
+	public boolean deleteUser(String userId) {
+
+			
+	//データベースに接続
+			try (Connection conn = UserConnectionProvider.getConnection();
+				     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			//データベースに削除のフラグを出す
+				String sql="UPDATE MeetingRoom SET delete_flg = TRUE WHERE userId = ?";
+			}catch(SQLException e){
+				System.err.println("エラーが発生しました");
+				
+			}
+	}
+	
 }
