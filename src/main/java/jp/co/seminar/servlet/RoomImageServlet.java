@@ -43,14 +43,14 @@ public class RoomImageServlet extends HttpServlet {
 		String roomId = request.getParameter("roomId");
 		// ルームIDなし
 		if (roomId == null || roomId.isEmpty()) {
-			request.setAttribute("err", "roomIdを入力してください。");
-			request.getRequestDispatcher("/menu.jsp").forward(request, response);
+			request.setAttribute("err", "roomIdが不明です");
+			request.getRequestDispatcher("/room.jsp").forward(request, response);
 			return;
 		}
 		
 		try {
 			ImageBean image = new ImageDao().findById(Integer.parseInt(roomId));
-
+			// 検索結果なし
 			if (image == null) {
 				request.setAttribute("err", "該当する画像が見つかりません。");
 				request.getRequestDispatcher("/room.jsp").forward(request, response);
@@ -58,6 +58,7 @@ public class RoomImageServlet extends HttpServlet {
 			}
 
 			String imageSrc = null;
+			// コンテンツと画像タイプがあるか？
 			if (image.getImageContent() != null && image.getImageType() != null) {
 				String base64 = Base64.getEncoder().encodeToString(image.getImageContent());
 				imageSrc = "data:" + image.getImageType() + ";base64," + base64;
