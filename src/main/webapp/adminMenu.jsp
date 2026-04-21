@@ -28,6 +28,7 @@
 		<input type="submit" value="アクセスログ">
 	</form>
 	
+	<hr>
 	<form action="<%= request.getContextPath() %>/menu.jsp" method="get">
 		<input type="submit" value="戻る">
 	</form>

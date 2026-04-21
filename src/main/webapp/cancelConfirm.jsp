@@ -30,13 +30,14 @@
 		</tr>
 	</table>
 	<hr>
-
-	<form action="Cancel" method="post">
-		<input type="submit" value="決定">
-	</form>
-	<form action="cancelInput.jsp" method="post">
-		<input type="submit" value="戻る">
-	</form>
+	<div class="flex">
+		<form action="Cancel" method="post">
+			<input type="submit" value="決定">
+		</form>
+		<form action="cancelInput.jsp" method="post">
+			<input type="submit" value="戻る">
+		</form>
+	</div>
 
 	<%@ include file="footer.jsp"%>
 </body>

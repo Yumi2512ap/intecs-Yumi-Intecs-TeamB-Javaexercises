@@ -33,6 +33,7 @@
 		<input type="submit" value="管理者メニュー">
 	</form>
 	<% } %>
+	<hr>
 	<form action="<%=request.getContextPath()%>/Logout"
 		method="post">
 		<input type="submit" value="ログアウト">
