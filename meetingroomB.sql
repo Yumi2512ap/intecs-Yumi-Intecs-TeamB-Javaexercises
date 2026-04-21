@@ -39,10 +39,21 @@ CREATE TABLE reservation (
 );
 
 CREATE TABLE access_log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    try_user_id VARCHAR(50),
-    result VARCHAR(10) NOT NULL,
-    ip_address VARCHAR(45),
-    user_agent VARCHAR(255),
-    when_access DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        try_user_id VARCHAR(50),
+        result VARCHAR(10) NOT NULL,
+        ip_address VARCHAR(45),
+        user_agent VARCHAR(255),
+        when_access DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE image (
+        image_id INT AUTO_INCREMENT PRIMARY KEY,
+        room_id VARCHAR(4) NOT NULL,
+        image_name VARCHAR(256),
+        image_type VARCHAR(64),
+        image_content MEDIUMBLOB,
+        image_size INT,
+        created_at DATETIME,
+        FOREIGN KEY (room_id) REFERENCES room(id)
 );
