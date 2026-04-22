@@ -16,8 +16,8 @@
 		利用者ID：<input type="text" name="userId" value=""> <br>
 		パスワード：<input type="password" name="userPw" value=""> <br>
 		<input type="submit" value="ログイン">
-	</form>
-	<a href="addUser.jsp"><p>新規ユーザー登録</p></a>
+	</form><br>
+	<a href="addUser.jsp" class="no">新規ユーザー登録</a>
 	
 	<%@ include file="footer.jsp"%>
 </body>
