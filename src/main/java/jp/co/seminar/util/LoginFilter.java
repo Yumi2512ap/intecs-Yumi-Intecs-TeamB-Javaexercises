@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -39,6 +38,11 @@ public class LoginFilter extends HttpFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		
+	    // 【追加】ここを通ったことをコンソールに表示
+	    System.out.println("DEBUG: Filterを通りました - " + ((HttpServletRequest)request).getRequestURI());
+		
+		
 		// TODO Auto-generated method stub
 		// place your code here
 		// パスを取得
@@ -59,24 +63,33 @@ public class LoginFilter extends HttpFilter implements Filter {
 			return;
 		}
 
-		// それ以外のページはセッションにMRがあれば処理してよい
-		HttpSession session = ((HttpServletRequest) request).getSession();
+	    // それ以外のページはセッションにMRがあれば処理してよい
+	    HttpSession session = ((HttpServletRequest) request).getSession();
+	    if (session.getAttribute("MR") != null) {
+	        jp.co.seminar.beans.MeetingRoom mr = (jp.co.seminar.beans.MeetingRoom) session.getAttribute("MR");
+	        String userId = mr.getUser().getId();
+	        
+	        // 二重ログインチェック
+	        String latestSessionId = (String) getServletContext().getAttribute(userId);
+	        String currentSessionId = session.getId();
 
-		if (session.getAttribute("MR") != null) {
-			chain.doFilter(request, response);
-		} else {
-			//　MRがないならログインページにリダイレクト
-			String nextPage = ((HttpServletRequest) request).getContextPath() + "/login.jsp";
-			((HttpServletResponse) response).sendRedirect(nextPage);
-			return;
-		}
-	}
+	        if (latestSessionId != null && !currentSessionId.equals(latestSessionId)) {
+	            session.invalidate();
+	            ((HttpServletResponse) response).sendRedirect(httpRequest.getContextPath() + "/login.jsp?error=double");
+	            return; 
+	        }
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-
-}
+	        // DB側の最新状態をチェック
+	        jp.co.seminar.dao.UserDao dao = new jp.co.seminar.dao.UserDao();
+	        if (dao.existsByUserId(userId)) {
+	            chain.doFilter(request, response);
+	        } else {
+	            session.invalidate();
+	            ((HttpServletResponse) response).sendRedirect(httpRequest.getContextPath() + "/login.jsp");
+	        }
+	    } else {
+	        // MRがないならログインページへ
+	        ((HttpServletResponse) response).sendRedirect(httpRequest.getContextPath() + "/login.jsp");
+	    }
+	} // doFilterの終わり (足りなかったカッコ1)
+} // クラスの終わり (足りなかったカッコ2)

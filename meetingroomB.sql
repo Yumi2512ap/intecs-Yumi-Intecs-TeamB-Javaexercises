@@ -18,7 +18,8 @@ CREATE TABLE user (
         password VARCHAR(10) NOT NULL,
         name VARCHAR(10),
         address VARCHAR(30),
-        is_admin BOOLEAN NOT NULL DEFAULT FALSE
+        is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+        delete_flg BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE room (
