@@ -28,6 +28,9 @@
 			method="get">
 			<input type="submit" value="アクセスログ">
 		</form>
+		<form action="deleteUser.jsp" method="get">
+		    <input type="submit" value="ユーザー削除">
+		</form>
 	</div>
 	
 	<hr>
