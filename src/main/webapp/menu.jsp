@@ -30,6 +30,10 @@ UserBean user = MR.getUser();
 			method="get">
 			<input type="submit" value="予約キャンセル">
 		</form>
+		<form action="<%=request.getContextPath()%>/userMenu.jsp">
+			<input type="submit" value="ユーザー情報">
+		</form>
+		
 		<%
 		if (user != null && user.getIsAdmin()) {
 		%>
@@ -39,21 +43,14 @@ UserBean user = MR.getUser();
 		<%
 		}
 		%>
-		<%
-		if (user != null && !user.getIsAdmin()) {
-		%>
-		<form action="<%=request.getContextPath()%>/userMenu.jsp">
-			<input type="submit" value="ユーザーメニュー">
-		</form>
-		<%
-		}
-		%>
-		<form action="<%=request.getContextPath()%>/Logout" method="post">
-			<input type="submit" value="ログアウト">
-		</form>
 
 	</div>
+	
 	<hr>
+	
+	<form action="<%=request.getContextPath()%>/Logout" method="post">
+		<input type="submit" value="ログアウト">
+	</form>
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
