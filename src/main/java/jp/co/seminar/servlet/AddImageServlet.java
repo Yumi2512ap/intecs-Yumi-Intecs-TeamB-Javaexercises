@@ -55,9 +55,13 @@ public class AddImageServlet extends HttpServlet {
 			}
 			//処理はMeetingRoomで行う
 			MeetingRoom MR = new MeetingRoom();
-			MR.addImage(imageSize, roomId, imageName, imageType, imageContent, createdAt);
-			request.setAttribute("message", "画像を登録しました。");
-			request.getRequestDispatcher(nextPage).forward(request, response);
+			if (MR.addImage(imageSize, roomId, imageName, imageType, imageContent, createdAt)) {
+				request.setAttribute("message", "画像を登録しました。");
+				request.getRequestDispatcher(nextPage).forward(request, response);
+			} else {
+				request.setAttribute("message", "画像の登録に失敗しました。");
+				request.getRequestDispatcher(nextPage).forward(request, response);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
