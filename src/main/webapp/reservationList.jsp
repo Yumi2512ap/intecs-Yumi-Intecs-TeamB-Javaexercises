@@ -9,7 +9,7 @@ SearchBean SB = (SearchBean) request.getAttribute("searchBean");
 String[] roomsName = MR.getRoomsName();
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>予約履歴</title>

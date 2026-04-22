@@ -9,7 +9,7 @@ UserBean user = MR.getUser();
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 

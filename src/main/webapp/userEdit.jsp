@@ -14,7 +14,7 @@ if (UB == null) {
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>ユーザー情報編集</title>

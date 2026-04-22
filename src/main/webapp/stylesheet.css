@@ -9,10 +9,14 @@ form{
 table{
     margin: 10px auto 20px auto;
 }
+
 th,td{
-    text-align: center;
+    text-align: left;
     font-size: 1.5rem;
+    vertical-align: middle;
+    border: 1px solid red;
 }
+
 .result tr th{
     padding-right: 32px;
 }
