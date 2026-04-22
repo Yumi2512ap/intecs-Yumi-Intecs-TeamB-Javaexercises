@@ -63,7 +63,7 @@ if (UB == null) {
 	</form>
 
 	${ msg }
-	<form action="login.jsp">
+	<form action="userMenu.jsp">
 		<input type="submit" value="戻る">
 	</form>
 	<%@ include file="footer.jsp"%>
