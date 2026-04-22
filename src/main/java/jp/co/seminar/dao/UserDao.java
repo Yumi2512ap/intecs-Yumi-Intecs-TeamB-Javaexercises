@@ -29,14 +29,18 @@ public class UserDao {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				if (rs.next()) {
-					String name = rs.getString("name");
-					String address = rs.getString("address");
-					int is_admin = rs.getInt("is_admin");
-					if (is_admin == 1) {
-						user = new UserBean(id, name, address, password, true);
-						return user;
+					// 削除済み
+					int deleteFlg = rs.getInt("delete_flg");
+					if (deleteFlg == 0) {
+						String name = rs.getString("name");
+						String address = rs.getString("address");
+						int is_admin = rs.getInt("is_admin");
+						if (is_admin == 1) {
+							user = new UserBean(id, name, address, password, true);
+							return user;
+						}
+						user = new UserBean(id, name, address, password);
 					}
-					user = new UserBean(id, name, address, password);
 				}
 			}
 		} catch (Exception e) {
