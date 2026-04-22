@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>ユーザー登録ページ</title>
@@ -12,25 +12,25 @@
 	<hr>
 	<form action="<%=request.getContextPath()%>/AddUser" method="post">
 	
-		<table class="result">
+		<table>
 			<tr>
-				<th>利用者ID：</th>
+				<th>ユーザーID:</th>
 				<td><input type="text" name="userId" value=""></td>
 			</tr>
 			<tr>
-				<th>パスワード：</th>
+				<th>パスワード:</th>
 				<td><input type="password" name="userPw" value=""></td>
 			</tr>
 			<tr>
-				<th>パスワード(2回目)：</th>
+				<th>パスワード(2回目):</th>
 				<td><input type="password" name="userPw2" value=""></td>
 			</tr>
 			<tr>
-				<th>表示ユーザー名：</th>
+				<th>表示ユーザー名:</th>
 				<td><input type="text" name="userName" value=""></td>
 			</tr>
 			<tr>
-				<th>居住地：</th>
+				<th>居住地:</th>
 				<td><input type="text" name="address" value="" placeholder="都道府県を入力"></td>
 			</tr>
 		</table>

@@ -5,7 +5,7 @@
 		String imageSrc = (String) request.getAttribute("imageSrc");
 	%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>会議室詳細</title>

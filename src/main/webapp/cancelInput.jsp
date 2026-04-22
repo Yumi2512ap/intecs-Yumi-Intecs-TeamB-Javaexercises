@@ -11,7 +11,7 @@
 	String[][] can = MR.getCanCancels();
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>会議室予約キャンセル</title>

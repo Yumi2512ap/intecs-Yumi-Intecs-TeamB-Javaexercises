@@ -7,7 +7,7 @@
 	String[] roomsId = MR.getRoomsId();
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>管理者ページ</title>
