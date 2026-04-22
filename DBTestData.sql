@@ -1,8 +1,8 @@
 ------テスト用データ　ここから下をコピペして(１４行目は終了を１時間後にしている)（）----------------------
 
-INSERT INTO user VALUES('1100003','xxxxxx','情報太郎','東京都','0');
-INSERT INTO user VALUES('1100015','yyyyyy','情報花子','大阪府','0');
-INSERT INTO user VALUES('1111','admin','管理者ログイン','管理','1');
+INSERT INTO user VALUES('1100003','xxxxxx','情報太郎','東京都','0','0');
+INSERT INTO user VALUES('1100015','yyyyyy','情報花子','大阪府','0','0');
+INSERT INTO user VALUES('1111','admin','管理者ログイン','管理','1','0');
 
 INSERT INTO room VALUES('0501','大会議室','0');
 INSERT INTO room VALUES('0502','５Ａ会議室','0');
