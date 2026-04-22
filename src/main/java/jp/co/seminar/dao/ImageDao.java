@@ -13,7 +13,7 @@ public class ImageDao {
 
 	public ImageBean findById(String roomId){
 		String sql = "SELECT image_id, room_id, image_name, image_type, image_content, image_size, created_at "
-				+ "FROM room_image WHERE image_id = ?";
+				+ "FROM room_image WHERE room_id = ? ORDER BY image_id DESC LIMIT 1";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -42,7 +42,7 @@ public class ImageDao {
 		return null;
 	}
 
-	public void insertImage(ImageBean image) throws Exception {
+	public boolean insertImage(ImageBean image) throws Exception {
 
 
 		String sql = "INSERT INTO room_image (room_id, image_name, image_type, image_content, image_size, created_at) "
@@ -58,13 +58,15 @@ public class ImageDao {
 			pstmt.setInt(5, image.getImageSize());
 			pstmt.setTimestamp(6, image.getCreatedAt());
 
-			pstmt.executeUpdate();
+			return pstmt.executeUpdate() == 1;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("ドライバが見つかりません。");
+			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("SQLに関するエラーです");
+			return false;
 		}
 	}
 }

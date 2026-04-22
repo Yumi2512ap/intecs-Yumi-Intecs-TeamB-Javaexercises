@@ -28,7 +28,7 @@
 	 		<form action="<%= request.getContextPath() %>/DeleteRoom" method="post">
 				<tr>
 					<td><%= roomsId[i] %></td> 
-					<td><%= roomsName[i] %></td>
+					<td><a href="<%=request.getContextPath() %>/RoomImage?roomId=<%= roomsId[i] %>"><%= roomsName[i] %></a></td>
 					<td><input type="submit" value="削除"></td>
 					<td><input type="hidden" name="roomId" value="<%= roomsId[i] %>"></td>
 					<td><input type="hidden" name="roomName" value="<%= roomsName[i] %>"></td>

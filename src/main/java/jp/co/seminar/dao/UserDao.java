@@ -103,4 +103,8 @@ public class UserDao {
 			}
 	}
 	
+	public UserDao update(String id,String password,String name,String address) {
+		
+		return 
+	}
 }
