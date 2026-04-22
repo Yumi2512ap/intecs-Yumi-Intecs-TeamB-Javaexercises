@@ -354,6 +354,8 @@ public class MeetingRoom implements Serializable {
 		//インスタンス化
 		UserDao userdao= new UserDao();
 		
+		// UserDaoの削除メソッドを呼び出し、その結果をそのまま返す
+	    return userdao.deleteUser(userId);
 	}
 
 	// アクセスログの取得
