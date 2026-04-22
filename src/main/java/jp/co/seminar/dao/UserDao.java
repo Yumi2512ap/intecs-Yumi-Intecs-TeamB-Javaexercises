@@ -3,6 +3,7 @@ package jp.co.seminar.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import jp.co.seminar.beans.UserBean;
 import jp.co.seminar.util.MRConnectionProvider;
@@ -87,33 +88,30 @@ public class UserDao {
 		}
 	}
 
-	
 	// 削除処理メソッド SQLの実行と削除フラグの更新 
 	public boolean deleteMyUser(String userId) {
 		//データベースに削除のフラグを出す
-		String sql="UPDATE MeetingRoom SET delete_flg = TRUE WHERE userId = ?";
-	//データベースに接続
-			try (Connection conn = MRConnectionProvider.getConnection();
-				     PreparedStatement pstmt = conn.prepareStatement(sql)) {
-				// プレースホルダに値をセット
-		        pstmt.setString(1, userId);
-		     // SQLで更新された行数を取得
-		        int affectedRows = pstmt.executeUpdate();
-		     // 1行以上更新されていればtrue
-		        return affectedRows > 0;
-			
-			}catch(SQLException e){
-				System.err.println("SQLに関するエラーが発生しました");
-				return false;
-				
-			}catch(ClassNotFoundException e){
-				System.err.println("ドライバーが見つかりません。");
-				return false;
-				
-			}
-	}
-	
+		String sql = "UPDATE MeetingRoom SET delete_flg = TRUE WHERE userId = ?";
+		//データベースに接続
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			// プレースホルダに値をセット
+			pstmt.setString(1, userId);
+			// SQLで更新された行数を取得
+			int affectedRows = pstmt.executeUpdate();
+			// 1行以上更新されていればtrue
+			return affectedRows > 0;
 
+		} catch (SQLException e) {
+			System.err.println("SQLに関するエラーが発生しました");
+			return false;
+
+		} catch (ClassNotFoundException e) {
+			System.err.println("ドライバーが見つかりません。");
+			return false;
+
+		}
+	}
 
 	public boolean update(String id, String password, String name, String address) {
 		String sql = "UPDATE user SET password = ?, name = ?, address = ? WHERE id = ?";
@@ -137,13 +135,13 @@ public class UserDao {
 	}
 
 	// ここに deleteUser を入れる！
-	public void deleteUser(String userId) {
+	public boolean deleteUser(String userId) {
 		// 物理的に消すのではなく、delete_flg を 1 に更新する
 		String sql = "UPDATE user SET delete_flg = 1 WHERE id = ?";
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, userId);
-			pstmt.executeUpdate();
+			return pstmt.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("ユーザーの論理削除に失敗しました", e);
