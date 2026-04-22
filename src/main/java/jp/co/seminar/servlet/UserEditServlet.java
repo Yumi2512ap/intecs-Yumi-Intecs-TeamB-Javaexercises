@@ -18,56 +18,56 @@ import jp.co.seminar.beans.UserBean;
 @WebServlet("/UserEditServlet")
 public class UserEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserEditServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UserEditServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		
-		// セッションから「今の（古い）情報」を取り出す
-				HttpSession session = request.getSession();
-				UserBean UB = (UserBean) session.getAttribute("UB");
-				
-		String id = UB.getId(); // セッションに保存されている確実なID	
-		
-		// JSPの入力欄から「新しい情報」をパラメータで受け取る
-		String newUserPw = request.getParameter("userPw");
-		String newUserName = request.getParameter("userName");
-		String newUserAddress = request.getParameter("useraddress");
-		
-		if (UB == null) {
-		    response.sendRedirect("login.jsp");
-		    return; 
-		}
-			
-		String nextPage;
-		request.getRequestDispatcher(nextPage).forward(request, response);	
+		//遷移先ページ格納変数
+		String nextPage2 = "login.jsp";
+		//nextPageに遷移するためのディスパッチャを作成する
+		RequestDispatcher rd = request.getRequestDispatcher(nextPage2);
+		//リダイレクトする
+		response.sendRedirect(nextPage2);
+		return;
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//遷移先ページ格納変数
-				String nextPage2 = "login.jsp";
-				//nextPageに遷移するためのディスパッチャを作成する
-				RequestDispatcher rd = request.getRequestDispatcher(nextPage2);
-				//リダイレクトする
-				response.sendRedirect(nextPage2);
-				return;
-			}
+		request.setCharacterEncoding("UTF-8");
 
+		// セッションから「今の（古い）情報」を取り出す
+		HttpSession session = request.getSession();
+		UserBean UB = (UserBean) session.getAttribute("UB");
+
+		String id = UB.getId(); // セッションに保存されている確実なID	
+
+		// JSPの入力欄から「新しい情報」をパラメータで受け取る
+		String newUserPw = request.getParameter("userPw");
+		String newUserName = request.getParameter("userName");
+		String newUserAddress = request.getParameter("useraddress");
+
+		if (UB == null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+
+		String nextPage;
+		request.getRequestDispatcher(nextPage).forward(request, response);
 	}
 
-
+}
