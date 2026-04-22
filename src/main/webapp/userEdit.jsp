@@ -30,21 +30,21 @@ if (UB == null) {
 		<table class="result">
 			<tr>
 				<th>利用者ID：</th>
-				<td><input type="text" name="userId" value="<%=UB.getId()%>"readonly></td>
+				<td><input type="text" name="userId" value="<%=UB.getId()%>" readonly required></td>
 			</tr>
 			<tr>
 				<th>パスワード：</th>
 				<td><input type="password" name="userPw"
-					value="<%=UB.getPassword()%>"></td>
+					value="<%=UB.getPassword()%>" required></td>
 			</tr>
 			<tr>
 				<th>表示ユーザー名：</th>
-				<td><input type="text" name="userName" value="<%=UB.getName()%>"></td>
+				<td><input type="text" name="userName" value="<%=UB.getName()%>" required></td>
 			</tr>
 			<tr>
 				<th>居住地：</th>
 				<td><input type="text" name="useraddress"
-					value="<%=UB.getAddress()%>" placeholder="都道府県を入力"></td>
+					value="<%=UB.getAddress()%>" placeholder="都道府県を入力" required></td>
 			</tr>
 		</table>
 

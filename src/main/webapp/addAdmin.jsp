@@ -15,23 +15,23 @@
 		<table>
 			<tr>
 				<th>ユーザーID:</th>
-				<td><input type="text" name="userId" value=""></td>
+				<td><input type="text" name="userId" value="" required></td>
 			</tr>
 			<tr>
 				<th>パスワード:</th>
-				<td><input type="password" name="userPw" value=""></td>
+				<td><input type="password" name="userPw" value="" required></td>
 			</tr>
 			<tr>
 				<th>パスワード(2回目):</th>
-				<td><input type="password" name="userPw2" value=""></td>
+				<td><input type="password" name="userPw2" value="" required></td>
 			</tr>
 			<tr>
 				<th>表示ユーザー名:</th>
-				<td><input type="text" name="userName" value=""></td>
+				<td><input type="text" name="userName" value="" required></td>
 			</tr>
 			<tr>
 				<th>居住地:</th>
-				<td><input type="text" name="address" value="" placeholder="都道府県を入力"></td>
+				<td><input type="text" name="address" value="" placeholder="都道府県を入力" required></td>
 			</tr>
 		</table>
 	
