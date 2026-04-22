@@ -369,7 +369,7 @@ public class MeetingRoom implements Serializable {
 	}
 
 	//画像の追加
-	public void addImage(int imageSize, String roomId, String imageName, String imageType,
+	public boolean addImage(int imageSize, String roomId, String imageName, String imageType,
 			byte[] imageContent, Timestamp createdAt) {
 		ImageBean image = new ImageBean(
 				null,
@@ -381,10 +381,11 @@ public class MeetingRoom implements Serializable {
 				createdAt);
 		ImageDao iD = new ImageDao();
 		try {
-			iD.insertImage(image);
+			return iD.insertImage(image);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("MeetingRoom addImageエラー");
+			return false;
 		}
 	}
 
