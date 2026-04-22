@@ -57,7 +57,6 @@ public class ResListSortServlet extends HttpServlet {
 		request.setAttribute("reservations", MR.getReservationList(order, date1, date2, room, user, request));
 		request.setAttribute("searchBean", new SearchBean(order, date1, date2, room, user));
 		String nextPage;
-		System.out.println(page);
 		if(page == null) {
 			nextPage = "reservationList.jsp";
 		}else {
