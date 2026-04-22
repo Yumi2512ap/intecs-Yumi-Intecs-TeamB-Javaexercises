@@ -43,7 +43,8 @@ public class LoginServlet extends HttpServlet {
 		String nextPage;
 
 		if (result) {
-
+			  // 【これを追加！】最新のセッションIDをサーバーに保存する
+		    getServletContext().setAttribute(userId, session.getId());	
 			// 認証が成功したら、UserDaoを使って詳細データを取ってくる
 			UserDao dao = new UserDao();
 
