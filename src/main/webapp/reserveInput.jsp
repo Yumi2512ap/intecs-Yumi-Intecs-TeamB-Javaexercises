@@ -38,7 +38,7 @@
 	
 			<% for(int i = 0; i < roomsName.length; i++){ %>
 				<tr>
-					<td><%= roomsName[i] %></td>
+					<td><a href="<%=request.getContextPath() %>/RoomImage?roomId=<%= roomsId[i] %>"><%= roomsName[i] %></a></td>
 					<% for(int j = 0;j < times.length; j++) { %>
 						<form action="<%= request.getContextPath() %>/ReserveCreate" method="post">
 							<td class="cell">
