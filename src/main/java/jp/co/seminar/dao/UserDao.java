@@ -3,7 +3,6 @@ package jp.co.seminar.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import jp.co.seminar.beans.UserBean;
 import jp.co.seminar.util.MRConnectionProvider;
@@ -87,9 +86,10 @@ public class UserDao {
 			throw new RuntimeException("ユーザー登録に失敗しました", e);
 		}
 	}
+
 	
 	// 削除処理メソッド SQLの実行と削除フラグの更新 
-	public boolean deleteUser(String userId) {
+	public boolean deleteMyUser(String userId) {
 		//データベースに削除のフラグを出す
 		String sql="UPDATE MeetingRoom SET delete_flg = TRUE WHERE userId = ?";
 	//データベースに接続
@@ -113,4 +113,41 @@ public class UserDao {
 			}
 	}
 	
+
+
+	public boolean update(String id, String password, String name, String address) {
+		String sql = "UPDATE user SET password = ?, name = ?, address = ? WHERE id = ?";
+
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, password);
+			pstmt.setString(2, name);
+			pstmt.setString(3, address);
+			pstmt.setString(4, id);
+
+			// 1行更新されたかどうかを返す
+			return pstmt.executeUpdate() == 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// RuntimeExceptionとして投げ直す（メッセージと元の例外eを渡す）
+			throw new RuntimeException("変更の保存に失敗しました", e);
+		}
+
+	}
+
+	// ここに deleteUser を入れる！
+	public void deleteUser(String userId) {
+		// 物理的に消すのではなく、delete_flg を 1 に更新する
+		String sql = "UPDATE user SET delete_flg = 1 WHERE id = ?";
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("ユーザーの論理削除に失敗しました", e);
+		}
+	}
+
 }
