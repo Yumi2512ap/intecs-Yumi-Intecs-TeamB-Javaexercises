@@ -28,9 +28,12 @@ if (UB == null) {
 		method="post">
 
 		<table class="result">
+
 			<tr>
+				<%--入力不可（表示のみ）--%>
 				<th>利用者ID：</th>
-				<td><input type="text" name="userId" value="<%=UB.getId()%>" readonly required></td>
+				<td><input type="text" name="userId" value="<%=UB.getId()%>"
+					readonly required></td>
 			</tr>
 			<tr>
 				<th>パスワード：</th>
@@ -39,7 +42,10 @@ if (UB == null) {
 			</tr>
 			<tr>
 				<th>表示ユーザー名：</th>
-				<td><input type="text" name="userName" value="<%=UB.getName()%>" required></td>
+
+				<td><input type="text" name="userName"
+					value="<%=UB.getName()%>" required></td>
+
 			</tr>
 			<tr>
 				<th>居住地：</th>
