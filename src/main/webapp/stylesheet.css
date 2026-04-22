@@ -11,10 +11,13 @@ table{
 }
 
 th,td{
-    text-align: left;
     font-size: 1.5rem;
-    vertical-align: middle;
-    border: 1px solid red;
+    text-align: left;
+    vertical-align:middle;
+}
+td input {
+    display: block;
+    margin: 0;
 }
 
 .result tr th{
@@ -196,6 +199,7 @@ header input[type="submit"]:hover {
 .list tr th{
     padding: 5px 15px;
 }
+
 .list{
     text-align: center;
 	border: solid 1px #434343;
@@ -205,6 +209,7 @@ header input[type="submit"]:hover {
 }
 .list th,
 .list td{
+    text-align: center;
     border: solid 1px #434343;
     padding: 0;  
 }

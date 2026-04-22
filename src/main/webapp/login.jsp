@@ -15,10 +15,10 @@
 	<form action="<%=request.getContextPath()%>/Login" method="post">
 		<table>
 			<tr>
-				<th>ユーザーID</th><td><input type="text" name="userId" value=""></td>
+				<th>ユーザーID:</th><td><input type="text" name="userId" value=""></td>
 			</tr>
 			<tr>
-				<th>パスワード</th><td><input type="password" name="userPw" value=""></td> 
+				<th>パスワード:</th><td><input type="password" name="userPw" value=""></td> 
 			</tr>
 		</table>
 		<input type="submit" value="ログイン">
