@@ -48,12 +48,12 @@ UserBean user = MR.getUser();
 		<%
 		}
 		%>
+		<form action="<%=request.getContextPath()%>/Logout" method="post">
+			<input type="submit" value="ログアウト">
+		</form>
+
 	</div>
 	<hr>
-
-	<form action="<%=request.getContextPath()%>/Logout" method="post">
-		<input type="submit" value="ログアウト">
-	</form>
 	<%@ include file="footer.jsp"%>
 </body>
 </html>

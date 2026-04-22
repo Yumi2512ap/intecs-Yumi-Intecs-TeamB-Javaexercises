@@ -39,7 +39,6 @@ public class LoginServlet extends HttpServlet {
 		String agent = request.getHeader("User-Agent");
 		boolean result = MR.login(userId, userPw, ip, agent);
 
-
 		UserBean UB;
 		String nextPage;
 
