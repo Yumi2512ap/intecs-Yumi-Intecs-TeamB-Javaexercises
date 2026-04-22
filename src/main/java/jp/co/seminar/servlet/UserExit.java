@@ -1,8 +1,6 @@
 package jp.co.seminar.servlet;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,13 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;//javascript
 
 import jp.co.seminar.beans.MeetingRoom;
 
 
 public class UserExit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String nextPage = null;
        
     
    
@@ -29,27 +27,21 @@ public class UserExit extends HttpServlet {
 		//リクエストで受信したUTF-8文字コードで受信する
 		request.setCharacterEncoding("UTF-8");
 
-		//JSPからのリクエストパラメーター
-		String userId = request.getParameter("userId");
-		String userPw = request.getParameter("userPw");
 		
-		//インスタンス
-		MeetingRoom MR = new MeetingRoom();
-		boolean result = MR.login(userId, userPw);
 		
-		if() {
-			//「はい」を選択
-			
+		//userEdit.jspから情報を取得
+	    String action = request.getParameter("action");
+	    String nextPage;
+	    	//退会処理を呼び出す処理
+	    	//インスタンス
+			MeetingRoom meetingroom=new MeetingRoom ();
+			// UserDaoの削除メソッドを呼び出す。
+		    meetingroom.deleteUser(action);
 			//ログインページへ
-			String nextPage="Login.jsp";
-		}else { 
-			//「いいえ」を選択
-			String nextPage2 = "menu.jsp";
-			
-			break;
-		}
+			nextPage="Login.jsp";
+
 		//nextPageに遷移するためのディスパッチャを作成する
-		RequestDispatcher rd = request.getRequestDispatcher(LogoutServlet.java);
+		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		//フォワードする
 		rd.forward(request, response);
 		//session情報の無効化はLogoutServletが行う
