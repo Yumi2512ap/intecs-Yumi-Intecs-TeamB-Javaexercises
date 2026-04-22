@@ -87,24 +87,23 @@ public class UserDao {
 			throw new RuntimeException("ユーザー登録に失敗しました", e);
 		}
 	}
-	
-	// 削除処理メソッド SQLの実行と削除フラグの更新
-	public boolean deleteUser(String userId) {
 
-			
-	//データベースに接続
-			try (Connection conn = UserConnectionProvider.getConnection();
-				     PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			//データベースに削除のフラグを出す
-				String sql="UPDATE MeetingRoom SET delete_flg = TRUE WHERE userId = ?";
-			}catch(SQLException e){
-				System.err.println("エラーが発生しました");
-				
-			}
-	}
-	
 	public UserDao update(String id,String password,String name,String address) {
 		
 		return 
+	}
+
+	// ここに deleteUser を入れる！
+	public void deleteUser(String userId) {
+		// 物理的に消すのではなく、delete_flg を 1 に更新する
+		String sql = "UPDATE user SET delete_flg = 1 WHERE id = ?";
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("ユーザーの論理削除に失敗しました", e);
+		}
 	}
 }
