@@ -10,21 +10,24 @@
 <body>
 	<%@ include file="header.jsp"%>
 
-	<h2>ユーザーメニュー</h2>
+	<h2>ユーザー情報</h2>
 	<hr>
 	<h2>メニュー</h2>
-
-	<form action="userEdit.jsp">
-		<input type="submit" value="ユーザー情報の編集">
-	</form>
-
+	<div class="menu">
+		<form action="userEdit.jsp">
+			<input type="submit" value="ユーザー情報の編集">
+		</form>
+		<form action="<%= request.getContextPath()%>/UserReservations" method="post">
+			<input type="hidden" name="user" value="${MR.user.name}">
+			<input type="submit" value="自身の予約一覧">
+		</form>
+	</div>
+	
+	<hr>
 	<form action="<%=request.getContextPath()%>/menu.jsp" method="get">
 		<input type="submit" value="戻る">
 	</form>
 
-	<form action="<%=request.getContextPath()%>/Logout" method="post">
-		<input type="submit" value="ログアウト">
-	</form>
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
