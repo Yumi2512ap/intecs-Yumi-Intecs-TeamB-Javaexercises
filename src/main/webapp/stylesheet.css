@@ -253,3 +253,8 @@ td.cell form {
     color: #ffffff;
     transform: translateY(-1px);
 }
+
+.img{
+    max-width: 50%;
+    margin: auto;
+}

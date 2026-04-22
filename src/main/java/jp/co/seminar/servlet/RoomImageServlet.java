@@ -35,9 +35,9 @@ public class RoomImageServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//セッションから取得
 		HttpSession session = request.getSession();
-		//キャストしながらセッションから取得
 		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 		String roomId = request.getParameter("roomId");
+		
 		// ルームIDなし
 		if (roomId == null || roomId.isEmpty()) {
 			request.setAttribute("err", "roomIdが不明です");
