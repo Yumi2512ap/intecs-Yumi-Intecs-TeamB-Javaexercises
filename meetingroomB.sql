@@ -25,7 +25,6 @@ CREATE TABLE user (
 CREATE TABLE room (
         id VARCHAR(4) PRIMARY KEY,
         name VARCHAR(20),
-        deleteFlg BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE reservation (
