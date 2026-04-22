@@ -404,7 +404,7 @@ public class MeetingRoom implements Serializable {
 		if (image.getImageContent() != null && image.getImageType() != null) {
 			String base64 = Base64.getEncoder().encodeToString(image.getImageContent());
 			imageSrc = "data:" + image.getImageType() + ";base64," + base64;
-			result = base64;
+			result = imageSrc;
 		}
 
 		return result;

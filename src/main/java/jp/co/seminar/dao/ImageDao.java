@@ -13,7 +13,7 @@ public class ImageDao {
 
 	public ImageBean findById(String roomId){
 		String sql = "SELECT image_id, room_id, image_name, image_type, image_content, image_size, created_at "
-				+ "FROM room_image WHERE image_id = ?";
+				+ "FROM room_image WHERE room_id = ?";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
