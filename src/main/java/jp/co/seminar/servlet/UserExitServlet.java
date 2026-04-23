@@ -36,21 +36,18 @@ public class UserExitServlet extends HttpServlet {
 
 		//リクエストで受信したUTF-8文字コードで受信する
 		request.setCharacterEncoding("UTF-8");
-
-		//userEdit.jspから情報を取得
-		String action = request.getParameter("action");
 		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
 		
 		// 管理者自身の削除を無効
 		if(MR.getUser().getIsAdmin()) {
-			request.setAttribute("err", "管理者自身の削除はできません");
+			request.setAttribute("msg", "管理者自身の削除はできません");
 			request.getRequestDispatcher("/userEdit.jsp").forward(request, response);
+			return;
 		}
 		// UserDaoの削除メソッドを呼び出す。
 		MR.deleteUser(MR.getUser().getId());
-		//ログインページへ
+		//ログアウト
 		String nextPage = "/Logout";
-
 		//nextPageに遷移するためのディスパッチャを作成する
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		//フォワードする
@@ -61,10 +58,4 @@ public class UserExitServlet extends HttpServlet {
 
 }
 
-//「はい」の場合退会しましたのメッセージを出力後ログイン画面へ
 
-//いいえの場合　セッションを無効化後即ログイン画面へ
-
-//userIdを受け取る
-
-//「はい/いいえ」の判定や、セッションの無効化、画面遷移

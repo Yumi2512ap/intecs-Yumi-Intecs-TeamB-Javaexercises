@@ -54,7 +54,7 @@ public class RoomDao {
 	//会議室の追加
 	public Boolean addRoom(String roomId, String roomName) {
 
-		String sql = "INSERT INTO room(id,name,deleteFlg) VALUES(?,?,?)";
+		String sql = "INSERT INTO room(id,name,deleteFlg) VALUES(?,?,?,0)";
 		int deleteFlg = 0;
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
