@@ -48,7 +48,7 @@ public class RoomDao {
 		} catch (ClassNotFoundException e) {
 			System.err.println("ドライバ");
 		}
-		return null;
+		return nameDataList.toArray(new RoomBean[0]);
 	}
 
 	//会議室の追加

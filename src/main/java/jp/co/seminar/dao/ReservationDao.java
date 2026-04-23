@@ -25,7 +25,7 @@ public class ReservationDao {
 		//DB取得結果を格納 
 		List<ReservationBean> List = new ArrayList<ReservationBean>();
 		//データベース接続
-		String sql = "SELECT * FROM reservation WHERE date = ?";
+		String sql = "SELECT * FROM reservation WHERE date = ? AND delete_flg = 0";
 
 		//try-with-resources構文
 		try (
