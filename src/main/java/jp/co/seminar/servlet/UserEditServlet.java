@@ -2,6 +2,7 @@ package jp.co.seminar.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,11 +61,21 @@ public class UserEditServlet extends HttpServlet {
 
 		// JSPの入力欄から「新しい情報」をパラメータで受け取る
 		String newUserPw = request.getParameter("userPw");
+		String newUserPw2 = request.getParameter("userPw2");
 		String newUserName = request.getParameter("userName");
 		String newUserAddress = request.getParameter("useraddress");
-
-		
+		String msg = null;
 		String nextPage = "";
+		
+		if (!newUserPw.equals(newUserPw2)) {
+			msg = "同じパスワードを入力してください";
+			nextPage = "/userEdit.jsp";
+			request.setAttribute("msg", msg);
+			RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+			rd.forward(request, response);
+			return;
+		}
+
 
 		try {// DAOで更新をする
 
