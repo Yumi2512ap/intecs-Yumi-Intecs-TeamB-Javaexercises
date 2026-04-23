@@ -22,7 +22,7 @@ public class RoomDao {
 		// 拡張可能なリストの作成
 		List<RoomBean> nameDataList = new ArrayList<RoomBean>();
 		// パラメータを含む動的SQL文を用意
-		String sql = "SELECT * FROM room";
+		String sql = "SELECT * FROM room WHERE delete_flg = 0";
 		// try-with-resourcesでリソースを自動的にクローズ
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -54,13 +54,11 @@ public class RoomDao {
 	//会議室の追加
 	public Boolean addRoom(String roomId, String roomName) {
 
-		String sql = "INSERT INTO room(id,name,deleteFlg) VALUES(?,?,?,0)";
-		int deleteFlg = 0;
+		String sql = "INSERT INTO room(id,name,delete_flg) VALUES(?,?,0)";
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, roomId);
 			pstmt.setString(2, roomName);
-			pstmt.setInt(3, deleteFlg);
 			return pstmt.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,16 +68,16 @@ public class RoomDao {
 	}
 
 	//会議室の削除
-	public Boolean deleteRoom(String roomId) {
-		String sql = "DELETE FROM room  WHERE id = ?";
+	public boolean deleteRoom(String roomId) {
+		// 物理的に消すのではなく、delete_flg を 1 に更新する
+		String sql = "UPDATE room SET delete_flg = 1 WHERE id = ?";
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, roomId);
 			return pstmt.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("RoomDao:会議室の削除に失敗しました");
-			return false;
+			throw new RuntimeException("ユーザーの論理削除に失敗しました", e);
 		}
 	}
 }
