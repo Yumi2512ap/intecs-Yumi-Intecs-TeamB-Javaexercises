@@ -63,6 +63,7 @@ public class UserEditServlet extends HttpServlet {
 		String newUserName = request.getParameter("userName");
 		String newUserAddress = request.getParameter("useraddress");
 
+		
 		String nextPage = "";
 
 		try {// DAOで更新をする
