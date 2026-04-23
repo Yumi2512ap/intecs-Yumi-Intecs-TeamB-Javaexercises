@@ -86,48 +86,46 @@ public class MeetingRoom implements Serializable {
 
 	// 一日分の予約状況を二次元配列で返す
 	public ReservationBean[][] getReservations() {
-		//会議室予約システムの利用日における予約状況を返します。
-		// null の2次元配列とDAOを用意
 		ReservationBean[][] reBs = new ReservationBean[rooms.length][PERIOD.length];
 		ReservationDao reD = new ReservationDao();
-		// 予約一覧を取得
-		List<ReservationBean> reList = reD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
-		// 予約リストの全件
+		List<ReservationBean> reList = reD.findByDate(date);
+
 		for (ReservationBean reB : reList) {
-			// 部屋番号と時間
 			String roomId = reB.getRoomId();
 			String start = reB.getStart();
 
-			// 配列の[room添え字][時間添え字]に代入
-			reBs[roomIndex(roomId)][startPeriod(start)] = reB;
+			int roomIdx = roomIndex(roomId);
+			if (roomIdx == -1) {
+				System.err.println("存在しない会議室IDの予約を無視: " + roomId);
+				continue;
+			}
 
+			reBs[roomIdx][startPeriod(start)] = reB;
 		}
 		return reBs;
 	}
 
 	// 予約状況String
 	public String[][] getDisabled() {
-		//会議室予約システムの利用日における予約状況を返します。
-
-		// null の2次元配列とDAOを用意
 		String[][] disabled = new String[rooms.length][PERIOD.length];
 		ReservationDao reD = new ReservationDao();
-		// 予約一覧を取得
-		List<ReservationBean> reList = reD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
-		// 予約リストの全件
+		List<ReservationBean> reList = reD.findByDate(date);
+
 		for (ReservationBean reB : reList) {
-			// 部屋番号と時間
 			String roomId = reB.getRoomId();
 			String start = reB.getStart();
 
-			// 配列の[room添え字][時間添え字]に代入
-			disabled[roomIndex(roomId)][startPeriod(start)] = "disabled";
+			int roomIdx = roomIndex(roomId);
+			if (roomIdx == -1) {
+				System.err.println("存在しない会議室IDの予約を無視: " + roomId);
+				continue;
+			}
 
+			disabled[roomIdx][startPeriod(start)] = "disabled";
 		}
 
 		for (int i = 0; i < disabled.length; i++) {
 			for (int j = 0; j < PERIOD.length; j++) {
-				// 現在時刻が表の時刻より後なら
 				if (!AfterNow(PERIOD[j])) {
 					disabled[i][j] = "disabled";
 				}
@@ -138,24 +136,23 @@ public class MeetingRoom implements Serializable {
 
 	// キャンセル可能状況String
 	public String[][] getCanCancels() {
-		//会議室予約システムの利用日における予約状況を返します。
-
-		// null の2次元配列とDAOを用意
 		String[][] cans = new String[rooms.length][PERIOD.length];
 		ReservationDao reD = new ReservationDao();
-		// 予約一覧を取得
-		List<ReservationBean> reList = reD.findByDate(date);//date文字列のSQLdate型変換はDAOで行う
-		// 予約リストの全件
+		List<ReservationBean> reList = reD.findByDate(date);
+
 		for (ReservationBean reB : reList) {
-			// 予約のユーザーIDと自信のユーザーIDが一致かつスタートが現在時刻より後
 			if (reB.getUserId().equals(this.user.getId()) && AfterNow(reB.getStart())) {
 				String roomId = reB.getRoomId();
 				String start = reB.getStart();
 
-				// 配列の[room添え字][時間添え字]に代入
-				cans[roomIndex(roomId)][startPeriod(start)] = "can";
-			}
+				int roomIdx = roomIndex(roomId);
+				if (roomIdx == -1) {
+					System.err.println("存在しない会議室IDの予約を無視: " + roomId);
+					continue;
+				}
 
+				cans[roomIdx][startPeriod(start)] = "can";
+			}
 		}
 
 		return cans;
@@ -258,16 +255,14 @@ public class MeetingRoom implements Serializable {
 	}
 
 	// MR内で使用するプライベートメソッド
-	private int roomIndex(String roomId) throws IndexOutOfBoundsException {
-		//roomIdが配列にあった場合その添え字を返すメソッド
-		//		RoomDao roD = new RoomDao();
-		//		RoomBean[] Rooms = roD.findAll();
+	// 添え字返却
+	private int roomIndex(String roomId) {
 		for (int i = 0; i < this.rooms.length; i++) {
 			if (this.rooms[i].getId().equals(roomId)) {
 				return i;
 			}
 		}
-		throw new IndexOutOfBoundsException("会議室が存在しません");
+		return -1;
 	}
 
 	// 日付変更
