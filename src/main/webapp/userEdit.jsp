@@ -56,7 +56,8 @@ if (UB == null) {
 
 		<input type="submit" name="action" value="変更を保存する">
 	</form>
-
+	
+	<hr>
 	<form action="<%=request.getContextPath()%>/UserExit"
 		method="post">
 		<input type="submit" name="action" value="退会する">
