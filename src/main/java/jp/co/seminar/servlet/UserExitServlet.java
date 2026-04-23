@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
 
-@WebServlet("/UserEdit")
-public class UserExit extends HttpServlet {
+@WebServlet("/UserExit")
+public class UserExitServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String nextPage = null;
 
@@ -39,14 +39,17 @@ public class UserExit extends HttpServlet {
 
 		//userEdit.jspから情報を取得
 		String action = request.getParameter("action");
-		String nextPage;
-		//退会処理を呼び出す処理
-		//インスタンス
-		MeetingRoom meetingroom = (MeetingRoom) session.getAttribute("MR");
+		MeetingRoom MR = (MeetingRoom) session.getAttribute("MR");
+		
+		// 管理者自身の削除を無効
+		if(MR.getUser().getIsAdmin()) {
+			request.setAttribute("err", "管理者自身の削除はできません");
+			request.getRequestDispatcher("/userEdit.jsp").forward(request, response);
+		}
 		// UserDaoの削除メソッドを呼び出す。
-		meetingroom.deleteUser(action);
+		MR.deleteUser(MR.getUser().getId());
 		//ログインページへ
-		nextPage = "Login.jsp";
+		String nextPage = "/Logout";
 
 		//nextPageに遷移するためのディスパッチャを作成する
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
@@ -54,7 +57,6 @@ public class UserExit extends HttpServlet {
 		rd.forward(request, response);
 		//session情報の無効化はLogoutServletが行う
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 }

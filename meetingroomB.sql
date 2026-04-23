@@ -24,8 +24,10 @@ CREATE TABLE user (
 
 CREATE TABLE room (
         id VARCHAR(4) PRIMARY KEY,
-        name VARCHAR(20)
+        name VARCHAR(20),
+        delete_flg BOOLEAN NOT NULL DEFAULT FALSE
 );
+
 
 CREATE TABLE reservation (
         id INT PRIMARY KEY AUTO_INCREMENT,
