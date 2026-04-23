@@ -17,7 +17,7 @@ public class UserDao {
 
 		UserBean user = null;
 
-		String sql = "SELECT id, password, name, address, is_admin FROM user WHERE id = ? AND password = ?";
+		String sql = "SELECT id, password, name, address, is_admin, delete_flg FROM user WHERE id = ? AND password = ?";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
 
