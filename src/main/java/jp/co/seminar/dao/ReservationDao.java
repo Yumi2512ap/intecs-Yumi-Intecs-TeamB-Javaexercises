@@ -27,7 +27,9 @@ public class ReservationDao {
 		//DB取得結果を格納 
 		List<ReservationBean> List = new ArrayList<ReservationBean>();
 		//データベース接続
-		String sql = "SELECT * FROM reservation WHERE date = ? AND delete_flg = 0";
+		String sql = "SELECT * FROM reservation AS r "
+				+ "INNER JOIN user ON r.userid = user.id "
+				+ "WHERE date = ? AND user.delete_flg = 0";
 
 		//try-with-resources構文
 		try (
@@ -41,12 +43,12 @@ public class ReservationDao {
 				//結果セットをviewへ送るための準備
 				while (rs.next()) {
 					//結果セットから取得
-					int intid = rs.getInt("id");
-					String StringroomId = rs.getString("roomId");
+					int intid = rs.getInt("r.id");
+					String StringroomId = rs.getString("roomid");
 					String strdate = rs.getString("date");
 					String strstart = rs.getString("start");
 					String strend = rs.getString("end");
-					String struserId = rs.getString("userId");
+					String struserId = rs.getString("userid");
 					//ReservationBeanオブジェクトを生成し、リストに追加
 					ReservationBean rese = new ReservationBean(intid, StringroomId, strdate, strstart, strend,
 							struserId);
