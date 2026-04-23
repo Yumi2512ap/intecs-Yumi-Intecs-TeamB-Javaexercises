@@ -22,7 +22,7 @@ public class RoomDao {
 		// 拡張可能なリストの作成
 		List<RoomBean> nameDataList = new ArrayList<RoomBean>();
 		// パラメータを含む動的SQL文を用意
-		String sql = "SELECT * FROM room";
+		String sql = "SELECT * FROM room WHERE delete_flg = 0";
 		// try-with-resourcesでリソースを自動的にクローズ
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
