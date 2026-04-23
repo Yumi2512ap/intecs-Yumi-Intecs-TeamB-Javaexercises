@@ -348,14 +348,14 @@ public class MeetingRoom implements Serializable {
 			System.err.println("MeetingRoom:deleteRoomエラー");
 		}
 	}
-	
+
 	// UserDaoの削除メソッドを呼ぶ　useDel	
 	public boolean deleteUser(String userId) {
 		//インスタンス化
-		UserDao userdao= new UserDao();
-		
+		UserDao userdao = new UserDao();
+
 		// UserDaoの削除メソッドを呼び出し、その結果をそのまま返す
-	    return userdao.deleteUser(userId);
+		return userdao.deleteUser(userId);
 	}
 
 	// アクセスログの取得
