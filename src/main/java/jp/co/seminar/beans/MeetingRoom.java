@@ -353,6 +353,8 @@ public class MeetingRoom implements Serializable {
 	public boolean deleteUser(String userId) {
 		//インスタンス化
 		UserDao userdao = new UserDao();
+		ReservationDao rD = new ReservationDao();
+		rD.delete(userId);
 
 		// UserDaoの削除メソッドを呼び出し、その結果をそのまま返す
 		return userdao.deleteUser(userId);
