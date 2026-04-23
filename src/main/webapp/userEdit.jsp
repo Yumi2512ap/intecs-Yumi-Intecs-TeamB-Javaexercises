@@ -57,13 +57,14 @@ if (UB == null) {
 		<input type="submit" name="action" value="変更を保存する">
 	</form>
 
-	<form action="<%=request.getContextPath()%>/UserEditServlet"
+	<form action="<%=request.getContextPath()%>/UserExit"
 		method="post">
 		<input type="submit" name="action" value="退会する">
 	</form>
 
 	${ msg }
-	<form action="login.jsp">
+	<hr>
+	<form action="userMenu.jsp">
 		<input type="submit" value="戻る">
 	</form>
 	<%@ include file="footer.jsp"%>
