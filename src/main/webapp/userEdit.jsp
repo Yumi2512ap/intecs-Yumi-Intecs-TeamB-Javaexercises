@@ -18,6 +18,7 @@
 
 		<table class="result">
 
+			${ msg }
 			<tr>
 				<%--入力不可（表示のみ）--%>
 				<th>利用者ID：</th>
@@ -51,7 +52,6 @@
 		<input type="submit" name="action" value="退会する">
 	</form>
 
-	${ msg }
 	<hr>
 	<form action="userMenu.jsp">
 		<input type="submit" value="戻る">
