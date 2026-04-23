@@ -73,7 +73,11 @@ body {
 }
 
 /* サブミットボタン */
-input[type="submit"]:not(.can):not(.cant) {
+input[type="button"] {
+    width: 70px;
+    margin: 0 auto;
+}
+input[type="submit"]:not(.can):not(.cant),input[type="button"] {
     background-color: #ffffff;
     color: #414c82;
     border: 1px solid #414c82;
@@ -84,11 +88,11 @@ input[type="submit"]:not(.can):not(.cant) {
     cursor: pointer;          /* マウスホバーでポインタ表示 */
     transition: background-color 0.2s; /* ホバー時の変化を滑らかに */
 }
-input[type="submit"]:not(.can):not(.cant):active { /* クリック（アクティブ）時のスタイル */
+input[type="submit"]:not(.can):not(.cant):active,input[type="button"]:active { /* クリック（アクティブ）時のスタイル */
   transform: translateY(2px); /* 2px下に下げる */
 }
 
-input[type="submit"]:not(.can):not(.cant):hover {
+input[type="submit"]:not(.can):not(.cant):hover,input[type="button"]:hover {
     background-color: #414c82;
     color: #ffffff;
     transform: translateY(-1px);

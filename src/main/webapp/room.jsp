@@ -21,7 +21,8 @@
 		<img src="${ imageSrc }" alt="部屋画像" class="img">
 	
 			
-	
+	<hr>
+	<input type="button" onclick="history.back()" value="戻る">
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
