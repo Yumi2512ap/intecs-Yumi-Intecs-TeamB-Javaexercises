@@ -30,6 +30,10 @@
 					value="${ MR.user.password }" required></td>
 			</tr>
 			<tr>
+				<th>パスワード(2回目):</th>
+				<td><input type="password" name="userPw2" required></td>
+			</tr>
+			<tr>
 				<th>表示ユーザー名：</th>
 
 				<td><input type="text" name="userName"

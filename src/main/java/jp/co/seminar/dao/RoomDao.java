@@ -77,7 +77,7 @@ public class RoomDao {
 			return pstmt.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("ユーザーの論理削除に失敗しました", e);
+			throw new RuntimeException("会議室の論理削除に失敗しました", e);
 		}
 	}
 }
