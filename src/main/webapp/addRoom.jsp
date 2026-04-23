@@ -17,8 +17,10 @@
 	<h1>管理者用ページ</h1>
 	<hr>
 	<h2>会議室管理</h2>
+		<div class="center">
 		<font color=red>${deleteErrorMessage}</font>
 		${deleteSuccessMessage}
+		</div>
 		<table class="list">
 		<tr>
 			<th>会議室ID</th>
@@ -31,6 +33,7 @@
 					<td><a href="<%=request.getContextPath() %>/RoomImage?roomId=<%= roomsId[i] %>"><%= roomsName[i] %></a></td>
 					<td class="cell"><input type="submit" value="削除"></td>
 					<td><input type="hidden" name="roomId" value="<%= roomsId[i] %>"></td>
+					<td><input type="hidden" name="roomName" value="<%= roomsName[i] %>"></td>
 				</tr>
 			 </form>
 		<% } %>      
@@ -40,8 +43,9 @@
 			</form>
 	<hr>
 	<h2>会議室追加</h2>
-		<font color=red>${errorMessage}</font>
+		<div class="center"><font color=red>${errorMessage}</font>
 		${successMessage}
+		</div>
 	<form action="<%= request.getContextPath() %>/AddRoom" method="post">
 		<input type="number" name="roomId" placeholder="会議室ID (数字4桁)" required="required">
 		<input type="text" name="roomname" placeholder="追加したい部屋名" required="required">
