@@ -260,12 +260,14 @@ td.cell form {
 	box-sizing: border-box;
 }
 
-#admin input[type="submit"]{
+#admin input[type="submit"],
+.menu .admin input[type="submit"]{
     color: #602c6d;
     border: 1px solid #602c6d;
 }
 
-#admin input[type="submit"]:hover {
+#admin input[type="submit"]:hover,
+.menu .admin input[type="submit"]:hover {
     background-color: #602c6d;
     color: #ffffff;
     transform: translateY(-1px);
