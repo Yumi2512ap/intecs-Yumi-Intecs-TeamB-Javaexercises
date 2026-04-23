@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import jp.co.seminar.beans.MeetingRoom;
 
-@WebServlet("/UserEdit")
+@WebServlet("/UserExit")
 public class UserExitServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String nextPage = null;
@@ -49,7 +49,7 @@ public class UserExitServlet extends HttpServlet {
 		// UserDaoの削除メソッドを呼び出す。
 		MR.deleteUser(MR.getUser().getId());
 		//ログインページへ
-		String nextPage = request.getContextPath()+"/Logout";
+		String nextPage = "/Logout";
 
 		//nextPageに遷移するためのディスパッチャを作成する
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);

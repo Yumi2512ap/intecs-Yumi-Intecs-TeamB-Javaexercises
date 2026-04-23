@@ -2,17 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="jp.co.seminar.beans.UserBean"%>
 
-<%
-//セッションから取り出して、変数UBに代入する
-UserBean UB = (UserBean) session.getAttribute("UB");
-
-// もしUBがnullだったらログイン画面へ飛ばす
-if (UB == null) {
-	response.sendRedirect("login.jsp");
-	return;
-}
-%>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -32,25 +21,25 @@ if (UB == null) {
 			<tr>
 				<%--入力不可（表示のみ）--%>
 				<th>利用者ID：</th>
-				<td><input type="text" name="userId" value="<%=UB.getId()%>"
+				<td><input type="text" name="userId" value="${MR.user.id }"
 					readonly required></td>
 			</tr>
 			<tr>
 				<th>パスワード：</th>
 				<td><input type="password" name="userPw"
-					value="<%=UB.getPassword()%>" required></td>
+					value="${ MR.user.password }" required></td>
 			</tr>
 			<tr>
 				<th>表示ユーザー名：</th>
 
 				<td><input type="text" name="userName"
-					value="<%=UB.getName()%>" required></td>
+					value="${ MR.user.name }" required></td>
 
 			</tr>
 			<tr>
 				<th>居住地：</th>
 				<td><input type="text" name="useraddress"
-					value="<%=UB.getAddress()%>" placeholder="都道府県を入力" required></td>
+					value="${ MR.user.address }" placeholder="都道府県を入力" required></td>
 			</tr>
 		</table>
 
