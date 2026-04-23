@@ -13,49 +13,49 @@
 	<h2>ユーザーメニュー</h2>
 	<hr>
 	<h2>ユーザー情報編集</h2>
-	<form action="<%=request.getContextPath()%>/UserEdit"
-		method="post">
-
-		<table class="result">
-
-			${ msg }
-			<tr>
-				<%--入力不可（表示のみ）--%>
-				<th>利用者ID：</th>
-				<td><div name="userId" value="${MR.user.id }">${MR.user.id }</div></td>
-			</tr>
-			<tr>
-				<th>パスワード：</th>
-				<td><input type="password" name="userPw"
-					value="${ MR.user.password }" required></td>
-			</tr>
-			<tr>
-				<th>パスワード(2回目):</th>
-				<td><input type="password" name="userPw2" required></td>
-			</tr>
-			<tr>
-				<th>表示ユーザー名：</th>
-
-				<td><input type="text" name="userName"
-					value="${ MR.user.name }" required></td>
-
-			</tr>
-			<tr>
-				<th>居住地：</th>
-				<td><input type="text" name="useraddress"
-					value="${ MR.user.address }" placeholder="都道府県を入力" required></td>
-			</tr>
-		</table>
-
-		<input type="submit" name="action" value="変更を保存する">
-	</form>
+	<div class="menu">
+		<form action="<%=request.getContextPath()%>/UserEdit"
+			method="post">
 	
-	<hr>
-	<form action="<%=request.getContextPath()%>/UserExit"
-		method="post">
-		<input type="submit" name="action" value="退会する">
-	</form>
-
+			<table class="result">
+	
+				${ msg }
+				<tr>
+					<%--入力不可（表示のみ）--%>
+					<th>利用者ID：</th>
+					<td><div name="userId" value="${MR.user.id }">${MR.user.id }</div></td>
+				</tr>
+				<tr>
+					<th>パスワード：</th>
+					<td><input type="password" name="userPw"
+						value="${ MR.user.password }" required></td>
+				</tr>
+				<tr>
+					<th>パスワード(2回目):</th>
+					<td><input type="password" name="userPw2" required></td>
+				</tr>
+				<tr>
+					<th>表示ユーザー名：</th>
+	
+					<td><input type="text" name="userName"
+						value="${ MR.user.name }" required></td>
+	
+				</tr>
+				<tr>
+					<th>居住地：</th>
+					<td><input type="text" name="useraddress"
+						value="${ MR.user.address }" placeholder="都道府県を入力" required></td>
+				</tr>
+			</table>
+	
+			<input type="submit" name="action" value="変更を保存する">
+		</form><br>
+		
+		<form action="<%=request.getContextPath()%>/UserExit"
+			method="post">
+			<input type="submit" name="action" value="退会する">
+		</form>
+	</div>
 	<hr>
 	<form action="userMenu.jsp">
 		<input type="submit" value="戻る">
