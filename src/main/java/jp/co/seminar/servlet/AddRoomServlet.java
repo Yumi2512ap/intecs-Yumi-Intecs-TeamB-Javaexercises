@@ -41,14 +41,14 @@ public class AddRoomServlet extends HttpServlet {
 		String roomId = request.getParameter("roomId");
 		String successMessage = null;
 		String errorMessage = null;
-		if (roomName.length() <= 25 && roomId.matches("[0-9]{4}") && MR.getRoom(roomName) == null) {
+		if (roomName.length() <= 25 && roomId.matches("[0-9]{4}") && MR.getRoom(roomId) == null) {
 			MR.addRoom(roomId, roomName);
 			session.setAttribute("MR", MR);
-			successMessage = "会議室の追加に成功しました <br>会議室ID:"+roomId+"会議室名:"+roomName;
+			successMessage = "会議室の追加に成功しました <br>会議室ID:" + roomId + "会議室名:" + roomName;
 		} else if (roomName.length() > 25) {
 			errorMessage = "会議室の追加に失敗しました 会議室名は２５文字以下にしてください";
-		} else if(MR.getRoom(roomName) != null){
-			errorMessage = "会議室の追加に失敗しました 登録済みの会議室を追加することはできません";
+		} else if (MR.getRoom(roomId) != null) {
+			errorMessage = "会議室の追加に失敗しました 会議室IDを重複させることはできません";
 		}
 		request.setAttribute("errorMessage", errorMessage);
 		request.setAttribute("successMessage", successMessage);
