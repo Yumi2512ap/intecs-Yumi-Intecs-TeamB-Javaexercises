@@ -29,7 +29,7 @@
 				<tr>
 					<td><%= roomsId[i] %></td> 
 					<td><a href="<%=request.getContextPath() %>/RoomImage?roomId=<%= roomsId[i] %>"><%= roomsName[i] %></a></td>
-					<td class="cell"><input type="submit" value="削除"></td>
+					<td class="cell"><input type="submit" value="削除" class="can"></td>
 					<td><input type="hidden" name="roomId" value="<%= roomsId[i] %>"></td>
 				</tr>
 			 </form>
