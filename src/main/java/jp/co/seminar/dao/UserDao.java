@@ -117,18 +117,22 @@ public class UserDao {
 		}
 	}
 
-	public boolean update(String id, String password, String name, String address) {
+	public UserBean update(UserBean uB) {
 		String sql = "UPDATE user SET password = ?, name = ?, address = ? WHERE id = ?";
 
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, password);
-			pstmt.setString(2, name);
-			pstmt.setString(3, address);
-			pstmt.setString(4, id);
+			pstmt.setString(1, uB.getPassword());
+			pstmt.setString(2, uB.getName());
+			pstmt.setString(3, uB.getAddress());
+			pstmt.setString(4, uB.getId());
 
 			// 1行更新されたかどうかを返す
-			return pstmt.executeUpdate() == 1;
+			if (pstmt.executeUpdate() == 1) {
+				return uB;
+			}else {
+				return null;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

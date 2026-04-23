@@ -13,7 +13,7 @@
 	<h2>ユーザーメニュー</h2>
 	<hr>
 	<h2>ユーザー情報編集</h2>
-	<form action="<%=request.getContextPath()%>/UserEditServlet"
+	<form action="<%=request.getContextPath()%>/UserEdit"
 		method="post">
 
 		<table class="result">
@@ -21,8 +21,7 @@
 			<tr>
 				<%--入力不可（表示のみ）--%>
 				<th>利用者ID：</th>
-				<td><input type="text" name="userId" value="${MR.user.id }"
-					readonly required></td>
+				<td><div name="userId" value="${MR.user.id }">${MR.user.id }</div></td>
 			</tr>
 			<tr>
 				<th>パスワード：</th>
