@@ -48,48 +48,49 @@ public class UserEditServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		request.setCharacterEncoding("UTF-8");
 
-		// セッションから「今の（古い）情報」を取り出す
+		// 1. セッションチェック
 		HttpSession session = request.getSession();
-		MeetingRoom MR = (MeetingRoom)session.getAttribute("MR");
+		UserBean UB = (UserBean) session.getAttribute("UB");
 
-		String id = MR.getUser().getId(); // セッションに保存されている確実なID
-		boolean isAdmin = MR.getUser().getIsAdmin();
+		if (UB == null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
 
-		// JSPの入力欄から「新しい情報」をパラメータで受け取る
+		// 2. パラメータの受け取り
+		String id = UB.getId(); 
 		String newUserPw = request.getParameter("userPw");
 		String newUserName = request.getParameter("userName");
 		String newUserAddress = request.getParameter("useraddress");
+		// isAdminが必要な場合は追加してください（例: UBから取得など）
+		boolean isAdmin = UB.getIsAdmin();
 
-		String nextPage = "";
+		String nextPage = "userEdit.jsp"; // デフォルトの遷移先
 
-		try {// DAOで更新をする
+		try {
+		    // MRを使えるように定義（実体化）する
+		    MeetingRoom MR = new MeetingRoom(); // ★ここでDAO（MeetingRoomなど）のインスタンス化が必要です
+			// 例: MeetingRoom MR = new MeetingRoom(); 
+			
+			// DAOのupdateを実行
+			UserBean isSuccess = MR.update(id, newUserPw, newUserName, newUserAddress, isAdmin);
 
-			// サーブレット内の変数を「引数」として、DAOに渡す。updateが成功したらboolean型の変数に代入
-			UserBean isSuccess = MR.update(id, newUserPw, newUserName, newUserAddress,isAdmin);
-			// 成功して、isSuccessがあれば
 			if (isSuccess != null) {
 				request.setAttribute("msg", "更新に成功しました。");
-				MR.setUser(isSuccess);
-				session.setAttribute("MR", MR);
-				nextPage = "userEdit.jsp";
+				// セッション情報を最新に更新
+				session.setAttribute("UB", isSuccess); 
 			} else {
-				// 更新されなかった時（IDが消えていた等）の行き先
 				request.setAttribute("msg", "更新に失敗しました。対象が見つかりません。");
-				nextPage = "userEdit.jsp";
 			}
-		} catch (RuntimeException e) {
-			// DAOで throw new RuntimeException されたらここに飛んでくる
+		} catch (Exception e) { // RuntimeException以外もキャッチできるようExceptionに
 			e.printStackTrace();
 			request.setAttribute("msg", "システムエラーが発生しました。");
-			nextPage = "userEdit.jsp";
 		}
 
-		// フォワード
+		// 3. 最後に一回だけフォワードする
 		request.getRequestDispatcher(nextPage).forward(request, response);
-
-	}
-
-}
+	} 
+}// ← ここでdoPostを閉じる
