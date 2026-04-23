@@ -37,7 +37,7 @@ UserBean user = MR.getUser();
 		<%
 		if (user != null && user.getIsAdmin()) {
 		%>
-		<form action="<%=request.getContextPath()%>/adminMenu.jsp">
+		<form action="<%=request.getContextPath()%>/adminMenu.jsp" class="admin">
 			<input type="submit" value="管理者メニュー">
 		</form>
 		<%
