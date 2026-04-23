@@ -21,15 +21,15 @@
 		${deleteSuccessMessage}
 		<table class="list">
 		<tr>
-			<td>会議室ID</td>
-			<td>会議室名</td>
+			<th>会議室ID</th>
+			<th>会議室名</th>
 		</tr>
 		<% for(int i = 0; i < roomsName.length; i++){ %>
 	 		<form action="<%= request.getContextPath() %>/DeleteRoom" method="post">
 				<tr>
 					<td><%= roomsId[i] %></td> 
 					<td><a href="<%=request.getContextPath() %>/RoomImage?roomId=<%= roomsId[i] %>"><%= roomsName[i] %></a></td>
-					<td><input type="submit" value="削除"></td>
+					<td class="cell"><input type="submit" value="削除"></td>
 					<td><input type="hidden" name="roomId" value="<%= roomsId[i] %>"></td>
 				</tr>
 			 </form>
