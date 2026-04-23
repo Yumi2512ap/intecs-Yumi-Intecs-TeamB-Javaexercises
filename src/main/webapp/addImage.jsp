@@ -16,7 +16,7 @@
 <%@ include file="header.jsp"%>
 <h1>会議室画像追加</h1>
 <hr>
-	${message}
+	<div class="center">${message}</div>
 	<form action="AddImage" method="post" enctype="multipart/form-data">
 		<select name="roomId">
 			<% for(int i = 0 ; i < roomsName.length; i++){ %>
