@@ -2,7 +2,6 @@ package jp.co.seminar.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.co.seminar.beans.MeetingRoom;
 import jp.co.seminar.beans.UserBean;
-import jp.co.seminar.dao.UserDao;
 
 /**
  * Servlet implementation class UserEditServlet
  */
-@WebServlet("/UserEditServlet")
+@WebServlet("/UserEdit")
 public class UserEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,8 +36,6 @@ public class UserEditServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//遷移先ページ格納変数
 		String nextPage2 = "login.jsp";
-		//nextPageに遷移するためのディスパッチャを作成する
-		RequestDispatcher rd = request.getRequestDispatcher(nextPage2);
 		//リダイレクトする
 		response.sendRedirect(nextPage2);
 		return;
@@ -56,31 +53,27 @@ public class UserEditServlet extends HttpServlet {
 
 		// セッションから「今の（古い）情報」を取り出す
 		HttpSession session = request.getSession();
-		UserBean UB = (UserBean) session.getAttribute("UB");
+		MeetingRoom MR = (MeetingRoom)session.getAttribute("MR");
 
-		// ログインチェック（念のため）
-		if (UB == null) {
-			response.sendRedirect("login.jsp");
-			return;
-		}
-
-		String id = UB.getId(); // セッションに保存されている確実なID
+		String id = MR.getUser().getId(); // セッションに保存されている確実なID
+		boolean isAdmin = MR.getUser().getIsAdmin();
 
 		// JSPの入力欄から「新しい情報」をパラメータで受け取る
 		String newUserPw = request.getParameter("userPw");
 		String newUserName = request.getParameter("userName");
 		String newUserAddress = request.getParameter("useraddress");
 
-		UserDao dao = new UserDao();
 		String nextPage = "";
 
 		try {// DAOで更新をする
 
 			// サーブレット内の変数を「引数」として、DAOに渡す。updateが成功したらboolean型の変数に代入
-			boolean isSuccess = dao.update(id, newUserPw, newUserName, newUserAddress);
+			UserBean isSuccess = MR.update(id, newUserPw, newUserName, newUserAddress,isAdmin);
 			// 成功して、isSuccessがあれば
-			if (isSuccess) {
+			if (isSuccess != null) {
 				request.setAttribute("msg", "更新に成功しました。");
+				MR.setUser(isSuccess);
+				session.setAttribute("MR", MR);
 				nextPage = "userEdit.jsp";
 			} else {
 				// 更新されなかった時（IDが消えていた等）の行き先

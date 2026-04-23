@@ -481,6 +481,16 @@ public class MeetingRoom implements Serializable {
 		return escapedValue;
 	}
 
+	public UserBean update(String id, String password, String name, String address, boolean isAdmin) {
+		UserBean uB = new UserBean(id, name, address, password, isAdmin);
+		UserDao uD = new UserDao();
+		return uD.update(uB);
+	}
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "利用日:" + this.date + "利用時間:" + INTERVAL;
