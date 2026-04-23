@@ -248,6 +248,10 @@ td.cell form {
     font-size: 0;
 }
 
+.list .cell2 td{
+    padding: 20px;
+}
+
 .menu input[type="submit"] {
 	width: 100%;
 	max-width: 200px;

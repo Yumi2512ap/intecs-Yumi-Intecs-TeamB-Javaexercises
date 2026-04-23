@@ -317,7 +317,7 @@ public class MeetingRoom implements Serializable {
 		session.setAttribute("CSVdata", list);
 		String result = "";
 		for (String[] str : list) {
-			result += "<tr>"
+			result += "<tr class=\"cell2\">"
 					+ "<td>" + str[0] + "</td>"
 					+ "<td>" + str[1] + "～" + str[2] + "</td>"
 					+ "<td>" + str[3] + "</td>"
@@ -365,7 +365,7 @@ public class MeetingRoom implements Serializable {
 		List<AccessLogBean> list = ALD.findAll();
 		String result = "";
 		for (AccessLogBean ALB : list) {
-			result += "<tr>"
+			result += "<tr class=\"cell2\">"
 					+ "<td>" + ALB.getId() + "</td>"
 					+ "<td>" + ALB.getUserId() + "</td>"
 					+ "<td>" + ALB.getResult() + "</td>"

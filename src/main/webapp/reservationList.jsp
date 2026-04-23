@@ -46,7 +46,7 @@ String[] roomsName = MR.getRoomsName();
 	</form>
 	<hr>
 
-	<table>
+	<table class="list">
 		<tr>
 			<th>予約日</th>
 			<th>時間</th>

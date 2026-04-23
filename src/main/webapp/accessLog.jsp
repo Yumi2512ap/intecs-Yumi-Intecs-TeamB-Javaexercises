@@ -10,7 +10,7 @@
 	<%@ include file="header.jsp"%>
 	<h1>アクセスログ</h1>
 	<hr>
-	<table>
+	<table class="list">
 		<tr>
 			<th>アクセスログID</th>
 			<th>使用したユーザーID</th>
