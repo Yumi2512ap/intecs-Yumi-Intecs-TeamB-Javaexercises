@@ -34,19 +34,22 @@
 
     <div class="main-container"> <!-- このクラスで高さを確保します -->
         <h1 class="page-title">ユーザー削除</h1>
+        <hr>
 
         <p>削除するユーザーIDを入力してください：</p>
         <p style="color:red; font-weight:bold;">${errorMessage}</p>
+        <p>${msg}</p>
         <form action="DeleteUser" method="post">
             <input type="text" name="userId" style="width: 250px; margin-bottom: 15px; padding: 5px;">
             <div style="text-align: center;">
                 <input type="submit" value="実行">
             </div>
         </form>
-
-        <div style="margin-top: 20px;">
-            <a href="adminMenu.jsp">管理者メニューに戻る</a>
-        </div>
+        
+		<hr style="margin-top: 80px;">
+        <form action="adminMenu.jsp">
+			<input type="submit" value="戻る">
+		</form>
     </div>
 
     <jsp:include page="footer.jsp" />

@@ -35,12 +35,16 @@ public class DeleteUserServlet extends HttpServlet {
          return; 
      }
 
-        // 4. 自分以外の場合のみ、DAOを呼び出して削除を実行
-        jp.co.seminar.dao.UserDao dao = new jp.co.seminar.dao.UserDao();
-        dao.deleteUser(targetUserId);
+        
+        if(mr.deleteUser(targetUserId)) {
+        	request.setAttribute("msg", "ユーザーの削除に成功しました。");
+        }else {
+        	request.setAttribute("msg", "ユーザーの削除に失敗しました");
+        }
 
         // 完了したら管理者メニューへ
-        response.sendRedirect("adminMenu.jsp");
+        
+        request.getRequestDispatcher("/deleteUser.jsp").forward(request, response);
     }
 
 }
