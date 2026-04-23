@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class ReservationDao {
 		//DB取得結果を格納 
 		List<ReservationBean> List = new ArrayList<ReservationBean>();
 		//データベース接続
-		String sql = "SELECT * FROM reservation WHERE date = ?";
+		String sql = "SELECT * FROM reservation WHERE date = ? AND delete_flg = 0";
 
 		//try-with-resources構文
 		try (
@@ -114,6 +116,28 @@ public class ReservationDao {
 			return false;
 		}
 	}
+	
+	// ユーザーIDを参照して未来の予約を消去
+	public boolean delete(String userId) {
+		LocalDate today = LocalDate.now();
+		LocalTime now = LocalTime.now().withSecond(0).withNano(0);
+		String sql = "DELETE FROM reservation WHERE userid = ? AND (date > ? OR (date = ? AND start >= ?))";
+
+		try (Connection conn = MRConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, userId);
+			pstmt.setDate(2, java.sql.Date.valueOf(today));
+			pstmt.setDate(3, java.sql.Date.valueOf(today));
+			pstmt.setTime(4, java.sql.Time.valueOf(now));
+
+			return pstmt.executeUpdate() > 0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	//　追加要件
 
@@ -171,7 +195,7 @@ public class ReservationDao {
 			if (user != null && !user.isEmpty()) {
 				pstmt.setString(index++, user);
 			}
-			
+
 			//SQL文を実行して結果を取得
 			try (ResultSet rs = pstmt.executeQuery()) {
 				//結果セットをviewへ送るための準備
