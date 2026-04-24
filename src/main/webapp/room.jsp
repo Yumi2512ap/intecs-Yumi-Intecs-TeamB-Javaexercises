@@ -15,12 +15,14 @@
 	<h1>詳細ページ</h1>
 	<hr>
 	<h2>${ roomName }イメージ</h2>
-	${ err }
+	<div class="center">${ err }
 	
-	
+		<%
+		if (imageSrc != null) {
+		%>
 		<img src="${ imageSrc }" alt="部屋画像" class="img">
-	
-			
+		<% } %>
+	</div>
 	<hr>
 	<input type="button" onclick="history.back()" value="戻る">
 	<%@ include file="footer.jsp"%>

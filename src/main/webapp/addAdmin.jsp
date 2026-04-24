@@ -10,6 +10,7 @@
 	<%@ include file="header.jsp"%>
 	<h1>管理者追加</h1>
 	<hr>
+	<div class="center">${ msg }</div>>
 	<form action="<%=request.getContextPath()%>/AddUser" method="post">
 	
 		<table>
@@ -39,7 +40,6 @@
 			
 		<input type="submit" value="アカウント作成">
 	</form>
-	${ msg }
 	<hr>
 	<form action="adminMenu.jsp">
 		<input type="submit" value="戻る">
