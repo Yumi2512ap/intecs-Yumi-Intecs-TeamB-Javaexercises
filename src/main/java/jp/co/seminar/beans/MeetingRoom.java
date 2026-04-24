@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -108,6 +109,20 @@ public class MeetingRoom implements Serializable {
 	// 予約状況String
 	public String[][] getDisabled() {
 		String[][] disabled = new String[rooms.length][PERIOD.length];
+		
+		  // 土日なら全て予約不可
+	    LocalDate targetDate = LocalDate.parse(date); // date = "yyyy-MM-dd" 前提
+	    DayOfWeek day = targetDate.getDayOfWeek();
+
+	    if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
+	        for (int i = 0; i < disabled.length; i++) {
+	            for (int j = 0; j < PERIOD.length; j++) {
+	                disabled[i][j] = "disabled";
+	            }
+	        }
+	        return disabled;
+	    }
+		
 		ReservationDao reD = new ReservationDao();
 		List<ReservationBean> reList = reD.findByDate(date);
 
