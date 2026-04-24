@@ -40,7 +40,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 			throws IOException, ServletException {
 		
 	    // 【追加】ここを通ったことをコンソールに表示
-	    System.out.println("DEBUG: Filterを通りました - " + ((HttpServletRequest)request).getRequestURI());
+//	    System.out.println("DEBUG: Filterを通りました - " + ((HttpServletRequest)request).getRequestURI());
 		
 		
 		// TODO Auto-generated method stub
