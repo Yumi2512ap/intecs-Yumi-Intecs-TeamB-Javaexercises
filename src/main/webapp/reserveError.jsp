@@ -12,7 +12,7 @@
 	<h1>会議室予約</h1>
 	<hr>
 	<h2>予約エラー</h2>
-	<label>${errorReason}</label>
+	<div class="center"><label>${errorReason}</label></div>
 	<table class="result">
 		<tr>
 			<th>予約日</th>
