@@ -92,19 +92,17 @@ public class UserDao {
 		}
 	}
 
-	// 削除処理メソッド SQLの実行と削除フラグの更新 
-	public boolean deleteMyUser(String userId) {
-		//データベースに削除のフラグを出す
-		String sql = "UPDATE MeetingRoom SET delete_flg = TRUE WHERE userId = ?";
+	// アクティブユーザーか？
+	public boolean isActiveUser(String userId) {
+		String sql = "SELECT 1 FROM user WHERE delete_flg = 0 AND id = ?";
 		//データベースに接続
 		try (Connection conn = MRConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			// プレースホルダに値をセット
 			pstmt.setString(1, userId);
-			// SQLで更新された行数を取得
-			int affectedRows = pstmt.executeUpdate();
-			// 1行以上更新されていればtrue
-			return affectedRows > 0;
+			try (ResultSet rs = pstmt.executeQuery()) {
+				return rs.next();
+			}
 
 		} catch (SQLException e) {
 			System.err.println("SQLに関するエラーが発生しました");

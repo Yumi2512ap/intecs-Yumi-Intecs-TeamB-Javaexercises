@@ -81,7 +81,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 
 	        // DB側の最新状態をチェック
 	        jp.co.seminar.dao.UserDao dao = new jp.co.seminar.dao.UserDao();
-	        if (dao.existsByUserId(userId)) {
+	        if (dao.isActiveUser(userId)) {
 	            chain.doFilter(request, response);
 	        } else {
 	            session.invalidate();
