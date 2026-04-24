@@ -60,3 +60,5 @@ CREATE TABLE room_image (
         created_at DATETIME,
         FOREIGN KEY (room_id) REFERENCES room(id)
 );
+
+INSERT INTO user VALUES('1111','admin','管理者ログイン','管理','1','0');
