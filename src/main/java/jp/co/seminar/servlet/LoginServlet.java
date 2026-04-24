@@ -48,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 			nextPage = "/menu.jsp";
 		
 		} else {
+			request.setAttribute("msg", "ログインに失敗しました。");
 			nextPage = "/login.jsp";
 		}
 

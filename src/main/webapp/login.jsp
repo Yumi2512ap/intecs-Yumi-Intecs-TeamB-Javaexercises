@@ -22,6 +22,7 @@
 			</tr>
 		</table>
 		<input type="submit" value="ログイン">
+		<div class="msg">${ msg }</div>
 	</form><br>
 	<a href="addUser.jsp" class="no">新規ユーザー登録</a>
 	
