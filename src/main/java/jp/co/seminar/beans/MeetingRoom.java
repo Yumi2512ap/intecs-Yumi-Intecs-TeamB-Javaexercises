@@ -96,7 +96,7 @@ public class MeetingRoom implements Serializable {
 
 			int roomIdx = roomIndex(roomId);
 			if (roomIdx == -1) {
-				System.err.println("存在しない会議室IDの予約を無視: " + roomId);
+//				System.err.println("存在しない会議室IDの予約を無視: " + roomId);
 				continue;
 			}
 
@@ -117,7 +117,7 @@ public class MeetingRoom implements Serializable {
 
 			int roomIdx = roomIndex(roomId);
 			if (roomIdx == -1) {
-				System.err.println("存在しない会議室IDの予約を無視: " + roomId);
+//				System.err.println("存在しない会議室IDの予約を無視: " + roomId);
 				continue;
 			}
 
@@ -147,7 +147,7 @@ public class MeetingRoom implements Serializable {
 
 				int roomIdx = roomIndex(roomId);
 				if (roomIdx == -1) {
-					System.err.println("存在しない会議室IDの予約を無視: " + roomId);
+//					System.err.println("存在しない会議室IDの予約を無視: " + roomId);
 					continue;
 				}
 
